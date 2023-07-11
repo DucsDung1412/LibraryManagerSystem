@@ -24,8 +24,12 @@ import util.hibernateUtil;
 
 public class main {
 	public static void main(String[] args) {
-		user u = new user("admin", "admin", "admin");
-//		userDAO.getuserDAO().insertX(u);
+		user u = new user("admin", "asdh", "xc");
+		Boolean b = (userDAO.getuserDAO().insertX(u)) ;
+		if(!b) {
+			System.out.println("Email da ton tai");
+		}
+		
 		
 		thongTinCaNhan ttcn = new thongTinCaNhan("TTCN2", u, "admin", "0000000000", "Khong biet", "ajsd");
 //		thongTinCaNhanDAO.getthongTinCaNhanDAO().insertX(ttcn);
@@ -45,7 +49,11 @@ public class main {
 		yeuCau yc = new yeuCau("YC1", "asdh", "ghjg", "aksdhjkzxv", u);
 //		yeuCauDAO.getyeuCauDAO().insertX(yc);
 		
+//		yeuCau y = yeuCauDAO.getyeuCauDAO().selectG(yc);
+//		System.out.println(y.getEmail().getUsername());
+		
 //		danhGiaDAO.getdanhGiaDAO().deletaX(dg);
+//		loaiSachDAO.getloaiSachDAO().deletaX(ls);
 		
 //		List<danhGia> list = danhGiaDAO.getdanhGiaDAO().selectAll();
 //		
@@ -91,13 +99,21 @@ public class main {
 //		List<loaiSach> list = loaiSachDAO.getloaiSachDAO().selectAll();
 		
 //		List<user> list = userDAO.getuserDAO().selectAll();
-//		
+		
+//		user u1 = userDAO.getuserDAO().selectG(u);
+//		for (yeuCau yeuC : u1.getListYC()) {
+//			System.out.println(yeuC.getMaYeuCau());
+//		}
+		
 //		for (user user : list) {
 //			System.out.println(user.getUsername());
+//			for (yeuCau yeuC : user.getListYC()) {
+//				System.out.println(yeuC.getMaYeuCau());
+//			}
 //			System.out.println(user.getListDG().size());
 //			System.out.println(user.getListPM().size());
 //			System.out.println(user.getListYC().size());
-//			System.out.println(user.getTtcn());
+//			System.out.println(user.getTtcn().getDiaChi());
 //		}
 		
 //		for (loaiSach danhGia : list) {
