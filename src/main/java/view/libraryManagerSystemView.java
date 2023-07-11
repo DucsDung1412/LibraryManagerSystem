@@ -135,4 +135,24 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return scrollPane;
 	}
+
+	/* 
+	
+	public JPanel panel() {
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setBounds(0, 148, 1286, 616);
+		panel.setLayout(null);
+		
+		// bat dau code
+		
+		
+		
+		
+		// ket thuc code
+		
+		return panel;
+	}
+	 
+	**/
 }
