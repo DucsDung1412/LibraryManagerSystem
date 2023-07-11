@@ -236,14 +236,7 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return panel;
 	}
-<<<<<<< HEAD
-	
-	
-	
-	
-=======
 
->>>>>>> ffabc7d14005bfd7eec35e9c9dc5026b08484fa5
 	/* 
 	
 	public JPanel panel() {
