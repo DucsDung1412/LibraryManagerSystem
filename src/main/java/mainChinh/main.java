@@ -27,7 +27,7 @@ public class main {
 		user u = new user("admin", "asdh", "xc");
 		Boolean b = (userDAO.getuserDAO().insertX(u)) ;
 		if(!b) {
-			System.out.println("Email da ton tai");
+			System.out.println("\nEmail da ton tai\n");
 		}
 		
 		
@@ -40,7 +40,7 @@ public class main {
 		sach s = new sach("S1", "test", 2093, "zkxc", 10, 2, ls);
 //		sachDAO.getsachDAO().insertX(s);
 		
-		phieuMuonSach pms = new phieuMuonSach("PM1", null, null, u, s);
+		phieuMuonSach pms = new phieuMuonSach("PM1", null, null, u, s, "Dang dat");
 //		phieuMuonSachDAO.getphieuMuonSachDAO().insertX(pms);
 		
 		danhGia dg = new danhGia("DG1", "Ngu", u, pms);
@@ -49,8 +49,10 @@ public class main {
 		yeuCau yc = new yeuCau("YC1", "asdh", "ghjg", "aksdhjkzxv", u);
 //		yeuCauDAO.getyeuCauDAO().insertX(yc);
 		
-//		yeuCau y = yeuCauDAO.getyeuCauDAO().selectG(yc);
-//		System.out.println(y.getEmail().getUsername());
+		yeuCau y = yeuCauDAO.getyeuCauDAO().selectG(new yeuCau("YC2", "asdh", "ghjg", "aksdhjkzxv", u));
+		if(y == null) {
+			System.out.println("\nKhong kiem thay yeu cau nay");
+		}
 		
 //		danhGiaDAO.getdanhGiaDAO().deletaX(dg);
 //		loaiSachDAO.getloaiSachDAO().deletaX(ls);

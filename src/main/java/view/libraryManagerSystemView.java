@@ -64,9 +64,9 @@ public class libraryManagerSystemView extends JFrame {
 		
 		// logo panelTop
 		JLabel imgLogo_panelTop = new JLabel("");
-		imgLogo_panelTop.setBounds(14, 7, 136, 130);
-		ImageIcon imgILogo_panelTop = new ImageIcon(Paths.get("src/main/java/icon/presetLOGO.png").toAbsolutePath().toString());
-//		ImageIcon imgILogo_panelTop = new ImageIcon("C:\\Users\\Admin\\Downloads\\sms-java-master\\src\\images\\presetLOGO.png");
+		imgLogo_panelTop.setBounds(16, 0, 144, 138);
+		ImageIcon imgILogo_panelTop = new ImageIcon(Paths.get("src/main/java/icon/logo.png").toAbsolutePath().toString());
+//		ImageIcon imgILogo_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\logo.png");
 		Image imLogo_panelTop = imgILogo_panelTop.getImage();
 		Image imageLogo_panelTop = imLogo_panelTop.getScaledInstance(imgLogo_panelTop.getWidth(), imgLogo_panelTop.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconLogo_panelTop = new ImageIcon(imageLogo_panelTop);
@@ -162,7 +162,7 @@ public class libraryManagerSystemView extends JFrame {
 		// user
 		JLabel imgUser_panelTop = new JLabel("");
 		imgUser_panelTop.setBounds(1176, 14, 36, 36);
-		ImageIcon imgIUser_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_user_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIUser_panelTop = new ImageIcon(Paths.get("src/main/java/icon/user.png").toAbsolutePath().toString());
 //		ImageIcon imgIUser_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imUser_panelTop = imgIUser_panelTop.getImage();
 		Image imageUser_panelTop = imUser_panelTop.getScaledInstance(imgUser_panelTop.getWidth(), imgUser_panelTop.getHeight(), Image.SCALE_SMOOTH);
@@ -173,7 +173,7 @@ public class libraryManagerSystemView extends JFrame {
 		// noti
 		JLabel imgNoti_panelTop = new JLabel("");
 		imgNoti_panelTop.setBounds(1236, 14, 36, 36);
-		ImageIcon imgINoti_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_user_setting.png").toAbsolutePath().toString());
+		ImageIcon imgINoti_panelTop = new ImageIcon(Paths.get("src/main/java/icon/thongbao.png").toAbsolutePath().toString());
 //		ImageIcon imgINoti_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imNoti_panelTop = imgINoti_panelTop.getImage();
 		Image imageNoti_panelTop = imNoti_panelTop.getScaledInstance(imgNoti_panelTop.getWidth(), imgNoti_panelTop.getHeight(), Image.SCALE_SMOOTH);
@@ -184,7 +184,7 @@ public class libraryManagerSystemView extends JFrame {
 		// setting
 		JLabel imgSetting_panelTop = new JLabel("");
 		imgSetting_panelTop.setBounds(1176, 62, 36, 36);
-		ImageIcon imgISetting_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_user_setting.png").toAbsolutePath().toString());
+		ImageIcon imgISetting_panelTop = new ImageIcon(Paths.get("src/main/java/icon/setting_banhrang.png").toAbsolutePath().toString());
 //		ImageIcon imgISetting_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imSetting_panelTop = imgISetting_panelTop.getImage();
 		Image imageSetting_panelTop = imSetting_panelTop.getScaledInstance(imgSetting_panelTop.getWidth(), imgSetting_panelTop.getHeight(), Image.SCALE_SMOOTH);
@@ -195,7 +195,7 @@ public class libraryManagerSystemView extends JFrame {
 		// exit
 		JLabel imgLogout_panelTop = new JLabel("");
 		imgLogout_panelTop.setBounds(1236, 62, 36, 36);
-		ImageIcon imgILogout_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_user_setting.png").toAbsolutePath().toString());
+		ImageIcon imgILogout_panelTop = new ImageIcon(Paths.get("src/main/java/icon/dangxuat.png").toAbsolutePath().toString());
 //		ImageIcon imgILogout_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imLogout_panelTop = imgILogout_panelTop.getImage();
 		Image imageLogout_panelTop = imLogout_panelTop.getScaledInstance(imgLogout_panelTop.getWidth(), imgLogout_panelTop.getHeight(), Image.SCALE_SMOOTH);
@@ -236,14 +236,10 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return panel;
 	}
-<<<<<<< HEAD
 	
 	
 	
 	
-=======
-
->>>>>>> ffabc7d14005bfd7eec35e9c9dc5026b08484fa5
 	/* 
 	
 	public JPanel panel() {

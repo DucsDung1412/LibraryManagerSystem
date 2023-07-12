@@ -15,6 +15,7 @@ public class phieuMuonSach {
 	@Id
 	private String maPhieu;
 	private Date ngayMuon, ngayTra;
+	private String trangThai;
 	
 	@ManyToOne
 	@JoinColumn(name = "email")
@@ -27,12 +28,13 @@ public class phieuMuonSach {
 	@OneToMany(mappedBy = "maPhieuMuon", cascade = CascadeType.ALL)
 	private List<danhGia> listDG;
 
-	public phieuMuonSach(String maPhieu, Date ngayMuon, Date ngayTra, user email, sach maSach) {
+	public phieuMuonSach(String maPhieu, Date ngayMuon, Date ngayTra, user email, sach maSach, String trangThai) {
 		this.maPhieu = maPhieu;
 		this.ngayMuon = ngayMuon;
 		this.ngayTra = ngayTra;
 		this.email = email;
 		this.maSach = maSach;
+		this.trangThai = trangThai;
 	}
 	
 	public phieuMuonSach() {
@@ -85,6 +87,14 @@ public class phieuMuonSach {
 
 	public void setListDG(List<danhGia> listDG) {
 		this.listDG = listDG;
+	}
+
+	public String getTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(String trangThai) {
+		this.trangThai = trangThai;
 	}
 	
 }
