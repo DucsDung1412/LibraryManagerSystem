@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,21 +31,21 @@ import java.awt.event.ActionEvent;
 public class registerView extends JFrame {
 
 	public JPanel contentPane;
-	public JTextField txtName;
-	public JTextField txtEmail;
-	public JPasswordField txtPass;
-	public JPasswordField txtConfirm;
-	public JLabel lblName;
-	public JLabel lblEmail;
-	public JLabel lblPass;
-	public JLabel lblConfirm;
-	public JLabel lblNewLabel;
+	public JTextField txtName_panelRegister;
+	public JTextField txtEmail_panelRegister;
+	public JPasswordField txtPass_panelRegister;
+	public JPasswordField txtConfirm_panelRegister;
+	public JLabel lblName_panelRegister;
+	public JLabel lblEmail_panelRegister;
+	public JLabel lblPass_panelRegister;
+	public JLabel lblConfirm_panelRegister;
+	public JLabel imgBg_panelRegister;
 	public controllerRegister c = new controllerRegister(this);
-	public JCheckBox chkAgree;
-	public JButton btnHienPass, btnCancel, btnSign;
-	private JButton btnAnPass;
-	private JButton btnHienConfirm;
-	private JButton btnAnConfirm;
+	public JCheckBox ckbAgree_panelRegister;
+	public JButton btnHienPass_panelRegister, btnCancel_panelRegister, btnSign_panelRegister;
+	private JButton btnAnPass_panelRegister;
+	private JButton btnHienConfirm_panelRegister;
+	private JButton btnAnConfirm_panelRegister;
 
 	/**
 	 * Launch the application.
@@ -63,150 +64,189 @@ public class registerView extends JFrame {
 	}
 
 	public registerView() {
+		//contentPane
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 862, 569);
+		setBounds(100, 100, 820, 530);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		//panel_Register
+		JPanel panel_Register = new JPanel();
+		panel_Register.setBounds(0, 0, 806, 493);
+		contentPane.add(panel_Register);
+		panel_Register.setLayout(null);
 
-		JLabel lblTitle = new JLabel("REGISTER");
-		lblTitle.setBounds(280, 82, 519, 37);
-		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 33));
+		//lblRegister_panelRegister
+		JLabel lblRegister_panelRegister = new JLabel("REGISTER");
+		lblRegister_panelRegister.setBounds(315, 40, 419, 49);
+		lblRegister_panelRegister.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegister_panelRegister.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 40));
+		panel_Register.add(lblRegister_panelRegister);
 
-		txtName = new JTextField();
-		txtName.setBounds(527, 169, 251, 28);
-		txtName.setColumns(10);
+		//txtName_panelRegister
+		txtName_panelRegister = new JTextField();
+		txtName_panelRegister.setHorizontalAlignment(SwingConstants.LEFT);
+		txtName_panelRegister.setFont(new Font("Calibri", Font.PLAIN, 15));
+		txtName_panelRegister.setBounds(483, 139, 251, 28);
+		txtName_panelRegister.setMargin(new Insets(3, 5, 0, 0));
+		txtName_panelRegister.setColumns(10);
+		panel_Register.add(txtName_panelRegister);
 
-		txtEmail = new JTextField();
-		txtEmail.setBounds(527, 212, 251, 28);
-		txtEmail.setColumns(10);
+		//txtEmail_panelRegister
+		txtEmail_panelRegister = new JTextField();
+		txtEmail_panelRegister.setHorizontalAlignment(SwingConstants.LEFT);
+		txtEmail_panelRegister.setFont(new Font("Calibri", Font.PLAIN, 15));
+		txtEmail_panelRegister.setBounds(483, 182, 251, 28);
+		txtEmail_panelRegister.setMargin(new Insets(3, 5, 0, 0));
+		txtEmail_panelRegister.setColumns(10);
+		panel_Register.add(txtEmail_panelRegister);
 
-		txtPass = new JPasswordField();
-		txtPass.setBounds(527, 255, 251, 28);
+		//txtPass_panelRegister
+		txtPass_panelRegister = new JPasswordField();
+		txtPass_panelRegister.setHorizontalAlignment(SwingConstants.LEFT);
+		txtPass_panelRegister.setFont(new Font("Calibri", Font.PLAIN, 15));
+		txtPass_panelRegister.setBounds(483, 225, 251, 28);
+		txtPass_panelRegister.setMargin(new Insets(3, 5, 0, 0));
+		panel_Register.add(txtPass_panelRegister);
 
-		txtConfirm = new JPasswordField();
-		txtConfirm.setBounds(527, 298, 250, 28);
+		//txtConfirm_panelRegister
+		txtConfirm_panelRegister = new JPasswordField();
+		txtConfirm_panelRegister.setHorizontalAlignment(SwingConstants.LEFT);
+		txtConfirm_panelRegister.setFont(new Font("Calibri", Font.PLAIN, 15));
+		txtConfirm_panelRegister.setBounds(483, 268, 250, 28);
+		txtConfirm_panelRegister.setMargin(new Insets(3, 5, 0, 0));
+		panel_Register.add(txtConfirm_panelRegister);
 
-		chkAgree = new JCheckBox("I Agree to the Term of User");
-		chkAgree.setBackground(new Color(255, 255, 255));
-		chkAgree.setBounds(527, 344, 251, 25);
-		chkAgree.setOpaque(false);
-		chkAgree.setFocusPainted(false);
-		chkAgree.setForeground(new Color(0, 0, 0));
-		chkAgree.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		//ckbAgree_panelRegister
+		ckbAgree_panelRegister = new JCheckBox("I Agree to the Term of User");
+		ckbAgree_panelRegister.setBackground(Color.WHITE);
+		ckbAgree_panelRegister.setBounds(483, 314, 251, 25);
+		ckbAgree_panelRegister.setOpaque(false);
+		ckbAgree_panelRegister.setFocusPainted(false);
+		ckbAgree_panelRegister.setFont(new Font("Calibri Light", Font.BOLD | Font.ITALIC, 18));
+		panel_Register.add(ckbAgree_panelRegister);
 
-		btnSign = new JButton("SIGN UP\r\n");
-		btnSign.setBounds(527, 411, 92, 30);
-		btnSign.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		btnSign.addActionListener(c);
+		//btnSign_panelRegister
+		btnSign_panelRegister = new JButton("SIGN UP\r\n");
+		btnSign_panelRegister.setBounds(483, 368, 92, 30);
+		btnSign_panelRegister.setFont(new Font("Calibri", Font.BOLD, 15));
+		btnSign_panelRegister.setMargin(new Insets(5, 0, 0, 0));
+		btnSign_panelRegister.addActionListener(c);
+		panel_Register.add(btnSign_panelRegister);
 
-		btnCancel = new JButton("CANCEL");
-		btnCancel.setBounds(686, 411, 92, 30);
-		btnCancel.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		btnCancel.addActionListener(c);
+		//btnCancel_panelRegister
+		btnCancel_panelRegister = new JButton("CANCEL");
+		btnCancel_panelRegister.setBounds(642, 368, 92, 30);
+		btnCancel_panelRegister.setFont(new Font("Calibri", Font.BOLD, 15));
+		btnCancel_panelRegister.setMargin(new Insets(5, 0, 0, 0));
+		btnCancel_panelRegister.addActionListener(c);
+		panel_Register.add(btnCancel_panelRegister);
 
-		lblName = new JLabel("Name");
-		lblName.setBounds(280, 177, 250, 20);
-		lblName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblName.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
+		//lblName_panelRegister
+		lblName_panelRegister = new JLabel("Name");
+		lblName_panelRegister.setBounds(315, 147, 150, 20);
+		lblName_panelRegister.setHorizontalAlignment(SwingConstants.CENTER);
+		lblName_panelRegister.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 18));
+		panel_Register.add(lblName_panelRegister);
 
-		lblEmail = new JLabel("Email");
-		lblEmail.setBounds(280, 223, 250, 17);
-		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmail.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
+		//lblEmail_panelRegister
+		lblEmail_panelRegister = new JLabel("Email");
+		lblEmail_panelRegister.setBounds(315, 193, 150, 17);
+		lblEmail_panelRegister.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmail_panelRegister.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 18));
+		panel_Register.add(lblEmail_panelRegister);
 
-		lblPass = new JLabel("Password");
-		lblPass.setBounds(280, 263, 250, 20);
-		lblPass.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPass.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
+		//lblPass_panelRegister
+		lblPass_panelRegister = new JLabel("Password");
+		lblPass_panelRegister.setBounds(315, 233, 150, 20);
+		lblPass_panelRegister.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPass_panelRegister.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 18));
+		panel_Register.add(lblPass_panelRegister);
 
-		lblConfirm = new JLabel("Confirm Password");
-		lblConfirm.setBounds(280, 306, 250, 20);
-		lblConfirm.setHorizontalAlignment(SwingConstants.CENTER);
-		lblConfirm.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
+		//lblConfirm_panelRegister
+		lblConfirm_panelRegister = new JLabel("Confirm Password");
+		lblConfirm_panelRegister.setBounds(315, 276, 150, 20);
+		lblConfirm_panelRegister.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConfirm_panelRegister.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 18));
+		panel_Register.add(lblConfirm_panelRegister);
 
 		// hien pass
-		btnHienPass = new JButton("");
-		btnHienPass.addMouseListener(new MouseAdapter() {
+		btnHienPass_panelRegister = new JButton("");
+		btnHienPass_panelRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnAnPass.setVisible(true);
-				btnHienPass.setVisible(false);
-				txtPass.setEchoChar((char) 0);
+				btnAnPass_panelRegister.setVisible(true);
+				btnHienPass_panelRegister.setVisible(false);
+				txtPass_panelRegister.setEchoChar((char) 0);
 
 			}
 		});
-		btnHienPass.setIcon(new ImageIcon(Paths.get("src/main/java/icon/hien_mk.png").toAbsolutePath().toString()));
-		btnHienPass.setForeground(Color.BLACK);
-		btnHienPass.setBounds(788, 255, 37, 28);
-		contentPane.add(btnHienPass);
+		btnHienPass_panelRegister
+				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/hien_mk.png").toAbsolutePath().toString()));
+		btnHienPass_panelRegister.setForeground(Color.BLACK);
+		btnHienPass_panelRegister.setBounds(744, 225, 37, 28);
+		panel_Register.add(btnHienPass_panelRegister);
 
 		// an pass
-		btnAnPass = new JButton("");
-		btnAnPass.addMouseListener(new MouseAdapter() {
+		btnAnPass_panelRegister = new JButton("");
+		btnAnPass_panelRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnHienPass.setVisible(true);
-				btnAnPass.setVisible(false);
-				txtPass.setEchoChar('*');
+				btnHienPass_panelRegister.setVisible(true);
+				btnAnPass_panelRegister.setVisible(false);
+				txtPass_panelRegister.setEchoChar('*');
 			}
 		});
-		btnAnPass.setVisible(false);
-		btnAnPass.setIcon(new ImageIcon(Paths.get("src/main/java/icon/an_mk.png").toAbsolutePath().toString()));
-		btnAnPass.setForeground(Color.BLACK);
-		btnAnPass.setBounds(788, 255, 37, 28);
-		contentPane.add(btnAnPass);
+		btnAnPass_panelRegister.setVisible(false);
+		btnAnPass_panelRegister
+				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/an_mk.png").toAbsolutePath().toString()));
+		btnAnPass_panelRegister.setForeground(Color.BLACK);
+		btnAnPass_panelRegister.setBounds(744, 225, 37, 28);
+		panel_Register.add(btnAnPass_panelRegister);
 
-		btnHienConfirm = new JButton("");
-		btnHienConfirm.addMouseListener(new MouseAdapter() {
+		//hien confirm
+		btnHienConfirm_panelRegister = new JButton("");
+		btnHienConfirm_panelRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnAnConfirm.setVisible(true);
-				btnHienConfirm.setVisible(false);
-				txtConfirm.setEchoChar((char) 0);
+				btnAnConfirm_panelRegister.setVisible(true);
+				btnHienConfirm_panelRegister.setVisible(false);
+				txtConfirm_panelRegister.setEchoChar((char) 0);
 			}
 		});
-		btnHienConfirm.setIcon(new ImageIcon(Paths.get("src/main/java/icon/hien_mk.png").toAbsolutePath().toString()));
-		btnHienConfirm.setForeground(Color.BLACK);
-		btnHienConfirm.setBounds(787, 298, 37, 28);
-		contentPane.add(btnHienConfirm);
+		btnHienConfirm_panelRegister
+				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/hien_mk.png").toAbsolutePath().toString()));
+		btnHienConfirm_panelRegister.setForeground(Color.BLACK);
+		btnHienConfirm_panelRegister.setBounds(743, 268, 37, 28);
+		panel_Register.add(btnHienConfirm_panelRegister);
 
-		btnAnConfirm = new JButton("");
-		btnAnConfirm.addMouseListener(new MouseAdapter() {
+		//an confirm
+		btnAnConfirm_panelRegister = new JButton("");
+		btnAnConfirm_panelRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnHienConfirm.setVisible(true);
-				btnAnConfirm.setVisible(false);
-				txtConfirm.setEchoChar('*');
+				btnHienConfirm_panelRegister.setVisible(true);
+				btnAnConfirm_panelRegister.setVisible(false);
+				txtConfirm_panelRegister.setEchoChar('*');
 			}
 		});
-		btnAnConfirm.setVisible(false);
-		btnAnConfirm.setIcon(new ImageIcon(Paths.get("src/main/java/icon/an_mk.png").toAbsolutePath().toString()));
-		btnAnConfirm.setForeground(Color.BLACK);
-		btnAnConfirm.setBounds(787, 298, 37, 28);
-		contentPane.add(btnAnConfirm);
+		btnAnConfirm_panelRegister.setVisible(false);
+		btnAnConfirm_panelRegister
+				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/an_mk.png").toAbsolutePath().toString()));
+		btnAnConfirm_panelRegister.setForeground(Color.BLACK);
+		btnAnConfirm_panelRegister.setBounds(743, 268, 37, 28);
+		panel_Register.add(btnAnConfirm_panelRegister);
 
-		contentPane.setLayout(null);
-		contentPane.add(lblTitle);
-		contentPane.add(lblName);
-		contentPane.add(txtName);
-		contentPane.add(lblEmail);
-		contentPane.add(lblPass);
-		contentPane.add(lblConfirm);
-		contentPane.add(txtPass);
-		contentPane.add(txtConfirm);
-		contentPane.add(txtEmail);
-		contentPane.add(btnSign);
-		contentPane.add(btnCancel);
-		contentPane.add(chkAgree);
-
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Paths.get("src/main/java/icon/login_BG.png").toAbsolutePath().toString()));
-		lblNewLabel.setBounds(0, 0, 862, 569);
-		contentPane.add(lblNewLabel);
-
+		//lblBg imgBg_panelRegister
+		imgBg_panelRegister = new JLabel("");
+		imgBg_panelRegister.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 15));
+		imgBg_panelRegister
+				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/login_BG.png").toAbsolutePath().toString()));
+		imgBg_panelRegister.setBounds(-30, -60, 920, 600);
+		panel_Register.add(imgBg_panelRegister);
 	}
 }
