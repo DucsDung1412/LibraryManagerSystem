@@ -35,44 +35,44 @@ public class controllerRegister implements ActionListener {
 			String chkEmail = "^[A-Za-z0-9-\\+]+([A-Za-z0-9-]+)*@" + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 			// Ten
-			if (this.v_reg.txtName.getText().equals("")) {
+			if (this.v_reg.txtName_panelRegister.getText().equals("")) {
 				JOptionPane.showMessageDialog(v_reg, "Vui lòng nhập tên");
 				return;
 			}
-			if (!this.v_reg.txtName.getText().matches(chkName)) {
+			if (!this.v_reg.txtName_panelRegister.getText().matches(chkName)) {
 				JOptionPane.showMessageDialog(v_reg, "Tên phải là chữ");
 				return;
 			}
 
 			// Email
 
-			if (this.v_reg.txtEmail.getText().equals("")) {
+			if (this.v_reg.txtEmail_panelRegister.getText().equals("")) {
 				JOptionPane.showMessageDialog(v_reg, "Vui lòng nhập Email");
 				return;
 			}
-			if (!this.v_reg.txtEmail.getText().matches(chkEmail)) {
+			if (!this.v_reg.txtEmail_panelRegister.getText().matches(chkEmail)) {
 				JOptionPane.showMessageDialog(v_reg, "Email không hợp lệ");
 				return;
 			}
 
 			// Pass
-			if (this.v_reg.txtPass.getText().equals("")) {
+			if (this.v_reg.txtPass_panelRegister.getText().equals("")) {
 				JOptionPane.showMessageDialog(v_reg, "Vui lòng nhập Password");
 				return;
 			}
 
 			// Confirm
-			if (this.v_reg.txtConfirm.getText().equals("")) {
+			if (this.v_reg.txtConfirm_panelRegister.getText().equals("")) {
 				JOptionPane.showMessageDialog(v_reg, "Vui lòng nhập Confirm Password");
 				return;
 			}
-			if (!new String(this.v_reg.txtPass.getPassword()).equals(new String(this.v_reg.txtConfirm.getPassword()))) {
+			if (!new String(this.v_reg.txtPass_panelRegister.getPassword()).equals(new String(this.v_reg.txtConfirm_panelRegister.getPassword()))) {
 				JOptionPane.showMessageDialog(v_reg, "Password và Confirm Password không trùng khớp");
 				return;
 			}
 
 			// chkAgree
-			if (!this.v_reg.chkAgree.isSelected()) {
+			if (!this.v_reg.ckbAgree_panelRegister.isSelected()) {
 				JOptionPane.showMessageDialog(v_reg, "Vui lòng đọc qua đều khoản");
 				return;
 			}
@@ -92,7 +92,7 @@ public class controllerRegister implements ActionListener {
 
 		final String emailSever = "nguyenthikieutrang171116@gmail.com";
 		final String passSever = "bbhrlzwcyylhdetc";
-		String email = this.v_reg.txtEmail.getText();
+		String email = this.v_reg.txtEmail_panelRegister.getText();
 
 		Authenticator auth = new Authenticator() {
 			@Override
