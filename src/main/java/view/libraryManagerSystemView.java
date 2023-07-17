@@ -289,17 +289,7 @@ public class libraryManagerSystemView extends JFrame {
 		return panel_QLS;
 	}
 		
-		// bat dau code
 		
-		
-		
-		
-		
-		// ket thuc code
-		
-		return panel;
-	}
-
 	/* 
 	
 	public JPanel panel() {
