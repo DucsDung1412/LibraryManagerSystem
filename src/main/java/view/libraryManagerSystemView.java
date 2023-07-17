@@ -216,15 +216,78 @@ public class libraryManagerSystemView extends JFrame {
 		panel_top.add(imgBG_panelTop);
 		
 		// Thêm panel tại đây
-		contentPane.add(panel_home());
+		contentPane.add(panel_QuanLySach());
 	}
 	
-	public JPanel panel_home() {
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 148, 1286, 616);
-		panel.setLayout(null);
+	public JPanel panel_QuanLySach() {
+		JPanel panel_QLS = new JPanel();
+		panel_QLS.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_QLS.setBackground(new Color(255, 255, 255));
+		panel_QLS.setBounds(0, 148, 1286, 616);
+		panel_QLS.setLayout(null);
+		
+		JLabel lblSachHienCo_panelQLS = new JLabel("Sách hiện có ở đây");
+		lblSachHienCo_panelQLS.setFont(new Font("Calibri", Font.PLAIN, 20));
+		lblSachHienCo_panelQLS.setBounds(69, 159, 740, 411);
+		panel_QLS.add(lblSachHienCo_panelQLS);
+		
+		JPanel panelDieuKhien = new JPanel();
+		panelDieuKhien.setBounds(845, 36, 374, 534);
+		panel_QLS.add(panelDieuKhien);
+		panelDieuKhien.setLayout(null);
+		
+		JLabel lblTimKiem_panelDieuKhien = new JLabel("Tìm kiếm");
+		lblTimKiem_panelDieuKhien.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblTimKiem_panelDieuKhien.setBounds(10, 10, 103, 43);
+		panelDieuKhien.add(lblTimKiem_panelDieuKhien);
+		
+		txtLoc = new JTextField();
+		txtLoc.setFont(new Font("Calibri", Font.PLAIN, 14));
+		txtLoc.setBounds(43, 63, 291, 46);
+		panelDieuKhien.add(txtLoc);
+		txtLoc.setColumns(10);
+		
+		JLabel lblDK_panelDieuKhien = new JLabel("Điều khiển");
+		lblDK_panelDieuKhien.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblDK_panelDieuKhien.setBounds(10, 191, 103, 43);
+		panelDieuKhien.add(lblDK_panelDieuKhien);
+		
+		JLabel lblThongTinSach_panelDieuKhien = new JLabel("Thông tin sách ở đây");
+		lblThongTinSach_panelDieuKhien.setBounds(47, 244, 287, 257);
+		panelDieuKhien.add(lblThongTinSach_panelDieuKhien);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(43, 135, 291, 43);
+		panelDieuKhien.add(comboBox);
+		
+		JPanel panel_Nut = new JPanel();
+		panel_Nut.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_Nut.setBounds(69, 36, 740, 76);
+		panel_QLS.add(panel_Nut);
+		panel_Nut.setLayout(null);
+		
+		JLabel lblSach_panelNut = new JLabel("Sách");
+		lblSach_panelNut.setBounds(10, 7, 146, 59);
+		panel_Nut.add(lblSach_panelNut);
+		lblSach_panelNut.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSach_panelNut.setFont(new Font("Calibri", Font.PLAIN, 24));
+		
+		JLabel lblLoaiSach_panelNut = new JLabel("Quản Lý Sách");
+		lblLoaiSach_panelNut.setBounds(166, 7, 131, 59);
+		panel_Nut.add(lblLoaiSach_panelNut);
+		lblLoaiSach_panelNut.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLoaiSach_panelNut.setFont(new Font("Calibri", Font.PLAIN, 24));
+		
+		// bat dau code
+		
+		
+		
+		
+		
+		// ket thuc code
+		
+		return panel_QLS;
+	}
 		
 		// bat dau code
 		
