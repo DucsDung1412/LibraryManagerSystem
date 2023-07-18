@@ -226,57 +226,171 @@ public class libraryManagerSystemView extends JFrame {
 		panel_QLS.setBounds(0, 148, 1286, 616);
 		panel_QLS.setLayout(null);
 		
-		JLabel lblSachHienCo_panelQLS = new JLabel("Sách hiện có ở đây");
-		lblSachHienCo_panelQLS.setFont(new Font("Calibri", Font.PLAIN, 20));
-		lblSachHienCo_panelQLS.setBounds(69, 159, 740, 411);
-		panel_QLS.add(lblSachHienCo_panelQLS);
-		
 		JPanel panelDieuKhien = new JPanel();
-		panelDieuKhien.setBounds(845, 36, 374, 534);
+		panelDieuKhien.setBounds(845, 36, 374, 540);
 		panel_QLS.add(panelDieuKhien);
 		panelDieuKhien.setLayout(null);
 		
 		JLabel lblTimKiem_panelDieuKhien = new JLabel("Tìm kiếm");
-		lblTimKiem_panelDieuKhien.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblTimKiem_panelDieuKhien.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblTimKiem_panelDieuKhien.setBounds(10, 10, 103, 43);
 		panelDieuKhien.add(lblTimKiem_panelDieuKhien);
 		
-		txtLoc = new JTextField();
-		txtLoc.setFont(new Font("Calibri", Font.PLAIN, 14));
-		txtLoc.setBounds(43, 63, 291, 46);
-		panelDieuKhien.add(txtLoc);
-		txtLoc.setColumns(10);
+		txtTimKiem_panelDieuKhien = new JTextField();
+		txtTimKiem_panelDieuKhien.setFont(new Font("Calibri", Font.PLAIN, 14));
+		txtTimKiem_panelDieuKhien.setBounds(40, 63, 294, 36);
+		panelDieuKhien.add(txtTimKiem_panelDieuKhien);
+		txtTimKiem_panelDieuKhien.setColumns(10);
 		
 		JLabel lblDK_panelDieuKhien = new JLabel("Điều khiển");
-		lblDK_panelDieuKhien.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblDK_panelDieuKhien.setBounds(10, 191, 103, 43);
+		lblDK_panelDieuKhien.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblDK_panelDieuKhien.setBounds(10, 182, 134, 43);
 		panelDieuKhien.add(lblDK_panelDieuKhien);
 		
-		JLabel lblThongTinSach_panelDieuKhien = new JLabel("Thông tin sách ở đây");
-		lblThongTinSach_panelDieuKhien.setBounds(47, 244, 287, 257);
-		panelDieuKhien.add(lblThongTinSach_panelDieuKhien);
+		JComboBox cbxLoc_panelDieuKhien = new JComboBox();
+		cbxLoc_panelDieuKhien.setModel(new DefaultComboBoxModel(new String[] {"rfdrg", "uyhggh"}));
+		cbxLoc_panelDieuKhien.setOpaque(true);
+		cbxLoc_panelDieuKhien.setBounds(40, 124, 294, 36);
+		panelDieuKhien.add(cbxLoc_panelDieuKhien);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(43, 135, 291, 43);
-		panelDieuKhien.add(comboBox);
+		JPanel panelCTS = new JPanel();
+		panelCTS.setBounds(10, 223, 354, 307);
+		panelDieuKhien.add(panelCTS);
+		panelCTS.setLayout(null);
 		
-		JPanel panel_Nut = new JPanel();
-		panel_Nut.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_Nut.setBounds(69, 36, 740, 76);
-		panel_QLS.add(panel_Nut);
-		panel_Nut.setLayout(null);
+		JButton btnSM_panelCTS = new JButton("Sách Mới");
+		btnSM_panelCTS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnSM_panelCTS.setBounds(0, 280, 105, 27);
+		panelCTS.add(btnSM_panelCTS);
+		
+		JLabel imgSach_panelCTS = new JLabel("New label");
+		imgSach_panelCTS.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		imgSach_panelCTS.setBounds(10, 10, 234, 93);
+		panelCTS.add(imgSach_panelCTS);
+		
+		JButton btnSS_panelCTS = new JButton("Sửa Sách");
+		btnSS_panelCTS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnSS_panelCTS.setBounds(126, 280, 105, 27);
+		panelCTS.add(btnSS_panelCTS);
+		
+		JButton btnXS_panelCTS = new JButton("Xóa Sách");
+		btnXS_panelCTS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnXS_panelCTS.setBounds(249, 280, 105, 27);
+		panelCTS.add(btnXS_panelCTS);
+		
+		JLabel lblMaSach_panelCTS = new JLabel("Mã Sách");
+		lblMaSach_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblMaSach_panelCTS.setBounds(0, 113, 60, 20);
+		panelCTS.add(lblMaSach_panelCTS);
+		
+		JLabel lblTenSach_panelCTS = new JLabel("Tên Sách");
+		lblTenSach_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblTenSach_panelCTS.setBounds(0, 168, 60, 20);
+		panelCTS.add(lblTenSach_panelCTS);
+		
+		JLabel lblTacGia_panelCTS = new JLabel("Tác Giả");
+		lblTacGia_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblTacGia_panelCTS.setBounds(0, 225, 60, 20);
+		panelCTS.add(lblTacGia_panelCTS);
+		
+		txtMaSach_panelCTS = new JTextField();
+		txtMaSach_panelCTS.setBounds(25, 133, 156, 30);
+		panelCTS.add(txtMaSach_panelCTS);
+		txtMaSach_panelCTS.setColumns(10);
+		
+		txtTenSach_panelCTS = new JTextField();
+		txtTenSach_panelCTS.setBounds(25, 185, 156, 30);
+		panelCTS.add(txtTenSach_panelCTS);
+		txtTenSach_panelCTS.setColumns(10);
+		
+		txtTacGia_panelCTS = new JTextField();
+		txtTacGia_panelCTS.setBounds(25, 240, 156, 30);
+		panelCTS.add(txtTacGia_panelCTS);
+		txtTacGia_panelCTS.setColumns(10);
+		
+		JComboBox cbxMaLS_panelCTS = new JComboBox();
+		cbxMaLS_panelCTS.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbxMaLS_panelCTS.setModel(new DefaultComboBoxModel(new String[] {"2023", "2022", "2021", "2020", "2019"}));
+		cbxMaLS_panelCTS.setBounds(254, 57, 90, 32);
+		panelCTS.add(cbxMaLS_panelCTS);
+		
+		JLabel lblMaLS_panelCTS = new JLabel("Mã Loại Sách");
+		lblMaLS_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblMaLS_panelCTS.setBounds(254, 20, 90, 27);
+		panelCTS.add(lblMaLS_panelCTS);
+		
+		JLabel lblTaiBan_panelCTS = new JLabel("Tái Bản");
+		lblTaiBan_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblTaiBan_panelCTS.setBounds(209, 113, 60, 20);
+		panelCTS.add(lblTaiBan_panelCTS);
+		
+		JLabel lblSoLuong_panelCTS = new JLabel("Số Lượng");
+		lblSoLuong_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblSoLuong_panelCTS.setBounds(209, 168, 60, 20);
+		panelCTS.add(lblSoLuong_panelCTS);
+		
+		JLabel lblNamXuatBan_panelCTS = new JLabel("Năm Xuất Bản");
+		lblNamXuatBan_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblNamXuatBan_panelCTS.setBounds(209, 225, 75, 20);
+		panelCTS.add(lblNamXuatBan_panelCTS);
+		
+		txtTaiBan_panelCTS = new JTextField();
+		txtTaiBan_panelCTS.setBounds(235, 133, 96, 30);
+		panelCTS.add(txtTaiBan_panelCTS);
+		txtTaiBan_panelCTS.setColumns(10);
+		
+		txtSoLuong_panelCTS = new JTextField();
+		txtSoLuong_panelCTS.setBounds(235, 185, 96, 30);
+		panelCTS.add(txtSoLuong_panelCTS);
+		txtSoLuong_panelCTS.setColumns(10);
+		
+		txtNamXuatBan_panelCTS = new JTextField();
+		txtNamXuatBan_panelCTS.setBounds(235, 240, 96, 30);
+		panelCTS.add(txtNamXuatBan_panelCTS);
+		txtNamXuatBan_panelCTS.setColumns(10);
+		
+		JPanel panelNut = new JPanel();
+		panelNut.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelNut.setBounds(69, 36, 740, 61);
+		panel_QLS.add(panelNut);
+		panelNut.setLayout(null);
 		
 		JLabel lblSach_panelNut = new JLabel("Sách");
-		lblSach_panelNut.setBounds(10, 7, 146, 59);
-		panel_Nut.add(lblSach_panelNut);
+		lblSach_panelNut.setForeground(new Color(255, 255, 255));
+		lblSach_panelNut.setBackground(new Color(27, 161, 226));
+		lblSach_panelNut.setOpaque(true);
+		lblSach_panelNut.setBounds(0, 0, 146, 61);
+		panelNut.add(lblSach_panelNut);
 		lblSach_panelNut.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSach_panelNut.setFont(new Font("Calibri", Font.PLAIN, 24));
+		lblSach_panelNut.setFont(new Font("Arial", Font.BOLD, 24));
 		
 		JLabel lblLoaiSach_panelNut = new JLabel("Quản Lý Sách");
-		lblLoaiSach_panelNut.setBounds(166, 7, 131, 59);
-		panel_Nut.add(lblLoaiSach_panelNut);
+		lblLoaiSach_panelNut.setBounds(166, 0, 189, 61);
+		panelNut.add(lblLoaiSach_panelNut);
 		lblLoaiSach_panelNut.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLoaiSach_panelNut.setFont(new Font("Calibri", Font.PLAIN, 24));
+		lblLoaiSach_panelNut.setFont(new Font("Arial", Font.BOLD, 24));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(69, 117, 740, 459);
+		panel_QLS.add(scrollPane);
+		
+		jblQuanLySach = new JTable();
+		jblQuanLySach.setFont(new Font("Arial", Font.PLAIN, 16));
+		jblQuanLySach.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"M\u00E3 S\u00E1ch", "T\u00EAn S\u00E1ch", "T\u00E1c Gi\u1EA3", "S\u1ED1 L\u1EA7n T\u00E1i B\u1EA3n ", "N\u0103m Xu\u1EA5t B\u1EA3n", "S\u1ED1 L\u01B0\u1EE3ng ", "M\u00E3 Lo\u1EA1i S\u00E1ch"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane.setViewportView(jblQuanLySach);
 		
 		// bat dau code
 		
