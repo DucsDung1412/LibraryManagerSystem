@@ -15,12 +15,39 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 import view.registerView;
+import model.*;
+import dao.*;
 
 public class controllerRegister implements ActionListener {
 	private registerView v_reg;
 
 	public controllerRegister(registerView v_reg) {
 		this.v_reg = v_reg;
+	}
+
+	public void hienPass() {
+		this.v_reg.btnAnPass_panelRegister.setVisible(true);
+		this.v_reg.btnHienPass_panelRegister.setVisible(false);
+		this.v_reg.txtPass_panelRegister.setEchoChar((char) 0);
+	}
+
+	public void anPass() {
+		this.v_reg.btnHienPass_panelRegister.setVisible(true);
+		this.v_reg.btnAnPass_panelRegister.setVisible(false);
+		this.v_reg.txtPass_panelRegister.setEchoChar('*');
+	}
+
+	public void hienConfirm() {
+		this.v_reg.btnAnConfirm_panelRegister.setVisible(true);
+		this.v_reg.btnHienConfirm_panelRegister.setVisible(false);
+		this.v_reg.txtConfirm_panelRegister.setEchoChar((char) 0);
+	}
+
+	public void anConfirm() {
+		this.v_reg.btnHienConfirm_panelRegister.setVisible(true);
+		this.v_reg.btnAnConfirm_panelRegister.setVisible(false);
+		this.v_reg.txtConfirm_panelRegister.setEchoChar('*');
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -31,7 +58,7 @@ public class controllerRegister implements ActionListener {
 			return;
 		} else {
 
-			String chkName = "^[a-zA-Z]+$";
+			String chkName = "^[a-zA-Z]+" + "[0-9]*$";
 			String chkEmail = "^[A-Za-z0-9-\\+]+([A-Za-z0-9-]+)*@" + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 			// Ten
@@ -66,7 +93,8 @@ public class controllerRegister implements ActionListener {
 				JOptionPane.showMessageDialog(v_reg, "Vui lòng nhập Confirm Password");
 				return;
 			}
-			if (!new String(this.v_reg.txtPass_panelRegister.getPassword()).equals(new String(this.v_reg.txtConfirm_panelRegister.getPassword()))) {
+			if (!new String(this.v_reg.txtPass_panelRegister.getPassword())
+					.equals(new String(this.v_reg.txtConfirm_panelRegister.getPassword()))) {
 				JOptionPane.showMessageDialog(v_reg, "Password và Confirm Password không trùng khớp");
 				return;
 			}
@@ -77,64 +105,71 @@ public class controllerRegister implements ActionListener {
 				return;
 			}
 
-		}
-
-		// Ma dang ky
-
-		long maDk = Math.round((Math.random() * 8999) + 1000);
-
-		Properties p = new Properties();
-		p.put("mail.smtp.auth", "true");
-		p.put("mail.smtp.starttls.enable", "true");
-		p.put("mail.smtp.host", "smtp.gmail.com");
-		p.put("mail.smtp.port", "587");
-		p.put("mail.smtp.ssl.protocols", "TLSv1.2");
-
-		final String emailSever = "nguyenthikieutrang171116@gmail.com";
-		final String passSever = "bbhrlzwcyylhdetc";
-		String email = this.v_reg.txtEmail_panelRegister.getText();
-
-		Authenticator auth = new Authenticator() {
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(emailSever, passSever);
-			}
-		};
-
-		Session session = Session.getInstance(p, auth);
-		Message mess = new MimeMessage(session);
-
-		try {
-			mess.setFrom(new InternetAddress(emailSever));
-			mess.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-			mess.setSubject("Mã đăng ký");
-			mess.setText("Mã đăng ký của bạn là: " + maDk);
-
-			Transport.send(mess);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-		String ma = JOptionPane.showInputDialog(this.v_reg, "Vui lòng nhập mã đăng ký thông qua Email");
-		
-		try {
-
-			if (Long.valueOf(ma) == maDk) {
-				JOptionPane.showMessageDialog(this.v_reg, "Đăng ký thành công");
+			// chkEmail
+			String user = this.v_reg.txtEmail_panelRegister.getText();
+			String pass = this.v_reg.txtPass_panelRegister.getText();
+			String role = "Độc giả";
+			user u = new user(user, pass, role);
+			if (userDAO.getuserDAO().selectG(u) != null) {
+				JOptionPane.showMessageDialog(this.v_reg, "Email này đã tồn tại");
 			} else {
-				JOptionPane.showMessageDialog(this.v_reg, "Mã đăng ký không đúng\nĐăng ký thất bại");
-			}
-		} catch (NumberFormatException e1) {
-			if (ma.equals("")) {
-				JOptionPane.showMessageDialog(this.v_reg, "Vui lòng nhập mã đăng ký");
-			} else {
-				JOptionPane.showMessageDialog(this.v_reg, "Mã đăng kí gồm 4 số");
+
+				long maDk = Math.round((Math.random() * 8999) + 1000);
+
+				Properties p = new Properties();
+				p.put("mail.smtp.auth", "true");
+				p.put("mail.smtp.starttls.enable", "true");
+				p.put("mail.smtp.host", "smtp.gmail.com");
+				p.put("mail.smtp.port", "587");
+				p.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+				final String emailSever = "nguyenthikieutrang171116@gmail.com";
+				final String passSever = "bbhrlzwcyylhdetc";
+
+				Authenticator auth = new Authenticator() {
+					@Override
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(emailSever, passSever);
+					}
+				};
+
+				Session session = Session.getInstance(p, auth);
+				Message mess = new MimeMessage(session);
+
+				try {
+					mess.setFrom(new InternetAddress(emailSever));
+					mess.setRecipients(Message.RecipientType.TO, InternetAddress.parse(u.getUsername()));
+					mess.setSubject("Mã đăng ký");
+					mess.setText("Mã đăng ký của bạn là: " + maDk);
+
+					Transport.send(mess);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				String ma = JOptionPane.showInputDialog(this.v_reg, "Vui lòng nhập mã đăng ký thông qua Email");
+
+				try {
+
+					if (Long.valueOf(ma) == maDk) {
+						userDAO.getuserDAO().insertX(u);
+						JOptionPane.showMessageDialog(this.v_reg, "Đăng ký thành công");
+					} else {
+						JOptionPane.showMessageDialog(this.v_reg, "Mã đăng ký không đúng\nĐăng ký thất bại");
+					}
+				} catch (NumberFormatException e1) {
+					if (ma.equals("")) {
+						JOptionPane.showMessageDialog(this.v_reg, "Vui lòng nhập mã đăng ký");
+					} else {
+						JOptionPane.showMessageDialog(this.v_reg, "Mã đăng kí gồm 4 số");
+					}
+
+				} catch (HeadlessException e1) {
+					e1.printStackTrace();
+				}
+
 			}
 
-		} catch (HeadlessException e1) {
-			e1.printStackTrace();
 		}
-
 	}
 
 }
