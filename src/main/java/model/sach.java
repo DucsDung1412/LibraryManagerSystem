@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 public class sach {
 	@Id
 	private String maSach;
-	private String tenSach, tacGia;
+	private String tenSach, tacGia, hinhSach, moTa, nhaXuatBan;
 	private Integer namXB, soLuong, soLanTaiBan;
 	
 	@ManyToOne
@@ -23,12 +23,15 @@ public class sach {
 	@OneToMany(mappedBy = "maSach", cascade = CascadeType.ALL)
 	private List<phieuMuonSach> listPM;
 
-	public sach(String maSach, String tenSach, Integer namXB, String tacGia, Integer soLuong, Integer soLanTaiBan,
-			loaiSach maLoaiSach) {
+	public sach(String maSach, String tenSach, String tacGia, String hinhSach, String moTa, String nhaXuatBan,
+			Integer namXB, Integer soLuong, Integer soLanTaiBan, loaiSach maLoaiSach) {
 		this.maSach = maSach;
 		this.tenSach = tenSach;
-		this.namXB = namXB;
 		this.tacGia = tacGia;
+		this.hinhSach = hinhSach;
+		this.moTa = moTa;
+		this.nhaXuatBan = nhaXuatBan;
+		this.namXB = namXB;
 		this.soLuong = soLuong;
 		this.soLanTaiBan = soLanTaiBan;
 		this.maLoaiSach = maLoaiSach;
@@ -102,9 +105,28 @@ public class sach {
 		this.listPM = listPM;
 	}
 
-	@Override
-	public String toString() {
-		return "sach [maSach=" + maSach + ", tenSach=" + tenSach + ", namXB=" + namXB + ", tacGia=" + tacGia
-				+ ", soLuong=" + soLuong + ", soLanTaiBan=" + soLanTaiBan + ", maLoaiSach=" + maLoaiSach + "]";
+	public String getHinhSach() {
+		return hinhSach;
 	}
+
+	public void setHinhSach(String hinhSach) {
+		this.hinhSach = hinhSach;
+	}
+
+	public String getMoTa() {
+		return moTa;
+	}
+
+	public void setMoTa(String moTa) {
+		this.moTa = moTa;
+	}
+
+	public String getNhaXuatBan() {
+		return nhaXuatBan;
+	}
+
+	public void setNhaXuatBan(String nhaXuatBan) {
+		this.nhaXuatBan = nhaXuatBan;
+	}
+
 }

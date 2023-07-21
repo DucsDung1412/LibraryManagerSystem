@@ -1,8 +1,8 @@
 package view;
 
-
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Point;
 import java.nio.file.Paths;
 
 import javax.swing.ImageIcon;
@@ -11,20 +11,64 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextPane;
+
 import java.awt.Font;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
-import java.awt.BorderLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import controller.libraryManagerSystemController;
+import dao.sachDAO;
+import dao.userDAO;
+import model.sach;
+import model.user;
+
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JPasswordField;
+import javax.swing.border.EtchedBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class libraryManagerSystemView extends JFrame {
-
-	private JPanel contentPane;
+	// thong tin
+	public String emailLogin = "";
+	public File fileClone = new File("");
+	public String maSach = "";
+	
+	// controller
+	private libraryManagerSystemController controller = new libraryManagerSystemController(this);
+	
+	// compunate
+	public JPanel contentPane;
+	public JTextField txtEmail_panelTTCN;
+	public JTextField txtHoTen_panelTTCN;
+	public JTextField txtSDT_panelTTCN;
+	public JPasswordField txtMatKhau_panelTTCN;
+	public JLabel lblTitle_panelTTCT;
+	public JTextArea txtDiaChi_panelTTCN;
+	public ImageRound imgAvata_panelMain;
+	private JTextField txtNhaXuatBan_panelCTS;
+	public JLabel imgHome_panelTop, imgMyBook_panelTop, imgBookManager_panelTop, imgUserManager_panelTop, imgThongKe_panelTop;
+	public JPanel panel_top;
 
 	/**
 	 * Launch the application.
@@ -44,6 +88,7 @@ public class libraryManagerSystemView extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * .setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	 */
 	public libraryManagerSystemView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,28 +99,49 @@ public class libraryManagerSystemView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JPanel panel_top = new JPanel();
+
+		panel_top = new JPanel();
 		panel_top.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panel_top.setBackground(Color.WHITE);
 		panel_top.setBounds(-1, 0, this.getWidth() - 14, 148);
 		contentPane.add(panel_top);
 		panel_top.setLayout(null);
-		
+
 		// logo panelTop
 		JLabel imgLogo_panelTop = new JLabel("");
 		imgLogo_panelTop.setBounds(16, 0, 144, 138);
-		ImageIcon imgILogo_panelTop = new ImageIcon(Paths.get("src/main/java/icon/logo.png").toAbsolutePath().toString());
+		ImageIcon imgILogo_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/logo.png").toAbsolutePath().toString());
 //		ImageIcon imgILogo_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\logo.png");
 		Image imLogo_panelTop = imgILogo_panelTop.getImage();
-		Image imageLogo_panelTop = imLogo_panelTop.getScaledInstance(imgLogo_panelTop.getWidth(), imgLogo_panelTop.getHeight(), Image.SCALE_SMOOTH);
+		Image imageLogo_panelTop = imLogo_panelTop.getScaledInstance(imgLogo_panelTop.getWidth(),
+				imgLogo_panelTop.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconLogo_panelTop = new ImageIcon(imageLogo_panelTop);
 		imgLogo_panelTop.setIcon(imageIconLogo_panelTop);
 		panel_top.add(imgLogo_panelTop);
-		
-		
+
 		// Home
-		JLabel imgHome_panelTop = new JLabel("Home");
+		imgHome_panelTop = new JLabel("Home");
+		imgHome_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				imgHome_panelTop.setBackground(new Color(255, 255, 255));
+				imgHome_panelTop.setOpaque(true);
+				
+				imgMyBook_panelTop.setBackground(new Color(244, 244, 244));
+				imgMyBook_panelTop.setOpaque(false);
+				
+				imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgBookManager_panelTop.setOpaque(false);
+				
+				imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgUserManager_panelTop.setOpaque(false);
+				
+				imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+				imgThongKe_panelTop.setOpaque(false);
+			}
+		});
+		imgHome_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgHome_panelTop.setBackground(new Color(255, 255, 255));
 		imgHome_panelTop.setOpaque(true);
 		imgHome_panelTop.setHorizontalAlignment(SwingConstants.CENTER);
@@ -83,74 +149,120 @@ public class libraryManagerSystemView extends JFrame {
 		imgHome_panelTop.setBounds(276, 0, 74, 109);
 		imgHome_panelTop.setVerticalTextPosition(JLabel.BOTTOM);
 		imgHome_panelTop.setHorizontalTextPosition(JLabel.CENTER);
-		ImageIcon imgIHome_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIHome_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIHome_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_home_setting.png");
 		Image imHome_panelTop = imgIHome_panelTop.getImage();
 		Image imageHome_panelTop = imHome_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		ImageIcon imageIconHome_panelTop = new ImageIcon(imageHome_panelTop);
 		imgHome_panelTop.setIcon(imageIconHome_panelTop);
 		panel_top.add(imgHome_panelTop);
-		
+
 		// Sach cua toi
-		JLabel imgMyBook_panelTop = new JLabel("Sách của tôi");
+		imgMyBook_panelTop = new JLabel("Sách của tôi");
+		imgMyBook_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				imgHome_panelTop.setBackground(new Color(244, 244, 244));
+				imgHome_panelTop.setOpaque(false);
+				
+				imgMyBook_panelTop.setBackground(new Color(255, 255, 255));
+				imgMyBook_panelTop.setOpaque(true);
+				
+				imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgBookManager_panelTop.setOpaque(false);
+				
+				imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgUserManager_panelTop.setOpaque(false);
+				
+				imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+				imgThongKe_panelTop.setOpaque(false);
+			}
+		});
+		imgMyBook_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgMyBook_panelTop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		imgMyBook_panelTop.setHorizontalTextPosition(SwingConstants.CENTER);
 		imgMyBook_panelTop.setHorizontalAlignment(SwingConstants.CENTER);
 		imgMyBook_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgMyBook_panelTop.setBounds(370, 0, 118, 109);
-		ImageIcon imgIMyBook_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_my_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIMyBook_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/icon_my_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIMyBook_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_my_setting.png");
 		Image imMyBook_panelTop = imgIMyBook_panelTop.getImage();
 		Image imageMyBook_panelTop = imMyBook_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		ImageIcon imageIconMyBook_panelTop = new ImageIcon(imageMyBook_panelTop);
 		imgMyBook_panelTop.setIcon(imageIconMyBook_panelTop);
 		panel_top.add(imgMyBook_panelTop);
-		
+
 		// Quan ly sach
-		JLabel imgBookManager_panelTop = new JLabel("Quản lý sách");
+		imgBookManager_panelTop = new JLabel("Quản lý sách");
+		imgBookManager_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseQLSach();
+			}
+		});
+		imgBookManager_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgBookManager_panelTop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		imgBookManager_panelTop.setHorizontalTextPosition(SwingConstants.CENTER);
 		imgBookManager_panelTop.setHorizontalAlignment(SwingConstants.CENTER);
 		imgBookManager_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgBookManager_panelTop.setBounds(508, 0, 118, 109);
-		ImageIcon imgIBookManager_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_book_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBookManager_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/icon_book_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIBookManager_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_book_setting.png");
 		Image imBookManager_panelTop = imgIBookManager_panelTop.getImage();
 		Image imageBookManager_panelTop = imBookManager_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		ImageIcon imageIconBookManager_panelTop = new ImageIcon(imageBookManager_panelTop);
 		imgBookManager_panelTop.setIcon(imageIconBookManager_panelTop);
 		panel_top.add(imgBookManager_panelTop);
-		
+
 		// quan ly user
-		JLabel imgUserManager_panelTop = new JLabel("Quản lý user");
+		imgUserManager_panelTop = new JLabel("Quản lý user");
+		imgUserManager_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseQLUser();
+			}
+		});
+		imgUserManager_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgUserManager_panelTop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		imgUserManager_panelTop.setHorizontalTextPosition(SwingConstants.CENTER);
 		imgUserManager_panelTop.setHorizontalAlignment(SwingConstants.CENTER);
 		imgUserManager_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgUserManager_panelTop.setBounds(646, 0, 118, 109);
-		ImageIcon imgIUserManager_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_user_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIUserManager_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/icon_user_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIUserManager_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imUserManager_panelTop = imgIUserManager_panelTop.getImage();
 		Image imageUserManager_panelTop = imUserManager_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		ImageIcon imageIconUserManager_panelTop = new ImageIcon(imageUserManager_panelTop);
 		imgUserManager_panelTop.setIcon(imageIconUserManager_panelTop);
 		panel_top.add(imgUserManager_panelTop);
-		
+
 		// Thong ke
-		JLabel imgThongKe_panelTop = new JLabel("Thống kê");
+		imgThongKe_panelTop = new JLabel("Thống kê");
+		imgThongKe_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseThongKe();
+			}
+		});
+		imgThongKe_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgThongKe_panelTop.setVerticalTextPosition(SwingConstants.BOTTOM);
 		imgThongKe_panelTop.setHorizontalTextPosition(SwingConstants.CENTER);
 		imgThongKe_panelTop.setHorizontalAlignment(SwingConstants.CENTER);
 		imgThongKe_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgThongKe_panelTop.setBounds(784, 0, 93, 109);
-		ImageIcon imgIThongKe_panelTop = new ImageIcon(Paths.get("src/main/java/icon/icon_thongke_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIThongKe_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/icon_thongke_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIThongKe_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_thongke_setting.png");
 		Image imThongKe_panelTop = imgIThongKe_panelTop.getImage();
 		Image imageThongKe_panelTop = imThongKe_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		ImageIcon imageIconThongKe_panelTop = new ImageIcon(imageThongKe_panelTop);
 		imgThongKe_panelTop.setIcon(imageIconThongKe_panelTop);
 		panel_top.add(imgThongKe_panelTop);
-		
+
 		// separator_panelTop
 		JSeparator separator_panelTop = new JSeparator();
 		separator_panelTop.setForeground(new Color(0, 0, 0));
@@ -158,73 +270,489 @@ public class libraryManagerSystemView extends JFrame {
 		separator_panelTop.setBackground(new Color(0, 0, 0));
 		separator_panelTop.setBounds(1160, 0, 1, 109);
 		panel_top.add(separator_panelTop);
-		
+
 		// user
 		JLabel imgUser_panelTop = new JLabel("");
+		imgUser_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseTTCN();
+			}
+		});
+		imgUser_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgUser_panelTop.setBounds(1176, 14, 36, 36);
-		ImageIcon imgIUser_panelTop = new ImageIcon(Paths.get("src/main/java/icon/user.png").toAbsolutePath().toString());
+		ImageIcon imgIUser_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/user.png").toAbsolutePath().toString());
 //		ImageIcon imgIUser_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imUser_panelTop = imgIUser_panelTop.getImage();
-		Image imageUser_panelTop = imUser_panelTop.getScaledInstance(imgUser_panelTop.getWidth(), imgUser_panelTop.getHeight(), Image.SCALE_SMOOTH);
+		Image imageUser_panelTop = imUser_panelTop.getScaledInstance(imgUser_panelTop.getWidth(),
+				imgUser_panelTop.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconUser_panelTop = new ImageIcon(imageUser_panelTop);
 		imgUser_panelTop.setIcon(imageIconUser_panelTop);
 		panel_top.add(imgUser_panelTop);
-		
+
 		// noti
 		JLabel imgNoti_panelTop = new JLabel("");
+		imgNoti_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				imgHome_panelTop.setBackground(new Color(244, 244, 244));
+				imgHome_panelTop.setOpaque(false);
+				
+				imgMyBook_panelTop.setBackground(new Color(244, 244, 244));
+				imgMyBook_panelTop.setOpaque(false);
+				
+				imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgBookManager_panelTop.setOpaque(false);
+				
+				imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgUserManager_panelTop.setOpaque(false);
+				
+				imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+				imgThongKe_panelTop.setOpaque(false);
+			}
+		});
+		imgNoti_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgNoti_panelTop.setBounds(1236, 14, 36, 36);
-		ImageIcon imgINoti_panelTop = new ImageIcon(Paths.get("src/main/java/icon/thongbao.png").toAbsolutePath().toString());
+		ImageIcon imgINoti_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/thongbao.png").toAbsolutePath().toString());
 //		ImageIcon imgINoti_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imNoti_panelTop = imgINoti_panelTop.getImage();
-		Image imageNoti_panelTop = imNoti_panelTop.getScaledInstance(imgNoti_panelTop.getWidth(), imgNoti_panelTop.getHeight(), Image.SCALE_SMOOTH);
+		Image imageNoti_panelTop = imNoti_panelTop.getScaledInstance(imgNoti_panelTop.getWidth(),
+				imgNoti_panelTop.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconNoti_panelTop = new ImageIcon(imageNoti_panelTop);
 		imgNoti_panelTop.setIcon(imageIconNoti_panelTop);
 		panel_top.add(imgNoti_panelTop);
-		
+
 		// setting
 		JLabel imgSetting_panelTop = new JLabel("");
+		imgSetting_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				imgHome_panelTop.setBackground(new Color(244, 244, 244));
+				imgHome_panelTop.setOpaque(false);
+				
+				imgMyBook_panelTop.setBackground(new Color(244, 244, 244));
+				imgMyBook_panelTop.setOpaque(false);
+				
+				imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgBookManager_panelTop.setOpaque(false);
+				
+				imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+				imgUserManager_panelTop.setOpaque(false);
+				
+				imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+				imgThongKe_panelTop.setOpaque(false);
+			}
+		});
+		imgSetting_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgSetting_panelTop.setBounds(1176, 62, 36, 36);
-		ImageIcon imgISetting_panelTop = new ImageIcon(Paths.get("src/main/java/icon/setting_banhrang.png").toAbsolutePath().toString());
+		ImageIcon imgISetting_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/setting_banhrang.png").toAbsolutePath().toString());
 //		ImageIcon imgISetting_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imSetting_panelTop = imgISetting_panelTop.getImage();
-		Image imageSetting_panelTop = imSetting_panelTop.getScaledInstance(imgSetting_panelTop.getWidth(), imgSetting_panelTop.getHeight(), Image.SCALE_SMOOTH);
+		Image imageSetting_panelTop = imSetting_panelTop.getScaledInstance(imgSetting_panelTop.getWidth(),
+				imgSetting_panelTop.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconSetting_panelTop = new ImageIcon(imageSetting_panelTop);
 		imgSetting_panelTop.setIcon(imageIconSetting_panelTop);
 		panel_top.add(imgSetting_panelTop);
-		
+
 		// exit
 		JLabel imgLogout_panelTop = new JLabel("");
+		imgLogout_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgLogout_panelTop.setBounds(1236, 62, 36, 36);
-		ImageIcon imgILogout_panelTop = new ImageIcon(Paths.get("src/main/java/icon/dangxuat.png").toAbsolutePath().toString());
+		ImageIcon imgILogout_panelTop = new ImageIcon(
+				Paths.get("src/main/java/icon/dangxuat.png").toAbsolutePath().toString());
 //		ImageIcon imgILogout_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imLogout_panelTop = imgILogout_panelTop.getImage();
-		Image imageLogout_panelTop = imLogout_panelTop.getScaledInstance(imgLogout_panelTop.getWidth(), imgLogout_panelTop.getHeight(), Image.SCALE_SMOOTH);
+		Image imageLogout_panelTop = imLogout_panelTop.getScaledInstance(imgLogout_panelTop.getWidth(),
+				imgLogout_panelTop.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconLogout_panelTop = new ImageIcon(imageLogout_panelTop);
 		imgLogout_panelTop.setIcon(imageIconLogout_panelTop);
 		panel_top.add(imgLogout_panelTop);
-		
+
 		// image background
 		JLabel imgBG_panelTop = new JLabel("");
 		imgBG_panelTop.setBackground(new Color(0, 0, 0));
 		imgBG_panelTop.setBounds(0, 0, panel_top.getWidth(), panel_top.getHeight());
-		ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
-//		ImageIcon imgIBG_panelTop = new ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\librarySys\\src\\main\\java\\icon\\main_BG1.png");
+//		ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelTop = new ImageIcon(
+				"C:\\Users\\Admin\\eclipse-workspace\\librarySys\\src\\main\\java\\icon\\main_BG1.png");
 		Image imBG_panelTop = imgIBG_panelTop.getImage();
-		Image imageBG_panelTop = imBG_panelTop.getScaledInstance(imgBG_panelTop.getWidth(), imgBG_panelTop.getHeight(), Image.SCALE_SMOOTH);
+		Image imageBG_panelTop = imBG_panelTop.getScaledInstance(imgBG_panelTop.getWidth(), imgBG_panelTop.getHeight(),
+				Image.SCALE_SMOOTH);
 		ImageIcon imageIconBG_panelTop = new ImageIcon(imageBG_panelTop);
 		imgBG_panelTop.setIcon(imageIconBG_panelTop);
 		panel_top.add(imgBG_panelTop);
-		
+
 		// Thêm panel tại đây
-		contentPane.add(panel_QuanLySach());
+		contentPane.add(panel_TTCN());
+	}
+
+	public JPanel panel_TTCN() {
+		// Find user login
+		this.emailLogin = "daoducdung2000@gmail.com";
+		user userLoginClone = new user();
+		userLoginClone.setUsername(emailLogin);
+		final user userLogin = userDAO.getuserDAO().selectG(userLoginClone);
+		
+		JPanel panel_TTCN = new JPanel();
+		panel_TTCN.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_TTCN.setBackground(new Color(255, 255, 255));
+		panel_TTCN.setBounds(-1, 158, 1286, 616);
+		panel_TTCN.setLayout(null);
+
+		// bat dau code
+
+		JPanel panel_main = new JPanel();
+		panel_main.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				txtHoTen_panelTTCN.setEditable(true);
+				txtMatKhau_panelTTCN.setEditable(true);
+				txtSDT_panelTTCN.setEditable(true);
+				txtDiaChi_panelTTCN.setEditable(true);
+			}
+		});
+		panel_main.setBackground(new Color(255, 255, 255));
+		panel_main.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_main.setBounds(60, 16, 1166, 556);
+		panel_TTCN.add(panel_main);
+		panel_main.setLayout(null);
+
+		imgAvata_panelMain = new ImageRound();
+		imgAvata_panelMain.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		imgAvata_panelMain.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.setAvataUser();
+			}
+		});
+		imgAvata_panelMain.setLocation(493, 50);
+		imgAvata_panelMain.setSize(180, 160);
+		imgAvata_panelMain.setImage(new javax.swing.ImageIcon(
+				Paths.get("src\\main\\java\\icon\\" + userLogin.getTtcn().getHinh()).toAbsolutePath().toString()));
+//		imgAvata_panelMain.setImage(new javax.swing.ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\librarySys\\src\\main\\java\\icon\\employee.png")); 
+		panel_main.add(imgAvata_panelMain);
+
+		JLabel lblTitle_panelTTCN = new JLabel("Thông tin cá nhân");
+		lblTitle_panelTTCN.setFont(new Font("Calibri", Font.BOLD, 30));
+		lblTitle_panelTTCN.setBounds(10, 10, 233, 39);
+		panel_main.add(lblTitle_panelTTCN);
+
+		JLabel lblEmail_panelTTCN = new JLabel("Email");
+		lblEmail_panelTTCN.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblEmail_panelTTCN.setBounds(50, 243, 136, 39);
+		panel_main.add(lblEmail_panelTTCN);
+
+		JLabel lblHoTen__panelTTCN = new JLabel("Họ & Tên");
+		lblHoTen__panelTTCN.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblHoTen__panelTTCN.setBounds(50, 302, 136, 39);
+		panel_main.add(lblHoTen__panelTTCN);
+
+		JLabel lblDiaChi_panelTTCN = new JLabel("Địa chỉ");
+		lblDiaChi_panelTTCN.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblDiaChi_panelTTCN.setBounds(50, 361, 136, 39);
+		panel_main.add(lblDiaChi_panelTTCN);
+
+		txtEmail_panelTTCN = new JTextField();
+		txtEmail_panelTTCN.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtEmail_panelTTCN.setBackground(new Color(255,255,255));
+		txtEmail_panelTTCN.setEditable(false);
+		txtEmail_panelTTCN.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtEmail_panelTTCN.setText(userLogin.getUsername());
+		txtEmail_panelTTCN.setBounds(195, 243, 390, 39);
+		panel_main.add(txtEmail_panelTTCN);
+		txtEmail_panelTTCN.setColumns(10);
+
+		txtHoTen_panelTTCN = new JTextField();
+		txtHoTen_panelTTCN.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtHoTen_panelTTCN.getText().equals("")) {
+					txtHoTen_panelTTCN.setText(userLogin.getUsername());
+				}
+			}
+		});
+		txtHoTen_panelTTCN.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtHoTen_panelTTCN.setBackground(new Color(255,255,255));
+		txtHoTen_panelTTCN.setEditable(false);
+		txtHoTen_panelTTCN.setText(userLogin.getTtcn().getTen());
+		txtHoTen_panelTTCN.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtHoTen_panelTTCN.setColumns(10);
+		txtHoTen_panelTTCN.setBounds(195, 302, 390, 39);
+		panel_main.add(txtHoTen_panelTTCN);
+
+		txtDiaChi_panelTTCN = new JTextArea();
+		txtDiaChi_panelTTCN.setEditable(false);
+		txtDiaChi_panelTTCN.setLineWrap(true);
+		txtDiaChi_panelTTCN.setWrapStyleWord(true);
+		txtDiaChi_panelTTCN.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtDiaChi_panelTTCN.setText(userLogin.getTtcn().getDiaChi());
+		txtDiaChi_panelTTCN.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtDiaChi_panelTTCN.setBounds(197, 368, 919, 113);
+		panel_main.add(txtDiaChi_panelTTCN);
+
+		JLabel lblMatKhau_panelTTCN = new JLabel("Mật khẩu");
+		lblMatKhau_panelTTCN.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblMatKhau_panelTTCN.setBounds(622, 243, 141, 39);
+		panel_main.add(lblMatKhau_panelTTCN);
+
+		JLabel lblSDT_panelTTCN = new JLabel("Số điện thoại");
+		lblSDT_panelTTCN.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblSDT_panelTTCN.setBounds(622, 302, 156, 39);
+		panel_main.add(lblSDT_panelTTCN);
+
+		txtSDT_panelTTCN = new JTextField();
+		txtSDT_panelTTCN.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtSDT_panelTTCN.setBackground(new Color(255,255,255));
+		txtSDT_panelTTCN.setEditable(false);
+		txtSDT_panelTTCN.setText(userLogin.getTtcn().getSoDienThoai());
+		txtSDT_panelTTCN.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtSDT_panelTTCN.setColumns(10);
+		txtSDT_panelTTCN.setBounds(788, 302, 328, 39);
+		panel_main.add(txtSDT_panelTTCN);
+
+		txtMatKhau_panelTTCN = new JPasswordField();
+		txtMatKhau_panelTTCN.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtMatKhau_panelTTCN.getText().equals("")) {
+					txtMatKhau_panelTTCN.setText(userLogin.getPassword());
+				}
+			}
+		});
+		txtMatKhau_panelTTCN.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtMatKhau_panelTTCN.setBackground(new Color(255,255,255));
+		txtMatKhau_panelTTCN.setEditable(false);
+		txtMatKhau_panelTTCN.setText(userLogin.getPassword());
+		txtMatKhau_panelTTCN.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtMatKhau_panelTTCN.setBounds(788, 243, 328, 39);
+		panel_main.add(txtMatKhau_panelTTCN);
+
+		JButton btnLuu_panelTTCN = new JButton("Lưu thay đổi");
+		btnLuu_panelTTCN.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnLuu_panelTTCN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveUser();
+			}
+		});
+		btnLuu_panelTTCN.setBackground(new Color(255,255,255));
+		btnLuu_panelTTCN.setBackground(new Color(192, 192, 192));
+		btnLuu_panelTTCN.setFocusPainted(false);
+		btnLuu_panelTTCN.setVerticalAlignment(SwingConstants.TOP);
+		btnLuu_panelTTCN.setFont(new Font("Calibri", Font.BOLD, 30));
+		btnLuu_panelTTCN.setBounds(476, 500, 213, 39);
+		panel_main.add(btnLuu_panelTTCN);
+
+		// ket thuc code
+
+		return panel_TTCN;
 	}
 	
+
+	public JScrollPane panel_TTS() {
+		// tim sach
+		sach sachClone = new sach();
+		this.maSach = "MS01";
+		sachClone.setMaSach(maSach);
+		sach sach = sachDAO.getsachDAO().selectG(sachClone);
+		
+		final JScrollPane scrollPane_TTS = new JScrollPane();
+		scrollPane_TTS.setBorder(new EmptyBorder(0, 0, 0, 0));
+		scrollPane_TTS.setBackground(new Color(255, 255, 255));
+		scrollPane_TTS.setBounds(0, 148, 1286, 616);
+
+		JPanel panel_main = new JPanel();
+		panel_main.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_main.setBackground(new Color(255, 255, 255));
+		scrollPane_TTS.setViewportView(panel_main);
+		panel_main.setPreferredSize(new Dimension(1267, 1274));
+		panel_main.setLayout(new BoxLayout(panel_main, BoxLayout.Y_AXIS));
+
+		JPanel panel_TTS = new JPanel();
+		panel_TTS.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_TTS.setBackground(new Color(255, 255, 255));
+		panel_TTS.setPreferredSize(new Dimension(1267, 4)); // Set the preferred size of panel_1
+		panel_main.add(panel_TTS);
+		panel_TTS.setLayout(null);
+		
+		
+		// panel Gioi Thieu
+		JPanel panel_GT = new JPanel();
+		panel_GT.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_GT.setBounds(66, 10, 1140, 337);
+		panel_TTS.add(panel_GT);
+		panel_GT.setLayout(null);
+
+		JLabel imgSach_panelGT = new JLabel("");
+		imgSach_panelGT.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		imgSach_panelGT.setBounds(0, 0, 1140, 268);
+//			ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelTTS = new ImageIcon(
+				"C:\\Users\\Admin\\OneDrive\\Pictures\\Screenshots\\Screenshot 2023-07-16 154106.png");
+		Image imBG_panelTTS = imgIBG_panelTTS.getImage();
+		Image imageBG_panelTTS = imBG_panelTTS.getScaledInstance(imgSach_panelGT.getWidth(),
+				imgSach_panelGT.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelTTS = new ImageIcon(imageBG_panelTTS);
+		imgSach_panelGT.setIcon(imageIconBG_panelTTS);
+		panel_GT.add(imgSach_panelGT);
+
+		JButton btnDatSach_panelGT = new JButton("Đặt sách");
+		btnDatSach_panelGT.setFocusPainted(false);
+		btnDatSach_panelGT.setForeground(new Color(255, 255, 255));
+		btnDatSach_panelGT.setBackground(new Color(27, 161, 226));
+		btnDatSach_panelGT.setFont(new Font("Arial", Font.BOLD, 24));
+		btnDatSach_panelGT.setBounds(10, 278, 144, 49);
+		panel_GT.add(btnDatSach_panelGT);
+
+		JLabel lblTitle_panelGT = new JLabel(
+				"Lập trình hướng đối tượng JAVA core dành cho người mới bắt đầu học lập trình");
+		lblTitle_panelGT.setFont(new Font("Arial", Font.PLAIN, 22));
+		lblTitle_panelGT.setBounds(164, 278, 931, 49);
+		panel_GT.add(lblTitle_panelGT);
+		
+		
+		// panel Thong tin chi tiet
+		JPanel panel_TTCT = new JPanel();
+		panel_TTCT.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_TTCT.setBackground(new Color(255, 255, 255));
+		panel_TTCT.setBounds(66, 368, 1140, 166);
+		panel_TTS.add(panel_TTCT);
+		panel_TTCT.setLayout(null);
+		
+		lblTitle_panelTTCT = new JLabel("Thông tin chi tiết");
+		lblTitle_panelTTCT.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblTitle_panelTTCT.setBounds(10, 10, 252, 33);
+		panel_TTCT.add(lblTitle_panelTTCT);
+		
+		JTextPane txtKey_panelTTCT = new JTextPane();
+		txtKey_panelTTCT.setEditable(false);
+		txtKey_panelTTCT.setBackground(new Color(238, 238, 238));
+		txtKey_panelTTCT.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtKey_panelTTCT.setText(" Nhà xuất bản\r\n\r\n Tác giả");
+		txtKey_panelTTCT.setBounds(20, 54, 202, 98);
+		panel_TTCT.add(txtKey_panelTTCT);
+
+		JTextPane txtValue_panelTTCT = new JTextPane();
+		txtValue_panelTTCT.setEditable(false);
+		txtValue_panelTTCT.setText(" Nhà Xuất Bản Lao Động\r\n\r\n Đào Đức Dũng");
+		txtValue_panelTTCT.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtValue_panelTTCT.setBackground(new Color(255, 255, 255));
+		txtValue_panelTTCT.setBounds(232, 54, 252, 98);
+		panel_TTCT.add(txtValue_panelTTCT);
+		
+		JTextPane txtValue_panelTTCT_1 = new JTextPane();
+		txtValue_panelTTCT_1.setText(" 2021\r\n Tái bản lần thứ nhất\r\n 21 cuốn");
+		txtValue_panelTTCT_1.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtValue_panelTTCT_1.setEditable(false);
+		txtValue_panelTTCT_1.setBackground(Color.WHITE);
+		txtValue_panelTTCT_1.setBounds(868, 54, 252, 98);
+		panel_TTCT.add(txtValue_panelTTCT_1);
+		
+		JTextPane txtKey_panelTTCT_1 = new JTextPane();
+		txtKey_panelTTCT_1.setText(" Năm xuất bản\r\n Số lần tái bản\r\n Số lượng còn lại");
+		txtKey_panelTTCT_1.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtKey_panelTTCT_1.setEditable(false);
+		txtKey_panelTTCT_1.setBackground(new Color(238, 238, 238));
+		txtKey_panelTTCT_1.setBounds(656, 54, 202, 98);
+		panel_TTCT.add(txtKey_panelTTCT_1);
+		
+		
+		// panel Mo ta san pham
+		JPanel panel_MTSP = new JPanel();
+		panel_MTSP.setLayout(null);
+		panel_MTSP.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_MTSP.setBackground(Color.WHITE);
+		panel_MTSP.setBounds(66, 557, 1140, 460);
+		panel_TTS.add(panel_MTSP);
+
+		JLabel lblTitle_panelMTSP = new JLabel("Mô tả sản phẩm");
+		lblTitle_panelMTSP.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblTitle_panelMTSP.setBounds(10, 10, 252, 33);
+		panel_MTSP.add(lblTitle_panelMTSP);
+
+		JTextPane txtMTSP_panelMTSP = new JTextPane();
+		txtMTSP_panelMTSP.setEditable(false);
+		txtMTSP_panelMTSP.setText(
+				"I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA");
+		txtMTSP_panelMTSP.setFont(new Font("Calibri Light", Font.PLAIN, 16));
+		txtMTSP_panelMTSP.setBackground(Color.WHITE);
+		txtMTSP_panelMTSP.setBounds(20, 40, 1092, 404);
+		panel_MTSP.add(txtMTSP_panelMTSP);
+
+		
+		// panel Danh gia
+		JPanel panel_DG = new JPanel();
+		panel_DG.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_DG.setBackground(new Color(255, 255, 255));
+		panel_DG.setBounds(66, 1042, 1140, 222);
+		panel_TTS.add(panel_DG);
+		panel_DG.setLayout(null);
+		
+		JLabel lblTitle_panelDG = new JLabel("Đánh giá - nhận xét từ đọc giả");
+		lblTitle_panelDG.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblTitle_panelDG.setBounds(10, 10, 400, 33);
+		panel_DG.add(lblTitle_panelDG);
+
+		JScrollPane scrollPane_panelDG = new JScrollPane();
+		scrollPane_panelDG.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		scrollPane_panelDG.setBounds(0, 44, 1140, 178);
+		panel_DG.add(scrollPane_panelDG);
+
+		JTextPane txtDG_panelDG = new JTextPane();
+		txtDG_panelDG.setEditable(false);
+		txtDG_panelDG.setFont(new Font("Calibri Light", Font.PLAIN, 24));
+		txtDG_panelDG.setText("asjdjasd: aksdhlkasd");
+		scrollPane_panelDG.setViewportView(txtDG_panelDG);
+
+		
+		// set scrollPane len dau
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				scrollPane_TTS.getViewport().setViewPosition(new Point(0, 0));
+			}
+		});
+
+		// ket thuc code
+
+		return scrollPane_TTS;
+	}
+	
+
 	public JPanel panel_QuanLySach() {
 		JPanel panel_QLS = new JPanel();
 		panel_QLS.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panel_QLS.setBackground(new Color(255, 255, 255));
 		panel_QLS.setBounds(0, 148, 1286, 616);
 		panel_QLS.setLayout(null);
+		
+		// bat dau code
 		
 		JPanel panelDieuKhien = new JPanel();
 		panelDieuKhien.setBounds(845, 36, 374, 540);
@@ -236,178 +764,197 @@ public class libraryManagerSystemView extends JFrame {
 		lblTimKiem_panelDieuKhien.setBounds(10, 10, 103, 43);
 		panelDieuKhien.add(lblTimKiem_panelDieuKhien);
 		
-		txtTimKiem_panelDieuKhien = new JTextField();
+		JTextField txtTimKiem_panelDieuKhien = new JTextField();
 		txtTimKiem_panelDieuKhien.setFont(new Font("Calibri", Font.PLAIN, 14));
-		txtTimKiem_panelDieuKhien.setBounds(40, 63, 294, 36);
+		txtTimKiem_panelDieuKhien.setBounds(40, 50, 294, 36);
 		panelDieuKhien.add(txtTimKiem_panelDieuKhien);
 		txtTimKiem_panelDieuKhien.setColumns(10);
 		
 		JLabel lblDK_panelDieuKhien = new JLabel("Điều khiển");
 		lblDK_panelDieuKhien.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblDK_panelDieuKhien.setBounds(10, 182, 134, 43);
+		lblDK_panelDieuKhien.setBounds(10, 157, 134, 43);
 		panelDieuKhien.add(lblDK_panelDieuKhien);
 		
 		JComboBox cbxLoc_panelDieuKhien = new JComboBox();
 		cbxLoc_panelDieuKhien.setModel(new DefaultComboBoxModel(new String[] {"rfdrg", "uyhggh"}));
 		cbxLoc_panelDieuKhien.setOpaque(true);
-		cbxLoc_panelDieuKhien.setBounds(40, 124, 294, 36);
+		cbxLoc_panelDieuKhien.setBounds(40, 111, 294, 36);
 		panelDieuKhien.add(cbxLoc_panelDieuKhien);
 		
 		JPanel panelCTS = new JPanel();
-		panelCTS.setBounds(10, 223, 354, 307);
+		panelCTS.setBounds(10, 190, 354, 340);
 		panelDieuKhien.add(panelCTS);
 		panelCTS.setLayout(null);
 		
 		JButton btnSM_panelCTS = new JButton("Sách Mới");
-		btnSM_panelCTS.setFont(new Font("Arial", Font.BOLD, 16));
-		btnSM_panelCTS.setBounds(0, 280, 105, 27);
+		btnSM_panelCTS.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSM_panelCTS.setBounds(0, 313, 105, 27);
 		panelCTS.add(btnSM_panelCTS);
 		
 		JLabel imgSach_panelCTS = new JLabel("New label");
 		imgSach_panelCTS.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		imgSach_panelCTS.setBounds(10, 10, 234, 93);
+		imgSach_panelCTS.setBounds(20, 4, 156, 93);
 		panelCTS.add(imgSach_panelCTS);
 		
-		JButton btnSS_panelCTS = new JButton("Sửa Sách");
-		btnSS_panelCTS.setFont(new Font("Arial", Font.BOLD, 16));
-		btnSS_panelCTS.setBounds(126, 280, 105, 27);
+		JButton btnSS_panelCTS = new JButton("Lưu Sách");
+		btnSS_panelCTS.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSS_panelCTS.setBounds(126, 313, 105, 27);
 		panelCTS.add(btnSS_panelCTS);
 		
 		JButton btnXS_panelCTS = new JButton("Xóa Sách");
-		btnXS_panelCTS.setFont(new Font("Arial", Font.BOLD, 16));
-		btnXS_panelCTS.setBounds(249, 280, 105, 27);
+		btnXS_panelCTS.setFont(new Font("Arial", Font.BOLD, 14));
+		btnXS_panelCTS.setBounds(249, 313, 105, 27);
 		panelCTS.add(btnXS_panelCTS);
-		
-		JLabel lblMaSach_panelCTS = new JLabel("Mã Sách");
-		lblMaSach_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblMaSach_panelCTS.setBounds(0, 113, 60, 20);
-		panelCTS.add(lblMaSach_panelCTS);
 		
 		JLabel lblTenSach_panelCTS = new JLabel("Tên Sách");
 		lblTenSach_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblTenSach_panelCTS.setBounds(0, 168, 60, 20);
+		lblTenSach_panelCTS.setBounds(0, 101, 60, 20);
 		panelCTS.add(lblTenSach_panelCTS);
 		
 		JLabel lblTacGia_panelCTS = new JLabel("Tác Giả");
 		lblTacGia_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblTacGia_panelCTS.setBounds(0, 225, 60, 20);
+		lblTacGia_panelCTS.setBounds(0, 158, 60, 20);
 		panelCTS.add(lblTacGia_panelCTS);
 		
-		txtMaSach_panelCTS = new JTextField();
-		txtMaSach_panelCTS.setBounds(25, 133, 156, 30);
+		JTextField txtMaSach_panelCTS = new JTextField();
+		txtMaSach_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtMaSach_panelCTS.setBounds(230, 21, 109, 30);
 		panelCTS.add(txtMaSach_panelCTS);
 		txtMaSach_panelCTS.setColumns(10);
 		
-		txtTenSach_panelCTS = new JTextField();
-		txtTenSach_panelCTS.setBounds(25, 185, 156, 30);
+		JTextField txtTenSach_panelCTS = new JTextField();
+		txtTenSach_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtTenSach_panelCTS.setBounds(20, 118, 156, 30);
 		panelCTS.add(txtTenSach_panelCTS);
 		txtTenSach_panelCTS.setColumns(10);
 		
-		txtTacGia_panelCTS = new JTextField();
-		txtTacGia_panelCTS.setBounds(25, 240, 156, 30);
+		JTextField txtTacGia_panelCTS = new JTextField();
+		txtTacGia_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtTacGia_panelCTS.setBounds(20, 173, 156, 30);
 		panelCTS.add(txtTacGia_panelCTS);
 		txtTacGia_panelCTS.setColumns(10);
 		
 		JComboBox cbxMaLS_panelCTS = new JComboBox();
-		cbxMaLS_panelCTS.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbxMaLS_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
 		cbxMaLS_panelCTS.setModel(new DefaultComboBoxModel(new String[] {"2023", "2022", "2021", "2020", "2019"}));
-		cbxMaLS_panelCTS.setBounds(254, 57, 90, 32);
+		cbxMaLS_panelCTS.setBounds(230, 86, 109, 32);
 		panelCTS.add(cbxMaLS_panelCTS);
 		
 		JLabel lblMaLS_panelCTS = new JLabel("Mã Loại Sách");
 		lblMaLS_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblMaLS_panelCTS.setBounds(254, 20, 90, 27);
+		lblMaLS_panelCTS.setBounds(209, 64, 90, 27);
 		panelCTS.add(lblMaLS_panelCTS);
 		
 		JLabel lblTaiBan_panelCTS = new JLabel("Tái Bản");
 		lblTaiBan_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblTaiBan_panelCTS.setBounds(209, 113, 60, 20);
+		lblTaiBan_panelCTS.setBounds(209, 128, 60, 20);
 		panelCTS.add(lblTaiBan_panelCTS);
 		
 		JLabel lblSoLuong_panelCTS = new JLabel("Số Lượng");
 		lblSoLuong_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblSoLuong_panelCTS.setBounds(209, 168, 60, 20);
+		lblSoLuong_panelCTS.setBounds(209, 183, 60, 20);
 		panelCTS.add(lblSoLuong_panelCTS);
 		
 		JLabel lblNamXuatBan_panelCTS = new JLabel("Năm Xuất Bản");
 		lblNamXuatBan_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblNamXuatBan_panelCTS.setBounds(209, 225, 75, 20);
+		lblNamXuatBan_panelCTS.setBounds(209, 240, 75, 20);
 		panelCTS.add(lblNamXuatBan_panelCTS);
 		
-		txtTaiBan_panelCTS = new JTextField();
-		txtTaiBan_panelCTS.setBounds(235, 133, 96, 30);
+		JTextField txtTaiBan_panelCTS = new JTextField();
+		txtTaiBan_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtTaiBan_panelCTS.setBounds(230, 148, 109, 30);
 		panelCTS.add(txtTaiBan_panelCTS);
 		txtTaiBan_panelCTS.setColumns(10);
 		
-		txtSoLuong_panelCTS = new JTextField();
-		txtSoLuong_panelCTS.setBounds(235, 185, 96, 30);
+		JTextField txtSoLuong_panelCTS = new JTextField();
+		txtSoLuong_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtSoLuong_panelCTS.setBounds(230, 200, 109, 30);
 		panelCTS.add(txtSoLuong_panelCTS);
 		txtSoLuong_panelCTS.setColumns(10);
 		
-		txtNamXuatBan_panelCTS = new JTextField();
-		txtNamXuatBan_panelCTS.setBounds(235, 240, 96, 30);
+		JTextField txtNamXuatBan_panelCTS = new JTextField();
+		txtNamXuatBan_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtNamXuatBan_panelCTS.setBounds(230, 255, 109, 30);
 		panelCTS.add(txtNamXuatBan_panelCTS);
 		txtNamXuatBan_panelCTS.setColumns(10);
 		
-		JPanel panelNut = new JPanel();
-		panelNut.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelNut.setBounds(69, 36, 740, 61);
-		panel_QLS.add(panelNut);
-		panelNut.setLayout(null);
+		JLabel lblMaLS_panelCTS_1 = new JLabel("Mã Sách");
+		lblMaLS_panelCTS_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblMaLS_panelCTS_1.setBounds(209, 0, 90, 27);
+		panelCTS.add(lblMaLS_panelCTS_1);
+		
+		JLabel lblNhaXuatBan_panelCTS = new JLabel("Nhà Xuất Bản");
+		lblNhaXuatBan_panelCTS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblNhaXuatBan_panelCTS.setBounds(0, 213, 90, 20);
+		panelCTS.add(lblNhaXuatBan_panelCTS);
+		
+		txtNhaXuatBan_panelCTS = new JTextField();
+		txtNhaXuatBan_panelCTS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtNhaXuatBan_panelCTS.setColumns(10);
+		txtNhaXuatBan_panelCTS.setBounds(20, 228, 156, 30);
+		panelCTS.add(txtNhaXuatBan_panelCTS);
+		
+		JButton btnMoTa_panelCTS = new JButton("Mô Tả");
+		btnMoTa_panelCTS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnMoTa_panelCTS.setBounds(46, 270, 105, 27);
+		panelCTS.add(btnMoTa_panelCTS);
+		
+		JPanel panelQLS = new JPanel();
+		panelQLS.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelQLS.setBounds(69, 36, 740, 61);
+		panel_QLS.add(panelQLS);
+		panelQLS.setLayout(null);
 		
 		JLabel lblSach_panelNut = new JLabel("Sách");
 		lblSach_panelNut.setForeground(new Color(255, 255, 255));
 		lblSach_panelNut.setBackground(new Color(27, 161, 226));
 		lblSach_panelNut.setOpaque(true);
 		lblSach_panelNut.setBounds(0, 0, 146, 61);
-		panelNut.add(lblSach_panelNut);
+		panelQLS.add(lblSach_panelNut);
 		lblSach_panelNut.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSach_panelNut.setFont(new Font("Arial", Font.BOLD, 24));
 		
-		JLabel lblLoaiSach_panelNut = new JLabel("Quản Lý Sách");
-		lblLoaiSach_panelNut.setBounds(166, 0, 189, 61);
-		panelNut.add(lblLoaiSach_panelNut);
+		JLabel lblLoaiSach_panelNut = new JLabel("Loại Sách");
+		lblLoaiSach_panelNut.setBounds(166, 0, 169, 61);
+		panelQLS.add(lblLoaiSach_panelNut);
 		lblLoaiSach_panelNut.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLoaiSach_panelNut.setFont(new Font("Arial", Font.BOLD, 24));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(69, 117, 740, 459);
-		panel_QLS.add(scrollPane);
+		JScrollPane scrollPane_QLS = new JScrollPane();
+		scrollPane_QLS.setBounds(69, 117, 740, 459);
+		panel_QLS.add(scrollPane_QLS);
 		
-		jblQuanLySach = new JTable();
-		jblQuanLySach.setFont(new Font("Arial", Font.PLAIN, 16));
-		jblQuanLySach.setModel(new DefaultTableModel(
+		JTable lblQuanLySach = new JTable();
+		lblQuanLySach.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblQuanLySach.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"M\u00E3 S\u00E1ch", "T\u00EAn S\u00E1ch", "T\u00E1c Gi\u1EA3", "S\u1ED1 L\u1EA7n T\u00E1i B\u1EA3n ", "N\u0103m Xu\u1EA5t B\u1EA3n", "S\u1ED1 L\u01B0\u1EE3ng ", "M\u00E3 Lo\u1EA1i S\u00E1ch"
+				"M\u00E3 S\u00E1ch", "T\u00EAn S\u00E1ch", "T\u00E1c Gi\u1EA3", "Nh\u00E0 Xu\u1EA5t B\u1EA3n", "S\u1ED1 L\u1EA7n T\u00E1i B\u1EA3n ", "N\u0103m Xu\u1EA5t B\u1EA3n", "S\u1ED1 L\u01B0\u1EE3ng ", "M\u00E3 Lo\u1EA1i S\u00E1ch"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false
+				false, false, false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
-		scrollPane.setViewportView(jblQuanLySach);
-		
-		// bat dau code
-		
-		
-		
-		
+		scrollPane_QLS.setViewportView(lblQuanLySach);
 		
 		// ket thuc code
 		
 		return panel_QLS;
 	}
+	
 	public JPanel panel_QuanLyUser() {
 		JPanel panel_QLUS = new JPanel();
 		panel_QLUS.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panel_QLUS.setBackground(new Color(255, 255, 255));
 		panel_QLUS.setBounds(0, 148, 1286, 616);
 		panel_QLUS.setLayout(null);
+		
+		// bat dau code
 		
 		JPanel panelDieuKhienUser = new JPanel();
 		panelDieuKhienUser.setBounds(845, 36, 374, 540);
@@ -442,17 +989,17 @@ public class libraryManagerSystemView extends JFrame {
 		panelDieuKhienUser.add(panelCTUS);
 		panelCTUS.setLayout(null);
 		
-		JButton btnUserNew_panelCTUS = new JButton("User Mới");
+		JButton btnUserNew_panelCTUS = new JButton("Làm mới");
 		btnUserNew_panelCTUS.setFont(new Font("Arial", Font.BOLD, 16));
 		btnUserNew_panelCTUS.setBounds(0, 280, 105, 27);
 		panelCTUS.add(btnUserNew_panelCTUS);
 		
 		JLabel imgUser_panelCTUS = new JLabel("New label");
 		imgUser_panelCTUS.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		imgUser_panelCTUS.setBounds(10, 10, 234, 93);
+		imgUser_panelCTUS.setBounds(20, 10, 180, 92);
 		panelCTUS.add(imgUser_panelCTUS);
 		
-		JButton btnSuaUser_panelCTUS = new JButton("Sửa User");
+		JButton btnSuaUser_panelCTUS = new JButton("Lưu User");
 		btnSuaUser_panelCTUS.setFont(new Font("Arial", Font.BOLD, 16));
 		btnSuaUser_panelCTUS.setBounds(126, 280, 105, 27);
 		panelCTUS.add(btnSuaUser_panelCTUS);
@@ -480,17 +1027,17 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblHoten_panelCTUS);
 		
 		JTextField txtEmail_panelCTUS = new JTextField();
-		txtEmail_panelCTUS.setBounds(25, 133, 306, 30);
+		txtEmail_panelCTUS.setBounds(20, 133, 314, 30);
 		panelCTUS.add(txtEmail_panelCTUS);
 		txtEmail_panelCTUS.setColumns(10);
 		
 		JTextField txtPassword_panelCTUS = new JTextField();
-		txtPassword_panelCTUS.setBounds(25, 185, 306, 30);
+		txtPassword_panelCTUS.setBounds(20, 185, 314, 30);
 		panelCTUS.add(txtPassword_panelCTUS);
 		txtPassword_panelCTUS.setColumns(10);
 		
 		JTextField txtHoten_panelCTUS = new JTextField();
-		txtHoten_panelCTUS.setBounds(25, 240, 156, 30);
+		txtHoten_panelCTUS.setBounds(20, 240, 156, 30);
 		panelCTUS.add(txtHoten_panelCTUS);
 		txtHoten_panelCTUS.setColumns(10);
 		
@@ -501,9 +1048,14 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblSDT_panelCTUS);
 		
 		JTextField txtSDT_panelCTUS = new JTextField();
-		txtSDT_panelCTUS.setBounds(235, 240, 96, 30);
+		txtSDT_panelCTUS.setBounds(220, 240, 114, 30);
 		panelCTUS.add(txtSDT_panelCTUS);
 		txtSDT_panelCTUS.setColumns(10);
+		
+		JButton btnSuaUser_panelCTUS_1 = new JButton("Xem thêm");
+		btnSuaUser_panelCTUS_1.setFont(new Font("Arial", Font.BOLD, 16));
+		btnSuaUser_panelCTUS_1.setBounds(218, 46, 116, 27);
+		panelCTUS.add(btnSuaUser_panelCTUS_1);
 		
 		JPanel panelNutUser = new JPanel();
 		panelNutUser.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -515,13 +1067,13 @@ public class libraryManagerSystemView extends JFrame {
 		lblUser_panelNutUser.setForeground(new Color(255, 255, 255));
 		lblUser_panelNutUser.setBackground(new Color(27, 161, 226));
 		lblUser_panelNutUser.setOpaque(true);
-		lblUser_panelNutUser.setBounds(0, 0, 146, 61);
+		lblUser_panelNutUser.setBounds(0, 0, 136, 61);
 		panelNutUser.add(lblUser_panelNutUser);
 		lblUser_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUser_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
 		
 		JLabel lblDatSach_panelNutUser = new JLabel("Đặt sách");
-		lblDatSach_panelNutUser.setBounds(145, 0, 130, 61);
+		lblDatSach_panelNutUser.setBounds(151, 0, 136, 61);
 		panelNutUser.add(lblDatSach_panelNutUser);
 		lblDatSach_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDatSach_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
@@ -529,65 +1081,242 @@ public class libraryManagerSystemView extends JFrame {
 		JLabel lblYeuCau_panelNutUser = new JLabel("Yêu cầu");
 		lblYeuCau_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
 		lblYeuCau_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
-		lblYeuCau_panelNutUser.setBounds(278, 0, 95, 61);
+		lblYeuCau_panelNutUser.setBounds(302, 0, 136, 61);
 		panelNutUser.add(lblYeuCau_panelNutUser);
 		
 		JLabel lblDangMuon_panelNutUser = new JLabel("Đang mượn");
 		lblDangMuon_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDangMuon_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
-		lblDangMuon_panelNutUser.setBounds(383, 0, 146, 61);
+		lblDangMuon_panelNutUser.setBounds(453, 0, 136, 61);
 		panelNutUser.add(lblDangMuon_panelNutUser);
 		
 		JLabel lblQuaHan_panelNutUser = new JLabel("Quá hạn");
 		lblQuaHan_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuaHan_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
-		lblQuaHan_panelNutUser.setBounds(532, 4, 99, 57);
+		lblQuaHan_panelNutUser.setBounds(604, 0, 136, 61);
 		panelNutUser.add(lblQuaHan_panelNutUser);
 		
 		JScrollPane scrollPaneUser = new JScrollPane();
-		scrollPaneUser.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//		scrollPaneUser.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneUser.setBounds(69, 117, 740, 459);
 		panel_QLUS.add(scrollPaneUser);
 		
-		JTable jblQuanLyUser = new JTable();
-		jblQuanLyUser.setFont(new Font("Arial", Font.PLAIN, 16));
-		jblQuanLyUser.setModel(new DefaultTableModel(
+		JTable lblQuanLyUser = new JTable();
+		lblQuanLyUser.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblQuanLyUser.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Email", "Mật khẩu", "Họ và tên", "Số điện thoại"
 			}
 		));
-		scrollPaneUser.setViewportView(jblQuanLyUser);
-		
-		// bat dau code
-		
-		
-		
-		
+		scrollPaneUser.setViewportView(lblQuanLyUser);
 		
 		// ket thuc code
 		
 		return panel_QLUS;
 	}	
-		
-	/* 
 	
-	public JPanel panel() {
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 148, 1286, 616);
-		panel.setLayout(null);
+	public JPanel panel_ThongKe() {
+		JPanel panel_ThongKe = new JPanel();
+		panel_ThongKe.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_ThongKe.setBackground(new Color(255, 255, 255));
+		panel_ThongKe.setBounds(0, 148, 1286, 616);
+		panel_ThongKe.setLayout(null);
 		
 		// bat dau code
 		
+		JPanel panel_TongSoNguoiDung = new JPanel();
+		panel_TongSoNguoiDung.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_TongSoNguoiDung.setBounds(80, 60, 291, 204);
+		panel_ThongKe.add(panel_TongSoNguoiDung);
+		panel_TongSoNguoiDung.setLayout(null);
+		
+
+		JLabel lblTitle_panelTongSoNguoiDung = new JLabel("Tổng số người dùng");
+		lblTitle_panelTongSoNguoiDung.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelTongSoNguoiDung.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelTongSoNguoiDung.setForeground(new Color(255, 255, 255));
+		lblTitle_panelTongSoNguoiDung.setBounds(36, 26, 218, 44);
+		panel_TongSoNguoiDung.add(lblTitle_panelTongSoNguoiDung);
+		
+		JLabel lblTong__panelTongSoNguoiDung = new JLabel("100 người");
+		lblTong__panelTongSoNguoiDung.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong__panelTongSoNguoiDung.setForeground(Color.WHITE);
+		lblTong__panelTongSoNguoiDung.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong__panelTongSoNguoiDung.setBounds(36, 70, 218, 44);
+		panel_TongSoNguoiDung.add(lblTong__panelTongSoNguoiDung);
+		
+		JLabel imgBG_panelTongSoNguoiDung = new JLabel("");
+		imgBG_panelTongSoNguoiDung.setBounds(0, 0, panel_TongSoNguoiDung.getWidth(), panel_TongSoNguoiDung.getHeight());
+//		ImageIcon imgITongSoNguoiDung_panelThongKe = new ImageIcon(
+//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelThongKe = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoNguoiDung.jpg");
+		Image imBG_panelThongKe = imgIBG_panelThongKe.getImage();
+		Image imageBG_panelThongKe = imBG_panelThongKe.getScaledInstance(imgBG_panelTongSoNguoiDung.getWidth(), imgBG_panelTongSoNguoiDung.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelThongKe = new ImageIcon(imageBG_panelThongKe);
+		imgBG_panelTongSoNguoiDung.setIcon(imageIconBG_panelThongKe);
+		panel_TongSoNguoiDung.add(imgBG_panelTongSoNguoiDung);
 		
 		
+		JPanel panel_TongSoSach = new JPanel();
+		panel_TongSoSach.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_TongSoSach.setBounds(498, 60, 291, 204);
+		panel_ThongKe.add(panel_TongSoSach);
+		panel_TongSoSach.setLayout(null);
+		
+		JLabel lblTong_panelTongSoSach = new JLabel("1000 cuốn");
+		lblTong_panelTongSoSach.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelTongSoSach.setForeground(Color.WHITE);
+		lblTong_panelTongSoSach.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelTongSoSach.setBounds(36, 70, 218, 44);
+		panel_TongSoSach.add(lblTong_panelTongSoSach);
+		
+		JLabel lblTitle_panelTongSoSach = new JLabel("Tổng số sách");
+		lblTitle_panelTongSoSach.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelTongSoSach.setForeground(Color.WHITE);
+		lblTitle_panelTongSoSach.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelTongSoSach.setBounds(36, 26, 218, 44);
+		panel_TongSoSach.add(lblTitle_panelTongSoSach);
+		
+		JLabel imgBG_panelTongSoSach = new JLabel("");
+		imgBG_panelTongSoSach.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelTongSoSach = new ImageIcon(
+//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelTongSoSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoSach.jpg");
+		Image imBG_panelTongSoSach = imgIBG_panelTongSoSach.getImage();
+		Image imageBG_panelTongSoSach = imBG_panelTongSoSach.getScaledInstance(imgBG_panelTongSoSach.getWidth(), imgBG_panelTongSoSach.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelTongSoSach = new ImageIcon(imageBG_panelTongSoSach);
+		imgBG_panelTongSoSach.setIcon(imageIconBG_panelTongSoSach);	
+		panel_TongSoSach.add(imgBG_panelTongSoSach);
+		
+		
+		JPanel panel_DoPhoBienCuaSach = new JPanel();
+		panel_DoPhoBienCuaSach.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_DoPhoBienCuaSach.setBounds(915, 60, 291, 204);
+		panel_ThongKe.add(panel_DoPhoBienCuaSach);
+		panel_DoPhoBienCuaSach.setLayout(null);
+		
+		JLabel lblTitle_panelDoPhoBienCuaSach = new JLabel("Độ phổ biến của sách");
+		lblTitle_panelDoPhoBienCuaSach.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelDoPhoBienCuaSach.setForeground(Color.WHITE);
+		lblTitle_panelDoPhoBienCuaSach.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelDoPhoBienCuaSach.setBounds(10, 26, 271, 44);
+		panel_DoPhoBienCuaSach.add(lblTitle_panelDoPhoBienCuaSach);
+		
+		JButton btnXemChiTiet_panelDoPhoBienCuaSach = new JButton("Xem chi tiết");
+		btnXemChiTiet_panelDoPhoBienCuaSach.setFocusPainted(false);
+		btnXemChiTiet_panelDoPhoBienCuaSach.setFont(new Font("Arial", Font.BOLD, 18));
+		btnXemChiTiet_panelDoPhoBienCuaSach.setBounds(74, 70, 143, 44);
+		panel_DoPhoBienCuaSach.add(btnXemChiTiet_panelDoPhoBienCuaSach);
+		
+		JLabel imgBG_panelDoPhoBienCuaSach = new JLabel("");
+		imgBG_panelDoPhoBienCuaSach.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachDangMuon  = new ImageIcon(
+//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelDoPhoBienCuaSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\doPhoBienCuaSachjpg.jpg");
+		Image imBG_panelDoPhoBienCuaSach = imgIBG_panelDoPhoBienCuaSach.getImage();
+		Image imageBG_panelDoPhoBienCuaSach = imBG_panelDoPhoBienCuaSach.getScaledInstance(imgBG_panelDoPhoBienCuaSach.getWidth(), imgBG_panelDoPhoBienCuaSach.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelDoPhoBienCuaSach = new ImageIcon(imageBG_panelDoPhoBienCuaSach);
+		imgBG_panelDoPhoBienCuaSach.setIcon(imageIconBG_panelDoPhoBienCuaSach);	
+		panel_DoPhoBienCuaSach.add(imgBG_panelDoPhoBienCuaSach);
+		
+		
+		JPanel panel_SachQuaHan = new JPanel();
+		panel_SachQuaHan.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_SachQuaHan.setBounds(915, 342, 291, 204);
+		panel_ThongKe.add(panel_SachQuaHan);
+		panel_SachQuaHan.setLayout(null);
+		
+		JLabel lblTitle_panelSachQuaHan = new JLabel("Tống số sách quá hạn");
+		lblTitle_panelSachQuaHan.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelSachQuaHan.setForeground(Color.WHITE);
+		lblTitle_panelSachQuaHan.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelSachQuaHan.setBounds(10, 26, 271, 44);
+		panel_SachQuaHan.add(lblTitle_panelSachQuaHan);
+		
+		JLabel lblTong_panelSachQuaHan = new JLabel("100 cuốn");
+		lblTong_panelSachQuaHan.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelSachQuaHan.setForeground(Color.WHITE);
+		lblTong_panelSachQuaHan.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelSachQuaHan.setBounds(36, 70, 218, 44);
+		panel_SachQuaHan.add(lblTong_panelSachQuaHan);
+		
+		JLabel imgBG_panelSachQuaHan = new JLabel("");
+		imgBG_panelSachQuaHan.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon(
+//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachQuaHanjpg.jpg");
+		Image imBG_panelSachQuaHan  = imgIBG_panelSachQuaHan.getImage();
+		Image imageBG_panelSachQuaHan  = imBG_panelSachQuaHan.getScaledInstance(imgBG_panelSachQuaHan.getWidth(), imgBG_panelSachQuaHan.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelSachQuaHan  = new ImageIcon(imageBG_panelSachQuaHan);
+		imgBG_panelSachQuaHan.setIcon(imageIconBG_panelSachQuaHan);	
+		panel_SachQuaHan.add(imgBG_panelSachQuaHan);
+		
+		JPanel panel_SachDangDat = new JPanel();
+		panel_SachDangDat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_SachDangDat.setBounds(498, 342, 291, 204);
+		panel_ThongKe.add(panel_SachDangDat);
+		panel_SachDangDat.setLayout(null);
+		
+		JLabel lblTitle_panelSachDangDat = new JLabel("Tống số sách đang đặt");
+		lblTitle_panelSachDangDat.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelSachDangDat.setForeground(Color.WHITE);
+		lblTitle_panelSachDangDat.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelSachDangDat.setBounds(10, 26, 271, 44);
+		panel_SachDangDat.add(lblTitle_panelSachDangDat);
+		
+		JLabel lblTong_panelSachDangDat = new JLabel("100 cuốn");
+		lblTong_panelSachDangDat.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelSachDangDat.setForeground(Color.WHITE);
+		lblTong_panelSachDangDat.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelSachDangDat.setBounds(36, 70, 218, 44);
+		panel_SachDangDat.add(lblTong_panelSachDangDat);
+		
+		JLabel imgBG_panelSachDangDat = new JLabel("");
+		imgBG_panelSachDangDat.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachDangDat = new ImageIcon(
+//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelSachDangDat  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangDatjpg.jpg");
+		Image imBG_panelSachDangDat  = imgIBG_panelSachDangDat.getImage();
+		Image imageBG_panelSachDangDat  = imBG_panelSachDangDat.getScaledInstance(imgBG_panelSachDangDat.getWidth(), imgBG_panelSachDangDat.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelSachDangDat  = new ImageIcon(imageBG_panelSachDangDat);
+		imgBG_panelSachDangDat.setIcon(imageIconBG_panelSachDangDat);	
+		panel_SachDangDat.add(imgBG_panelSachDangDat);
+		
+		JPanel panel_SachDangMuon = new JPanel();
+		panel_SachDangMuon.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_SachDangMuon.setBounds(80, 342, 291, 204);
+		panel_ThongKe.add(panel_SachDangMuon);
+		panel_SachDangMuon.setLayout(null);
+		
+		JLabel lblTitle_panelSachDangMuon = new JLabel("Tống số sách đang mượn");
+		lblTitle_panelSachDangMuon.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelSachDangMuon.setForeground(Color.WHITE);
+		lblTitle_panelSachDangMuon.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelSachDangMuon.setBounds(10, 26, 271, 44);
+		panel_SachDangMuon.add(lblTitle_panelSachDangMuon);
+		
+		JLabel lblTong_panelSachDangMuon = new JLabel("100 cuốn");
+		lblTong_panelSachDangMuon.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelSachDangMuon.setForeground(Color.WHITE);
+		lblTong_panelSachDangMuon.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelSachDangMuon.setBounds(36, 70, 218, 44);
+		panel_SachDangMuon.add(lblTong_panelSachDangMuon);
+		
+		JLabel imgBG_panelSachDangMuon = new JLabel("");
+		imgBG_panelSachDangMuon.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachDangMuon  = new ImageIcon(
+//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelSachDangMuon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangMuonjpg.jpg");
+		Image imBG_panelSachDangMuon = imgIBG_panelSachDangMuon.getImage();
+		Image imageBG_panelSachDangMuon = imBG_panelSachDangMuon.getScaledInstance(imgBG_panelSachDangMuon.getWidth(), imgBG_panelSachDangMuon.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelSachDangMuon = new ImageIcon(imageBG_panelSachDangMuon);
+		imgBG_panelSachDangMuon.setIcon(imageIconBG_panelSachDangMuon);	
+		panel_SachDangMuon.add(imgBG_panelSachDangMuon);
 		
 		// ket thuc code
 		
-		return panel;
+		return panel_ThongKe;
 	}
-	 
-	**/
 }

@@ -25,20 +25,21 @@ import util.hibernateUtil;
 public class main {
 	public static void main(String[] args) {
 		user u = new user("admin", "asdh", "xc");
-		Boolean b = (userDAO.getuserDAO().insertX(u)) ;
-		if(!b) {
-			System.out.println("\nEmail da ton tai\n");
-		}
+//		Boolean b = (userDAO.getuserDAO().insertX(u)) ;
+//		if(!b) {
+//			System.out.println("\nEmail da ton tai\n");
+//		}
 		
 		
 		thongTinCaNhan ttcn = new thongTinCaNhan("TTCN2", u, "admin", "0000000000", "Khong biet", "ajsd");
 //		thongTinCaNhanDAO.getthongTinCaNhanDAO().insertX(ttcn);
 		
-		loaiSach ls = new loaiSach("LS1", "aksjdk", "akshxhvkr");
+		loaiSach ls = new loaiSach("LS01", "aksjdk", "akshxhvkr");
 //		loaiSachDAO.getloaiSachDAO().insertX(ls);
 		
-		sach s = new sach("S1", "test", 2093, "zkxc", 10, 2, ls);
+		sach s = new sach("MS99", "Sach test", "Dung", "asnd.png", "asdjbhhj", "VipPro", 2021, 21, 1, ls);
 //		sachDAO.getsachDAO().insertX(s);
+//		sachDAO.getsachDAO().deletaX(s);
 		
 		phieuMuonSach pms = new phieuMuonSach("PM1", null, null, u, s, "Dang dat");
 //		phieuMuonSachDAO.getphieuMuonSachDAO().insertX(pms);
@@ -49,10 +50,10 @@ public class main {
 		yeuCau yc = new yeuCau("YC1", "asdh", "ghjg", "aksdhjkzxv", u);
 //		yeuCauDAO.getyeuCauDAO().insertX(yc);
 		
-		yeuCau y = yeuCauDAO.getyeuCauDAO().selectG(new yeuCau("YC2", "asdh", "ghjg", "aksdhjkzxv", u));
-		if(y == null) {
-			System.out.println("\nKhong kiem thay yeu cau nay");
-		}
+//		yeuCau y = yeuCauDAO.getyeuCauDAO().selectG(new yeuCau("YC2", "asdh", "ghjg", "aksdhjkzxv", u));
+//		if(y == null) {
+//			System.out.println("\nKhong kiem thay yeu cau nay");
+//		}
 		
 //		danhGiaDAO.getdanhGiaDAO().deletaX(dg);
 //		loaiSachDAO.getloaiSachDAO().deletaX(ls);

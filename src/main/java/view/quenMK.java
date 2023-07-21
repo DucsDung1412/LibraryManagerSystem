@@ -13,11 +13,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class quenMK extends JFrame {
 
@@ -25,6 +29,7 @@ public class quenMK extends JFrame {
 	private JPanel panelBG;
 	public JTextField txtEmail;
 	public JTextField txtMaxacnhan;
+	public JLabel lblSetEnEmail;
 
 	/**
 	 * Launch the application.
@@ -59,7 +64,6 @@ public class quenMK extends JFrame {
 		lblQuenMatKhau.setBackground(new Color(0, 0, 0));
 		lblQuenMatKhau.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuenMatKhau.setForeground(new Color(0, 0, 0));
-		lblQuenMatKhau.setEnabled(false);
 		lblQuenMatKhau.setFont(new Font("Arial", Font.BOLD, 28));
 		lblQuenMatKhau.setBounds(531, 88, 209, 76);
 		panelBG.add(lblQuenMatKhau);
@@ -77,6 +81,20 @@ public class quenMK extends JFrame {
 		lblMaxacnhan.setBounds(390, 251, 122, 51);
 		panelBG.add(lblMaxacnhan);
 		
+		lblSetEnEmail = new JLabel("");
+		lblSetEnEmail.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.enableEmail();
+			}
+		});
+		lblSetEnEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSetEnEmail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblSetEnEmail.setIcon(new ImageIcon(Paths.get("src/main/java/icon/exit16.png").toAbsolutePath().toString()));
+		lblSetEnEmail.setBounds(739, 209, 45, 32);
+		lblSetEnEmail.setVisible(false);
+		panelBG.add(lblSetEnEmail);
+		
 		txtEmail = new JTextField();
 		txtEmail.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		txtEmail.setBounds(512, 209, 272, 33);
@@ -90,6 +108,8 @@ public class quenMK extends JFrame {
 		txtMaxacnhan.setColumns(10);
 		
 		JButton btnMaxacnhan = new JButton("Gửi mã xác nhận");
+		btnMaxacnhan.setFocusPainted(false);
+		btnMaxacnhan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMaxacnhan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.guimail();
@@ -101,17 +121,21 @@ public class quenMK extends JFrame {
 		
 		
 		JButton btnDongy = new JButton("Đồng ý");
+		btnDongy.setFocusPainted(false);
+		btnDongy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDongy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.clickbtnOK();
 			}
 		});
-		btnDongy.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnDongy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnDongy.setBounds(519, 342, 92, 30);
 		panelBG.add(btnDongy);
 		
 		JButton btnHuy = new JButton("Huỷ");
-		btnHuy.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnHuy.setFocusPainted(false);
+		btnHuy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnHuy.setBounds(648, 342, 92, 30);
 		panelBG.add(btnHuy);
 		
@@ -121,10 +145,6 @@ public class quenMK extends JFrame {
 		ImageIcon bg = new ImageIcon(Paths.get("src/main/java/icon/login_BG.png").toAbsolutePath().toString());
 		lblBG.setIcon(bg);
 		panelBG.add(lblBG);
-
 		
-
-
-
 	}
 }

@@ -12,16 +12,13 @@ import javax.swing.border.EmptyBorder;
 
 import controller.controllerRegister;
 
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
-import javax.swing.JComboBox;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
@@ -123,6 +120,7 @@ public class registerView extends JFrame {
 
 		// ckbAgree_panelRegister
 		ckbAgree_panelRegister = new JCheckBox("I Agree to the Term of User");
+		ckbAgree_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		ckbAgree_panelRegister.setBackground(Color.WHITE);
 		ckbAgree_panelRegister.setBounds(483, 314, 251, 25);
 		ckbAgree_panelRegister.setOpaque(false);
@@ -132,6 +130,8 @@ public class registerView extends JFrame {
 
 		// btnSign_panelRegister
 		btnSign_panelRegister = new JButton("SIGN UP\r\n");
+		btnSign_panelRegister.setFocusPainted(false);
+		btnSign_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSign_panelRegister.setBounds(483, 368, 92, 30);
 		btnSign_panelRegister.setFont(new Font("Calibri", Font.BOLD, 15));
 		btnSign_panelRegister.setMargin(new Insets(5, 0, 0, 0));
@@ -140,6 +140,8 @@ public class registerView extends JFrame {
 
 		// btnCancel_panelRegister
 		btnCancel_panelRegister = new JButton("CANCEL");
+		btnCancel_panelRegister.setFocusPainted(false);
+		btnCancel_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancel_panelRegister.setBounds(642, 368, 92, 30);
 		btnCancel_panelRegister.setFont(new Font("Calibri", Font.BOLD, 15));
 		btnCancel_panelRegister.setMargin(new Insets(5, 0, 0, 0));
@@ -176,6 +178,7 @@ public class registerView extends JFrame {
 
 		// hien pass
 		btnHienPass_panelRegister = new JButton("");
+		btnHienPass_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnHienPass_panelRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -190,6 +193,7 @@ public class registerView extends JFrame {
 
 		// an pass
 		btnAnPass_panelRegister = new JButton("");
+		btnAnPass_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAnPass_panelRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -205,6 +209,7 @@ public class registerView extends JFrame {
 
 		// hien confirm
 		btnHienConfirm_panelRegister = new JButton("");
+		btnHienConfirm_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnHienConfirm_panelRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				c.hienConfirm();
@@ -218,6 +223,7 @@ public class registerView extends JFrame {
 
 		// an confirm
 		btnAnConfirm_panelRegister = new JButton("");
+		btnAnConfirm_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAnConfirm_panelRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

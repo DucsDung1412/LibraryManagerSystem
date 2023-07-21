@@ -3,6 +3,7 @@ package controller;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -58,7 +59,7 @@ public class controllerRegister implements ActionListener {
 			return;
 		} else {
 
-			String chkName = "^[a-zA-Z]+" + "[0-9]*$";
+			String chkName = "^[^0-9].*$";
 			String chkEmail = "^[A-Za-z0-9-\\+]+([A-Za-z0-9-]+)*@" + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 			// Ten
@@ -152,6 +153,25 @@ public class controllerRegister implements ActionListener {
 
 					if (Long.valueOf(ma) == maDk) {
 						userDAO.getuserDAO().insertX(u);
+						
+						thongTinCaNhan ttcnClone = new thongTinCaNhan();
+						ttcnClone.setHinh("employee.png");
+						ttcnClone.setTen(this.v_reg.txtName_panelRegister.getText());
+						List<thongTinCaNhan> listTTCN = thongTinCaNhanDAO.getthongTinCaNhanDAO().selectAll();
+						for (int i = 0 ;i <= listTTCN.size() ;i++) {
+							if(i == listTTCN.size()) {
+								ttcnClone.setMaTTCN("TT" + i);
+								break;
+							}
+							if(Integer.valueOf(listTTCN.get(i).getMaTTCN().substring(2).trim()) != i) {
+								ttcnClone.setMaTTCN("TT" + i);
+								break;
+							}
+						}
+						ttcnClone.setDiaChi("");
+						ttcnClone.setSoDienThoai("");
+						ttcnClone.setEmail(u);
+						thongTinCaNhanDAO.getthongTinCaNhanDAO().insertX(ttcnClone);
 						JOptionPane.showMessageDialog(this.v_reg, "Đăng ký thành công");
 					} else {
 						JOptionPane.showMessageDialog(this.v_reg, "Mã đăng ký không đúng\nĐăng ký thất bại");
@@ -161,6 +181,7 @@ public class controllerRegister implements ActionListener {
 						JOptionPane.showMessageDialog(this.v_reg, "Vui lòng nhập mã đăng ký");
 					} else {
 						JOptionPane.showMessageDialog(this.v_reg, "Mã đăng kí gồm 4 số");
+						e1.printStackTrace();
 					}
 
 				} catch (HeadlessException e1) {
