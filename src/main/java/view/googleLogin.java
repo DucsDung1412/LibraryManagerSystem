@@ -10,6 +10,8 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 
+import controller.loginListener;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -41,7 +43,7 @@ public class googleLogin extends JPanel {
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 16));
-		btnNewButton.setBounds(40, 5, 171, 41);
+		btnNewButton.setBounds(0, 0, 176, 30);
 		add(btnNewButton);
 		
 	}
@@ -70,6 +72,10 @@ public class googleLogin extends JPanel {
 				System.out.println(email);
 				
 				JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
+				
+				libraryManagerSystemView view = new libraryManagerSystemView();
+				view.setVisible(true);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

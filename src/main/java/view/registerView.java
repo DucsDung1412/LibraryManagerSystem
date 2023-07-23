@@ -64,9 +64,9 @@ public class registerView extends JFrame {
 		// contentPane
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 820, 530);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLocationRelativeTo(null);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -140,6 +140,12 @@ public class registerView extends JFrame {
 
 		// btnCancel_panelRegister
 		btnCancel_panelRegister = new JButton("CANCEL");
+		btnCancel_panelRegister.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				c.backLogin();
+			}
+		});
 		btnCancel_panelRegister.setFocusPainted(false);
 		btnCancel_panelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancel_panelRegister.setBounds(642, 368, 92, 30);

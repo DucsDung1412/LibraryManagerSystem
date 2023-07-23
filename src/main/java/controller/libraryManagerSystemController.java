@@ -24,6 +24,7 @@ import dao.userDAO;
 import model.thongTinCaNhan;
 import model.user;
 import view.libraryManagerSystemView;
+import view.loginView;
 
 public class libraryManagerSystemController {
 	private libraryManagerSystemView view;
@@ -248,5 +249,11 @@ public class libraryManagerSystemController {
 		this.view.contentPane.add(this.view.panel_ThongKe());
 		this.view.contentPane.repaint();
 		this.view.contentPane.revalidate();
+	}
+
+	public void logOut() {
+		loginView viewLogin = new loginView();
+		this.view.setVisible(false);
+		viewLogin.setVisible(true);
 	}
 }

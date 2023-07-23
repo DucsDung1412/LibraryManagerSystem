@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import dao.userDAO;
 import model.user;
+import view.loginView;
 import view.quenMK;
 
 public class controllerQuenMK {
@@ -115,7 +116,10 @@ public class controllerQuenMK {
 		this.quenMk.txtMaxacnhan.setText("");
 	}
 
-
-
+	public void clickHuy() {
+		loginView view = new loginView();
+		this.quenMk.setVisible(false);
+		view.setVisible(true);
+	}
 
 }

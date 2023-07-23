@@ -53,6 +53,7 @@ public class quenMK extends JFrame {
 	public quenMK() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 862, 569);
+		this.setLocationRelativeTo(null);
 		panelBG = new JPanel();
 		panelBG.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -133,6 +134,11 @@ public class quenMK extends JFrame {
 		panelBG.add(btnDongy);
 		
 		JButton btnHuy = new JButton("Huỷ");
+		btnHuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.clickHuy();
+			}
+		});
 		btnHuy.setFocusPainted(false);
 		btnHuy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnHuy.setFont(new Font("Times New Roman", Font.BOLD, 16));

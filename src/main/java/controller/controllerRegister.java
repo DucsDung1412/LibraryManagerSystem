@@ -15,6 +15,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
+import view.loginView;
 import view.registerView;
 import model.*;
 import dao.*;
@@ -191,6 +192,12 @@ public class controllerRegister implements ActionListener {
 			}
 
 		}
+	}
+
+	public void backLogin() {
+		loginView view = new loginView();
+		this.v_reg.setVisible(false);
+		view.setVisible(true);
 	}
 
 }

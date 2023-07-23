@@ -5,35 +5,61 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import dao.userDAO;
 import model.user;
-import view.LoginView;
+import view.loginView;
+import view.quenMK;
 import view.libraryManagerSystemView;
 import view.registerView;
 
-public class LoginListener {
-	private LoginView loginView;
+public class loginListener {
+	private loginView loginView;
+	private String userName;
+	private String passWord;
+	private String role = "";
 	
-	public LoginListener (LoginView loginView)
+	public loginListener (loginView loginView)
 	{
 		this.loginView = loginView;
 	}
 
 	public void forgottenPassword()
 	{
-		// new quenMK();
+		quenMK view = new quenMK();
+		this.loginView.setVisible(false);
+		view.setVisible(true);
 	}
 
-	public void logIn(user user , user u)
+	public void logIn()
 	{
-		if(user.getUsername().equals(u.getUsername()) && user.getPassword().equals(u.getPassword()))
-		{
-			JOptionPane.showMessageDialog(loginView, "Dang nhap thanh cong");
-			new libraryManagerSystemView();
+		userName = this.loginView.txtUsername_pnlFormLogin_contentPane.getText();
+		char[] pw = this.loginView.txtPassword_pnlFormLogin_contentPane.getPassword();
+		passWord = new String(pw);
+		if(passWord.equals("") || userName.equals("")) {
+			JOptionPane.showMessageDialog(this.loginView, "Vui lòng nhập đày đủ thông tin");
+		} else {
+			user u = new user(userName, passWord , "");
+			user user = userDAO.getuserDAO().selectG(u);
+			if(user != null)
+			{
+				if(user.getPassword().equals(passWord)) {
+					libraryManagerSystemView view = new libraryManagerSystemView();
+					this.loginView.setVisible(false);
+					view.setVisible(true);
+					view.emailLogin = user.getUsername();
+				} else {
+					JOptionPane.showMessageDialog(this.loginView, "Sai tài khoản hoặc mật khẩu");
+				}
+			} else {
+				JOptionPane.showMessageDialog(this.loginView, "Sai tài khoản hoặc mật khẩu");
+			}
 		}
 	}
 	
 	public void creatAccount()
 	{
-		new registerView();
+		registerView view = new registerView();
+		this.loginView.setVisible(false);
+		view.setVisible(true);
 	}
 }

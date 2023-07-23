@@ -109,7 +109,7 @@ public class libraryManagerSystemView extends JFrame {
 
 		// logo panelTop
 		JLabel imgLogo_panelTop = new JLabel("");
-		imgLogo_panelTop.setBounds(16, 0, 144, 138);
+		imgLogo_panelTop.setBounds(16, -18, 155, 156);
 		ImageIcon imgILogo_panelTop = new ImageIcon(
 				Paths.get("src/main/java/icon/logo.png").toAbsolutePath().toString());
 //		ImageIcon imgILogo_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\logo.png");
@@ -359,6 +359,12 @@ public class libraryManagerSystemView extends JFrame {
 
 		// exit
 		JLabel imgLogout_panelTop = new JLabel("");
+		imgLogout_panelTop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.logOut();
+			}
+		});
 		imgLogout_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgLogout_panelTop.setBounds(1236, 62, 36, 36);
 		ImageIcon imgILogout_panelTop = new ImageIcon(
@@ -386,12 +392,12 @@ public class libraryManagerSystemView extends JFrame {
 		panel_top.add(imgBG_panelTop);
 
 		// Thêm panel tại đây
-		contentPane.add(panel_TTCN());
+		contentPane.add(panel_TTS());
 	}
 
 	public JPanel panel_TTCN() {
 		// Find user login
-		this.emailLogin = "daoducdung2000@gmail.com";
+//		this.emailLogin = this.emailLogin;
 		user userLoginClone = new user();
 		userLoginClone.setUsername(emailLogin);
 		final user userLogin = userDAO.getuserDAO().selectG(userLoginClone);
