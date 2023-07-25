@@ -11,6 +11,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 
 import controller.loginListener;
+import dao.userDAO;
+import model.user;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -37,12 +39,15 @@ public class googleLogin extends JPanel {
 		setLayout(null);
 		
 		JButton btnNewButton = new JButton("Login with google");
+		btnNewButton.setOpaque(false);
+		btnNewButton.setFocusPainted(false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loginGoogle();
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 16));
+		setOpaque(false);
 		btnNewButton.setBounds(0, 0, 176, 30);
 		add(btnNewButton);
 		
@@ -69,12 +74,21 @@ public class googleLogin extends JPanel {
 				GoogleTokenResponse token = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
 				
 				String email = token.parseIdToken().getPayload().getEmail();
-				System.out.println(email);
+//				System.out.println(email);
 				
-				JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
 				
-				libraryManagerSystemView view = new libraryManagerSystemView();
-				view.setVisible(true);
+				user u = new user();
+				u.setUsername(email);
+				if(userDAO.getuserDAO().selectG(u) != null) {
+					JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
+					libraryManagerSystemView view = new libraryManagerSystemView();
+					view.setVisible(true);
+					view.emailLogin = email;
+				} else {
+					JOptionPane.showMessageDialog(null, "Tài khoản chưa tồn tại");
+					
+				}
+				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
