@@ -134,8 +134,8 @@ public class sachDAO implements daoInterface<sach>{
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
-					List<phieuMuonSach> listPM_sach = new ArrayList<>();
 					for (sach sach : list) {
+						List<phieuMuonSach> listPM_sach = new ArrayList<>();
 						List<phieuMuonSach> listPM = phieuMuonSachDAO.getphieuMuonSachDAO().selectAll();
 						for (phieuMuonSach pms : listPM) {
 							if(pms.getMaSach().getMaSach().equals(sach.getMaSach())) {
@@ -156,5 +156,5 @@ public class sachDAO implements daoInterface<sach>{
 		
 		return list;
 	}
-	
+
 }

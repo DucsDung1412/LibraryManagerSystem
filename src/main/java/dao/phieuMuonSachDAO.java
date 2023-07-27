@@ -134,8 +134,8 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
-					List<danhGia> listDG_PMS = new ArrayList<>();
 					for (phieuMuonSach phieuMuonSach : list) {
+						List<danhGia> listDG_PMS = new ArrayList<>();
 						List<danhGia> lsiDG = danhGiaDAO.getdanhGiaDAO().selectAll();
 						for (danhGia danhGia : lsiDG) {
 							if(danhGia.getMaPhieuMuon().getMaPhieu().equals(phieuMuonSach.getMaPhieu())) {
@@ -145,6 +145,32 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 						phieuMuonSach.setListDG(listDG_PMS);
 					}
 					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public List<Object[]> selectDoPhoBien() {
+		List<Object[]> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "SELECT COUNT(pms.maSach), pms.maSach, pms.maPhieu FROM phieuMuonSach pms GROUP BY pms.maSach";
+					Query query = s.createQuery(hql, Object[].class);
+					list = query.getResultList();
+
 					ts.commit();
 				} finally {
 					s.close();

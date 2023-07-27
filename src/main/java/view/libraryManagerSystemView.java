@@ -57,7 +57,7 @@ public class libraryManagerSystemView extends JFrame {
 	// controller
 	private libraryManagerSystemController controller = new libraryManagerSystemController(this);
 	
-	// compunate
+	// components
 	public JPanel contentPane;
 	public JTextField txtEmail_panelTTCN;
 	public JTextField txtHoTen_panelTTCN;
@@ -392,7 +392,7 @@ public class libraryManagerSystemView extends JFrame {
 		panel_top.add(imgBG_panelTop);
 
 		// Thêm panel tại đây
-		contentPane.add(panel_TTS());
+		contentPane.add(panel_ThongKe());
 	}
 
 	public JPanel panel_TTCN() {
@@ -572,9 +572,11 @@ public class libraryManagerSystemView extends JFrame {
 	public JScrollPane panel_TTS() {
 		// tim sach
 		sach sachClone = new sach();
-		this.maSach = "MS01";
+		this.maSach = "MS08";
 		sachClone.setMaSach(maSach);
 		sach sach = sachDAO.getsachDAO().selectG(sachClone);
+		
+//		System.out.println(sach.getMoTa());
 		
 		final JScrollPane scrollPane_TTS = new JScrollPane();
 		scrollPane_TTS.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -621,6 +623,11 @@ public class libraryManagerSystemView extends JFrame {
 		panel_GT.add(imgSach_panelGT);
 
 		JButton btnDatSach_panelGT = new JButton("Đặt sách");
+		btnDatSach_panelGT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.datSach();
+			}
+		});
 		btnDatSach_panelGT.setFocusPainted(false);
 		btnDatSach_panelGT.setForeground(new Color(255, 255, 255));
 		btnDatSach_panelGT.setBackground(new Color(27, 161, 226));
@@ -700,8 +707,8 @@ public class libraryManagerSystemView extends JFrame {
 
 		JTextPane txtMTSP_panelMTSP = new JTextPane();
 		txtMTSP_panelMTSP.setEditable(false);
-		txtMTSP_panelMTSP.setText(
-				"I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA");
+		txtMTSP_panelMTSP.setText( sach.getMoTa());
+//				"I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA");
 		txtMTSP_panelMTSP.setFont(new Font("Calibri Light", Font.PLAIN, 16));
 		txtMTSP_panelMTSP.setBackground(Color.WHITE);
 		txtMTSP_panelMTSP.setBounds(20, 40, 1092, 404);
@@ -1211,6 +1218,10 @@ public class libraryManagerSystemView extends JFrame {
 		panel_DoPhoBienCuaSach.add(lblTitle_panelDoPhoBienCuaSach);
 		
 		JButton btnXemChiTiet_panelDoPhoBienCuaSach = new JButton("Xem chi tiết");
+		btnXemChiTiet_panelDoPhoBienCuaSach.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnXemChiTiet_panelDoPhoBienCuaSach.setFocusPainted(false);
 		btnXemChiTiet_panelDoPhoBienCuaSach.setFont(new Font("Arial", Font.BOLD, 18));
 		btnXemChiTiet_panelDoPhoBienCuaSach.setBounds(74, 70, 143, 44);

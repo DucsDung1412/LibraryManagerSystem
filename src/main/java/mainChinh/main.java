@@ -1,5 +1,6 @@
 package mainChinh;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -24,6 +25,36 @@ import util.hibernateUtil;
 
 public class main {
 	public static void main(String[] args) {
+//		List<Object[]> lsit = phieuMuonSachDAO.getphieuMuonSachDAO().selectDoPhoBien();
+		
+//		List<sach> listSach = sachDAO.getsachDAO().selectAll();
+//		for (sach sach : listSach) {
+//			for (phieuMuonSach pms : sach.getListPM()) {
+//				for(danhGia dg : pms.getListDG()) {
+//					System.out.println(pms.getMaPhieu() + dg.getMaDanhGia());
+//				}
+//			}
+//			System.out.println(sach.getMaSach());
+//			for (Object[] objects : lsit) {
+//				if(((sach)objects[1]).getMaSach().equals(sach.getMaSach())) {
+//					System.out.println("zo" + objects[0]);
+//				} else {
+//					System.out.println(1);
+//				}
+//			}
+//		}
+		
+		List<user> listSach = userDAO.getuserDAO().selectAll();
+		for (user loaiSach : listSach) {
+			System.out.println(loaiSach.getUsername());
+			for (danhGia dg : loaiSach.getListDG()) {
+				System.out.println(dg.getEmail().getUsername() + ": " + dg.getMaDanhGia());
+			}
+			System.out.println(loaiSach.getListPM().size());
+			System.out.println(loaiSach.getListYC().size());
+		}
+		
+		
 		user u = new user("admin", "asdh", "xc");
 //		Boolean b = (userDAO.getuserDAO().insertX(u)) ;
 //		if(!b) {
@@ -65,7 +96,7 @@ public class main {
 //		}
 		
 //		List<phieuMuonSach> list = phieuMuonSachDAO.getphieuMuonSachDAO().selectAll();
-//		
+		
 //		for (phieuMuonSach danhGia : list) {
 //			System.out.println(danhGia.getListDG().size() + " " + danhGia.getEmail().getUsername());
 //		}
@@ -83,10 +114,10 @@ public class main {
 //		
 //		for (loaiSach loaiSach : list) {
 //			for (sach sach : loaiSach.getListSach()) {
-//				System.out.println(sach.getTenSach());
+//				System.out.println(sach.getTenSach() + sach.getListPM().size());
 //			}
 //		}
-		
+//		
 //		System.out.println(yeuCauDAO.getyeuCauDAO().selectG(yc).getEmail().getUsername());
 		
 //		List<yeuCau> list = yeuCauDAO.getyeuCauDAO().selectAll();

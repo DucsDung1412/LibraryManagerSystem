@@ -153,16 +153,16 @@ public class userDAO implements daoInterface<user>{
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
-					List<danhGia> listDG_user = new ArrayList<>();
-					List<phieuMuonSach> listPMS_user = new ArrayList<>();
-					List<yeuCau> listYC_user = new ArrayList<>();
-					thongTinCaNhan ttcn_user = new thongTinCaNhan();
-					
-					
 					for (user us : list) {
+						thongTinCaNhan ttcn_user = new thongTinCaNhan();
+						List<phieuMuonSach> listPMS_user = new ArrayList<>();
+						List<yeuCau> listYC_user = new ArrayList<>();
+						
+						List<danhGia> listDG_user = new ArrayList<>();
 						List<danhGia> lsiDG = danhGiaDAO.getdanhGiaDAO().selectAll();
 						for (danhGia danhGia : lsiDG) {
 							if(danhGia.getEmail().getUsername().equals(us.getUsername())) {
+								System.out.println("\n"+danhGia.getMaDanhGia()+"\n");
 								listDG_user.add(danhGia);
 							}
 						}
@@ -205,5 +205,5 @@ public class userDAO implements daoInterface<user>{
 		
 		return list;
 	}
-	
+
 }

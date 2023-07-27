@@ -1,9 +1,12 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,10 +20,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.toedter.calendar.JCalendar;
+
+import dao.phieuMuonSachDAO;
 import dao.thongTinCaNhanDAO;
 import dao.userDAO;
+import model.phieuMuonSach;
+import model.sach;
 import model.thongTinCaNhan;
 import model.user;
 import view.libraryManagerSystemView;
@@ -255,5 +264,38 @@ public class libraryManagerSystemController {
 		loginView viewLogin = new loginView();
 		this.view.setVisible(false);
 		viewLogin.setVisible(true);
+	}
+
+	public void datSach() {
+		JPanel panelCalendar = new JPanel();
+		panelCalendar.setLayout(null);
+		panelCalendar.setPreferredSize(new Dimension(400,180));
+		
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(0, 0, 400, 180);
+		calendar.getDayChooser().setDayBordersVisible(false);
+		calendar.setWeekOfYearVisible(false);
+		panelCalendar.add(calendar);
+		
+		int i = JOptionPane.showConfirmDialog(this.view, panelCalendar, "Chọn lịch", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION);
+		if(i == JOptionPane.YES_OPTION) {
+			int day = calendar.getDayChooser().getDay();
+			int month = calendar.getMonthChooser().getMonth();
+			int year = calendar.getYearChooser().getYear();
+			
+			Date date = new Date(year - 1900, month, day);
+			Date date1 = new Date(year, month, day, month, i, year);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			String dateClone = sdf.format(date);
+			
+			user u = new user();
+			u.setUsername("daoducdung2000@gmail.com");
+			
+			sach s = new sach();
+			s.setMaSach("MS01");
+			
+			phieuMuonSach pms = new phieuMuonSach("PM09", date, date, u, s, dateClone);
+//			phieuMuonSachDAO.getphieuMuonSachDAO().insertX(pms);
+		}
 	}
 }

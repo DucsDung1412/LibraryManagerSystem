@@ -138,8 +138,8 @@ public class loaiSachDAO implements daoInterface<loaiSach>{
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
-					List<sach> listS_LS = new ArrayList<>();
 					for (loaiSach lsach : list) {
+						List<sach> listS_LS = new ArrayList<>();
 						List<sach> listS = sachDAO.getsachDAO().selectAll();
 						for (sach sach : listS) {
 							if(sach.getMaLoaiSach().getMaLoaiSach().equals(lsach.getMaLoaiSach())) {
@@ -160,6 +160,5 @@ public class loaiSachDAO implements daoInterface<loaiSach>{
 		
 		return list;
 	}
-	
-	
+
 }
