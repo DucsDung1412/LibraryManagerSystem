@@ -1336,4 +1336,1277 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return panel_ThongKe;
 	}
+		public JPanel panel_QuanLyUser() {
+		panel_QLUS = new JPanel();
+		panel_QLUS.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_QLUS.setBackground(new Color(255, 255, 255));
+		panel_QLUS.setBounds(0, 148, 1286, 616);
+		panel_QLUS.setLayout(null);
+		
+		// bat dau code
+
+		panelNutUser = new JPanel();
+		panelNutUser.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelNutUser.setBounds(69, 36, 740, 61);
+		panel_QLUS.add(panelNutUser);
+		panelNutUser.setLayout(null);
+		
+		lblUser_panelNutUser = new JLabel("User");
+		lblUser_panelNutUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.changeToUser();
+			}
+		});
+		lblUser_panelNutUser.setForeground(new Color(255, 255, 255));
+		lblUser_panelNutUser.setBackground(new Color(27, 161, 226));
+		lblUser_panelNutUser.setOpaque(true);
+		lblUser_panelNutUser.setBounds(0, 0, 136, 61);
+		panelNutUser.add(lblUser_panelNutUser);
+		lblUser_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUser_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
+		
+		lblDatSach_panelNutUser = new JLabel("Đặt sách");
+		lblDatSach_panelNutUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.changeToDatSach();
+			}
+		});
+		lblDatSach_panelNutUser.setBackground(new Color(27, 161, 226));
+		lblDatSach_panelNutUser.setBounds(151, 0, 136, 61);
+		panelNutUser.add(lblDatSach_panelNutUser);
+		lblDatSach_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDatSach_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
+		
+		lblYeuCau_panelNutUser = new JLabel("Yêu cầu");
+		lblYeuCau_panelNutUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.changeToYeuCau();
+			}
+		});
+		lblYeuCau_panelNutUser.setBackground(new Color(27, 161, 226));
+		lblYeuCau_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblYeuCau_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
+		lblYeuCau_panelNutUser.setBounds(302, 0, 136, 61);
+		panelNutUser.add(lblYeuCau_panelNutUser);
+		
+		lblDangMuon_panelNutUser = new JLabel("Đang mượn");
+		lblDangMuon_panelNutUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.changeToDangMuon();
+			}
+		});
+		lblDangMuon_panelNutUser.setBackground(new Color(27, 161, 226));
+		lblDangMuon_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDangMuon_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
+		lblDangMuon_panelNutUser.setBounds(453, 0, 136, 61);
+		panelNutUser.add(lblDangMuon_panelNutUser);
+		
+		lblQuaHan_panelNutUser = new JLabel("Quá hạn");
+		lblQuaHan_panelNutUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.changeToQuaHan();
+			}
+		});
+		lblQuaHan_panelNutUser.setBackground(new Color(27, 161, 226));
+		lblQuaHan_panelNutUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblQuaHan_panelNutUser.setFont(new Font("Arial", Font.BOLD, 24));
+		lblQuaHan_panelNutUser.setBounds(604, 0, 136, 61);
+		panelNutUser.add(lblQuaHan_panelNutUser);
+		
+		
+		
+		panel_QLUS.add(panel_dieukhienUser());
+		panel_QLUS.add(tblQuanLyUser());
+		
+		// ket thuc code
+		
+		return panel_QLUS;
+	}	
+	
+	
+	public JScrollPane tblQuanLyUser() {
+		tblQuanLyUser = new JTable();
+		tblQuanLyUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.chooseQLUS();
+			}
+		});
+		tblQuanLyUser.setFont(new Font("Arial", Font.PLAIN, 16));
+		tblQuanLyUser.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Email", "M\u1EADt kh\u1EA9u", "H\u1ECD v\u00E0 t\u00EAn", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblQuanLyUser.setRowHeight(25);
+		
+		DefaultTableModel tableModel_User = (DefaultTableModel)tblQuanLyUser.getModel();
+		tableModel_User.setRowCount(0);
+		List<user> luser =  userDAO.getuserDAO().selectAll();
+		for (user user : luser) {
+			tableModel_User.addRow(new Object[] {
+					user.getUsername(),
+					user.getPassword(),
+					user.getTtcn().getTen(),
+					user.getTtcn().getSoDienThoai()
+					
+			});
+		}
+		
+		JScrollPane scrollPaneUser = new JScrollPane();
+		scrollPaneUser.setBounds(69, 117, 740, 459);
+		panel_QLUS.add(scrollPaneUser);
+		scrollPaneUser.setViewportView(tblQuanLyUser);
+		
+		return scrollPaneUser;
+	}
+	
+	
+	public JScrollPane tblQuanLyDatSach() {
+		tblQuanLyDatSach = new JTable();
+		tblQuanLyDatSach.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.chooseQLDatsach();
+			}
+		});
+		tblQuanLyDatSach.setFont(new Font("Arial", Font.PLAIN, 16));
+		tblQuanLyDatSach.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Email", "M\u00E3 S\u00E1ch", "Ng\u00E0y \u0110\u1EB7t", "Tr\u1EA1ng Th\u00E1i"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblQuanLyDatSach.setRowHeight(25);
+		
+		DefaultTableModel tableModel_DatSach = (DefaultTableModel)tblQuanLyDatSach.getModel();
+		tableModel_DatSach.setRowCount(0);
+		List<phieuMuonSach> lpms = phieuMuonSachDAO.getphieuMuonSachDAO().selectAllDangDat();
+		for (phieuMuonSach phieuMuonSach : lpms) {
+			tableModel_DatSach.addRow(new Object[] {
+					phieuMuonSach.getEmail().getUsername(),
+					phieuMuonSach.getMaSach().getMaSach(),
+					phieuMuonSach.getNgayMuon().toString().subSequence(0, 10),
+					phieuMuonSach.getTrangThaiPhieu()
+					
+			});
+		}
+		
+		JScrollPane scrollPaneUser = new JScrollPane();
+		scrollPaneUser.setBounds(69, 117, 740, 459);
+		panel_QLUS.add(scrollPaneUser);
+		scrollPaneUser.setViewportView(tblQuanLyDatSach);
+		
+		return scrollPaneUser;
+	}
+
+	public JScrollPane tblQuanLyYeuCau() {
+		tblQuanLyYeuCau = new JTable();
+		tblQuanLyYeuCau.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.chooseQLYeuCau();
+			}
+		});
+		tblQuanLyYeuCau.setFont(new Font("Arial", Font.PLAIN, 16));
+		tblQuanLyYeuCau.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Email", "Lo\u1EA1i S\u00E1ch", "T\u00EAn S\u00E1ch", "M\u00F4 T\u1EA3"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblQuanLyYeuCau.setRowHeight(25);
+		
+		DefaultTableModel tableModel_YeuCau = (DefaultTableModel)tblQuanLyYeuCau.getModel();
+		tableModel_YeuCau.setRowCount(0);
+		List<yeuCau> lyc = yeuCauDAO.getyeuCauDAO().selectAll();
+		for (yeuCau yeuCau : lyc) {
+			tableModel_YeuCau.addRow(new Object[] {
+					yeuCau.getEmail().getUsername(),
+					yeuCau.getLoaiSach(),
+					yeuCau.getSach(),
+					yeuCau.getMoTa()				
+			});
+		}
+		
+		JScrollPane scrollPaneUser = new JScrollPane();
+		scrollPaneUser.setBounds(69, 117, 740, 459);
+		panel_QLUS.add(scrollPaneUser);
+		scrollPaneUser.setViewportView(tblQuanLyYeuCau);
+		
+		return scrollPaneUser;
+	}
+	
+	
+	public JScrollPane tblQuanLyDangMuon() {
+		tblQuanLyDangMuon = new JTable();
+		tblQuanLyDangMuon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.chooseQlDangMuon();
+			}
+		});
+		tblQuanLyDangMuon.setFont(new Font("Arial", Font.PLAIN, 16));
+		tblQuanLyDangMuon.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Email", "M\u00E3 S\u00E1ch", "Ng\u00E0y M\u01B0\u1EE3n", "Ng\u00E0y Tr\u1EA3", "Tr\u1EA1ng Th\u00E1i"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblQuanLyDangMuon.setRowHeight(25);
+		
+		DefaultTableModel tableModel_DangMuon = (DefaultTableModel)tblQuanLyDangMuon.getModel();
+		tableModel_DangMuon.setRowCount(0);
+		List<phieuMuonSach> lpms = phieuMuonSachDAO.getphieuMuonSachDAO().selectAllDangMuon();
+		for (phieuMuonSach phieuMuonSach : lpms) {
+			tableModel_DangMuon.addRow(new Object[] {
+					phieuMuonSach.getEmail().getUsername(),
+					phieuMuonSach.getMaSach().getMaSach(),
+					phieuMuonSach.getNgayMuon().toString().substring(0, 10),
+					phieuMuonSach.getNgayTra().toString().substring(0, 10),
+					phieuMuonSach.getTrangThaiPhieu()
+					
+			});
+		}
+		
+		JScrollPane scrollPaneUser = new JScrollPane();
+		scrollPaneUser.setBounds(69, 117, 740, 459);
+		panel_QLUS.add(scrollPaneUser);
+		scrollPaneUser.setViewportView(tblQuanLyDangMuon);
+		
+		return scrollPaneUser;
+	}
+	
+	
+	public JScrollPane tblQuanLyQuaHan() {
+		tblQuanLyQuaHan = new JTable();
+		tblQuanLyQuaHan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.chooseQLQuaHan();
+			}
+		});
+		tblQuanLyQuaHan.setFont(new Font("Arial", Font.PLAIN, 16));
+		tblQuanLyQuaHan.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Email", "M\u00E3 S\u00E1ch", "Ng\u00E0y M\u01B0\u1EE3n", "Ng\u00E0y Tr\u1EA3", "Tr\u1EA1ng Th\u00E1i"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblQuanLyQuaHan.setRowHeight(25);
+		
+		DefaultTableModel tableModel_QuaHan = (DefaultTableModel)tblQuanLyQuaHan.getModel();
+		tableModel_QuaHan.setRowCount(0);
+		List<phieuMuonSach> lpms = phieuMuonSachDAO.getphieuMuonSachDAO().selectAllQuaHan();
+		for (phieuMuonSach phieuMuonSach : lpms) {
+			tableModel_QuaHan.addRow(new Object[] {
+					phieuMuonSach.getEmail().getUsername(),
+					phieuMuonSach.getMaSach().getMaSach(),
+					phieuMuonSach.getNgayMuon().toString().substring(0, 10),
+					phieuMuonSach.getNgayTra().toString().substring(0, 10),
+					phieuMuonSach.getTrangThaiPhieu()
+					
+			});
+		}
+		
+		JScrollPane scrollPaneUser = new JScrollPane();
+		scrollPaneUser.setBounds(69, 117, 740, 459);
+		panel_QLUS.add(scrollPaneUser);
+		scrollPaneUser.setViewportView(tblQuanLyQuaHan);
+		
+		return scrollPaneUser;
+	}
+	
+	
+	public JPanel panel_dieukhienUser() {
+		JPanel panelDieuKhienUser = new JPanel();
+		panelDieuKhienUser.setBounds(845, 36, 374, 540);
+
+		panelDieuKhienUser.setLayout(null);
+		
+		
+		JLabel lblTimKiem_panelDieuKhienUser = new JLabel("Tìm kiếm");
+		lblTimKiem_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblTimKiem_panelDieuKhienUser.setBounds(10, 10, 103, 43);
+		panelDieuKhienUser.add(lblTimKiem_panelDieuKhienUser);
+		
+		
+		txtTimKiem_panelDieuKhienUser = new JTextField();
+		txtTimKiem_panelDieuKhienUser.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				controller.timUserTheoCBX();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				controller.timUserTheoCBX();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+			}
+		});
+		txtTimKiem_panelDieuKhienUser.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTimKiem_panelDieuKhienUser.setBounds(40, 63, 294, 36);
+		panelDieuKhienUser.add(txtTimKiem_panelDieuKhienUser);
+		txtTimKiem_panelDieuKhienUser.setColumns(10);
+		
+		JLabel lblDK_panelDieuKhienUser = new JLabel("Điều khiển");
+		lblDK_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblDK_panelDieuKhienUser.setBounds(10, 182, 134, 43);
+		panelDieuKhienUser.add(lblDK_panelDieuKhienUser);
+		
+		cbxLoc_panelDieuKhienUser = new JComboBox();
+		cbxLoc_panelDieuKhienUser.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbxLoc_panelDieuKhienUser.setModel(new DefaultComboBoxModel(new String[] {"Email", "Họ và tên", "Số điện thoại"}));
+		cbxLoc_panelDieuKhienUser.setOpaque(true);
+		cbxLoc_panelDieuKhienUser.setBounds(40, 124, 294, 36);
+		panelDieuKhienUser.add(cbxLoc_panelDieuKhienUser);
+		
+		JPanel panelCTUS = new JPanel();
+		panelCTUS.setBounds(10, 223, 354, 307);
+		panelDieuKhienUser.add(panelCTUS);
+		panelCTUS.setLayout(null);
+		
+		
+		JButton btnUserNew_panelCTUS = new JButton("Làm mới");
+		btnUserNew_panelCTUS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.btnNewuser();
+			}
+		});
+		btnUserNew_panelCTUS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnUserNew_panelCTUS.setBounds(0, 280, 105, 27);
+		panelCTUS.add(btnUserNew_panelCTUS);
+		
+		imgUser_panelCTUS = new JLabel("Nhấn để tải hình ảnh");
+		imgUser_panelCTUS.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.changeAvatar_panelCTUS();
+			}
+		});
+		imgUser_panelCTUS.setHorizontalAlignment(SwingConstants.CENTER);
+		imgUser_panelCTUS.setFont(new Font("Arial", Font.BOLD, 14));
+		imgUser_panelCTUS.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		imgUser_panelCTUS.setBounds(20, 10, 180, 92);
+		panelCTUS.add(imgUser_panelCTUS);
+		
+		JButton btnSuaUser_panelCTUS = new JButton("Lưu User");
+		btnSuaUser_panelCTUS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.addOrUpdateUser();
+			}
+		});
+		btnSuaUser_panelCTUS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnSuaUser_panelCTUS.setBounds(126, 280, 105, 27);
+		panelCTUS.add(btnSuaUser_panelCTUS);
+		
+		JButton btnDeleteUser_panelCTUS = new JButton("Xóa User");
+		btnDeleteUser_panelCTUS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.deleteUser();
+			}
+		});
+		btnDeleteUser_panelCTUS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnDeleteUser_panelCTUS.setBounds(249, 280, 105, 27);
+		panelCTUS.add(btnDeleteUser_panelCTUS);
+		
+		JLabel lblEmail_panelCTUS = new JLabel("Email");
+		lblEmail_panelCTUS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEmail_panelCTUS.setBounds(0, 113, 60, 20);
+		panelCTUS.add(lblEmail_panelCTUS);
+		
+		JLabel lblPassword_panelCTUS = new JLabel("Password");
+		lblPassword_panelCTUS.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPassword_panelCTUS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblPassword_panelCTUS.setBounds(0, 168, 60, 20);
+		panelCTUS.add(lblPassword_panelCTUS);
+		
+		JLabel lblHoten_panelCTUS = new JLabel("Họ tên");
+		lblHoten_panelCTUS.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHoten_panelCTUS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblHoten_panelCTUS.setBounds(0, 225, 60, 20);
+		panelCTUS.add(lblHoten_panelCTUS);
+		
+		txtEmail_panelCTUS = new JTextField();
+		txtEmail_panelCTUS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtEmail_panelCTUS.setBounds(20, 133, 314, 30);
+		panelCTUS.add(txtEmail_panelCTUS);
+		txtEmail_panelCTUS.setColumns(10);
+		
+		txtHoten_panelCTUS = new JTextField();
+		txtHoten_panelCTUS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtHoten_panelCTUS.setBounds(20, 240, 156, 30);
+		panelCTUS.add(txtHoten_panelCTUS);
+		txtHoten_panelCTUS.setColumns(10);
+		
+		JLabel lblSDT_panelCTUS = new JLabel("Số diện thoại");
+		lblSDT_panelCTUS.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSDT_panelCTUS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblSDT_panelCTUS.setBounds(209, 225, 75, 20);
+		panelCTUS.add(lblSDT_panelCTUS);
+		
+		txtSDT_panelCTUS = new JTextField();
+		txtSDT_panelCTUS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtSDT_panelCTUS.setBounds(220, 240, 114, 30);
+		panelCTUS.add(txtSDT_panelCTUS);
+		txtSDT_panelCTUS.setColumns(10);
+		
+		JButton btnSuaUser_panelCTUS_1 = new JButton("Xem thêm");
+		btnSuaUser_panelCTUS_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.changeToChiTietUser();
+			}
+		});
+		btnSuaUser_panelCTUS_1.setFont(new Font("Arial", Font.BOLD, 16));
+		btnSuaUser_panelCTUS_1.setBounds(218, 46, 116, 27);
+		panelCTUS.add(btnSuaUser_panelCTUS_1);
+		
+		txtPassword_panelCTUS = new JPasswordField();
+		txtPassword_panelCTUS.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtPassword_panelCTUS.setBounds(20, 190, 314, 30);
+		panelCTUS.add(txtPassword_panelCTUS);
+		
+		JButton btnXuatFileLS_panelDieuKhienLS = new JButton("Xuất File");
+		btnXuatFileLS_panelDieuKhienLS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.xuatFileUser();
+			}
+		});
+		btnXuatFileLS_panelDieuKhienLS.setFocusPainted(false);
+		btnXuatFileLS_panelDieuKhienLS.setFont(new Font("Arial", Font.BOLD, 18));
+		btnXuatFileLS_panelDieuKhienLS.setBounds(247, 182, 117, 32);
+		panelDieuKhienUser.add(btnXuatFileLS_panelDieuKhienLS);
+		
+		return panelDieuKhienUser;
+	}
+	
+	
+	public JPanel panel_dieukhienDatSach() {
+		JPanel panelDieuKhienDatSach = new JPanel();
+		panelDieuKhienDatSach.setBounds(845, 36, 374, 540);
+
+		panelDieuKhienDatSach.setLayout(null);
+		
+		
+		JLabel lblTimKiem_panelDieuKhienUser = new JLabel("Tìm kiếm");
+		lblTimKiem_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblTimKiem_panelDieuKhienUser.setBounds(10, 10, 103, 43);
+		panelDieuKhienDatSach.add(lblTimKiem_panelDieuKhienUser);
+		
+		
+		txtTimKiem_panelDieuKhienUser_dkDS = new JTextField();
+		txtTimKiem_panelDieuKhienUser_dkDS.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				controller.timPMSTheoCBX_panelDangDat();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				controller.timPMSTheoCBX_panelDangDat();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		txtTimKiem_panelDieuKhienUser_dkDS.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTimKiem_panelDieuKhienUser_dkDS.setBounds(40, 63, 294, 36);
+		panelDieuKhienDatSach.add(txtTimKiem_panelDieuKhienUser_dkDS);
+		txtTimKiem_panelDieuKhienUser_dkDS.setColumns(10);
+		
+		JLabel lblDK_panelDieuKhienUser_dkDS = new JLabel("Điều khiển");
+		lblDK_panelDieuKhienUser_dkDS.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblDK_panelDieuKhienUser_dkDS.setBounds(10, 182, 134, 43);
+		panelDieuKhienDatSach.add(lblDK_panelDieuKhienUser_dkDS);
+		
+		cbxLoc_panelDieuKhienUser_dkDS = new JComboBox();
+		cbxLoc_panelDieuKhienUser_dkDS.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbxLoc_panelDieuKhienUser_dkDS.setModel(new DefaultComboBoxModel(new String[] {"Email", "Mã sách"}));
+		cbxLoc_panelDieuKhienUser_dkDS.setOpaque(true);
+		cbxLoc_panelDieuKhienUser_dkDS.setBounds(40, 124, 294, 36);
+		panelDieuKhienDatSach.add(cbxLoc_panelDieuKhienUser_dkDS);
+		
+		JPanel panelCTUS = new JPanel();
+		panelCTUS.setBounds(10, 223, 354, 307);
+		panelDieuKhienDatSach.add(panelCTUS);
+		panelCTUS.setLayout(null);
+		
+		JButton btnSuaUser_panelCTUS_dkDS = new JButton("Đã lấy sách");
+		btnSuaUser_panelCTUS_dkDS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.chuyenTrangThaiPhieuThanhDangMuon();
+			}
+		});
+		btnSuaUser_panelCTUS_dkDS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnSuaUser_panelCTUS_dkDS.setBounds(50, 280, 130, 27);
+		panelCTUS.add(btnSuaUser_panelCTUS_dkDS);
+		
+		JButton btnDeleteUser_panelCTUS_dkDS = new JButton("Xóa");
+		btnDeleteUser_panelCTUS_dkDS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.deleteDatSach();
+			}
+		});
+		btnDeleteUser_panelCTUS_dkDS.setFont(new Font("Arial", Font.BOLD, 16));
+		btnDeleteUser_panelCTUS_dkDS.setBounds(199, 280, 105, 27);
+		panelCTUS.add(btnDeleteUser_panelCTUS_dkDS);
+		
+		JLabel lblEmail_panelCTUS_dkDS = new JLabel("Email");
+		lblEmail_panelCTUS_dkDS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEmail_panelCTUS_dkDS.setBounds(0, 0, 60, 20);
+		panelCTUS.add(lblEmail_panelCTUS_dkDS);
+		
+		JLabel lblPassword_panelCTUS_dkDS = new JLabel("Mã sách");
+		lblPassword_panelCTUS_dkDS.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPassword_panelCTUS_dkDS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblPassword_panelCTUS_dkDS.setBounds(0, 64, 60, 20);
+		panelCTUS.add(lblPassword_panelCTUS_dkDS);
+		
+		JLabel lblHoten_panelCTUS_dkDS = new JLabel("Ngày Đặt");
+		lblHoten_panelCTUS_dkDS.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHoten_panelCTUS_dkDS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblHoten_panelCTUS_dkDS.setBounds(0, 134, 60, 20);
+		panelCTUS.add(lblHoten_panelCTUS_dkDS);
+		
+		txtEmail_panelCTUS_dkDS = new JTextField();
+		txtEmail_panelCTUS_dkDS.setBounds(20, 24, 314, 30);
+		panelCTUS.add(txtEmail_panelCTUS_dkDS);
+		txtEmail_panelCTUS_dkDS.setColumns(10);
+		
+		txtNgayMuon_panelCTUS_dkDS = new JTextField();
+		txtNgayMuon_panelCTUS_dkDS.setBounds(20, 164, 314, 30);
+		panelCTUS.add(txtNgayMuon_panelCTUS_dkDS);
+		txtNgayMuon_panelCTUS_dkDS.setColumns(10);
+		
+		JLabel lblSDT_panelCTUS_dkDS = new JLabel("Trạng thái");
+		lblSDT_panelCTUS_dkDS.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSDT_panelCTUS_dkDS.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblSDT_panelCTUS_dkDS.setBounds(0, 204, 75, 20);
+		panelCTUS.add(lblSDT_panelCTUS_dkDS);
+		
+		txtTrangThai_panelCTUS_dkDS = new JTextField();
+		txtTrangThai_panelCTUS_dkDS.setBounds(20, 234, 314, 30);
+		panelCTUS.add(txtTrangThai_panelCTUS_dkDS);
+		txtTrangThai_panelCTUS_dkDS.setColumns(10);
+		
+		txtMaSach_panelCTUS_dkDS = new JTextField();
+		txtMaSach_panelCTUS_dkDS.setBounds(20, 94, 314, 30);
+		panelCTUS.add(txtMaSach_panelCTUS_dkDS);
+		
+		JButton btnXuatFileLS_panelDieuKhienLS = new JButton("Xuất File");
+		btnXuatFileLS_panelDieuKhienLS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.xuatFileDatSach();
+			}
+		});
+		btnXuatFileLS_panelDieuKhienLS.setFocusPainted(false);
+		btnXuatFileLS_panelDieuKhienLS.setFont(new Font("Arial", Font.BOLD, 18));
+		btnXuatFileLS_panelDieuKhienLS.setBounds(247, 182, 117, 32);
+		panelDieuKhienDatSach.add(btnXuatFileLS_panelDieuKhienLS);
+		
+		return panelDieuKhienDatSach;
+		
+	}
+
+	public JPanel panel_dieukhienYeuCau() {
+		JPanel panelDieuKhienYeuCau = new JPanel();
+		panelDieuKhienYeuCau.setBounds(845, 36, 374, 540);
+
+		panelDieuKhienYeuCau.setLayout(null);
+		
+		
+		JLabel lblTimKiem_panelDieuKhienUser = new JLabel("Tìm kiếm");
+		lblTimKiem_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblTimKiem_panelDieuKhienUser.setBounds(10, 10, 103, 43);
+		panelDieuKhienYeuCau.add(lblTimKiem_panelDieuKhienUser);
+		
+		
+		txtTimKiem_panelDieuKhienUser_dkYC = new JTextField();
+		txtTimKiem_panelDieuKhienUser_dkYC.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				controller.timYCTheoCBX_panelYC();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				controller.timYCTheoCBX_panelYC();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		txtTimKiem_panelDieuKhienUser_dkYC.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTimKiem_panelDieuKhienUser_dkYC.setBounds(40, 63, 294, 36);
+		panelDieuKhienYeuCau.add(txtTimKiem_panelDieuKhienUser_dkYC);
+		txtTimKiem_panelDieuKhienUser_dkYC.setColumns(10);
+		
+		JLabel lblDK_panelDieuKhienUser = new JLabel("Điều khiển");
+		lblDK_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblDK_panelDieuKhienUser.setBounds(10, 182, 134, 43);
+		panelDieuKhienYeuCau.add(lblDK_panelDieuKhienUser);
+		
+		cbxLoc_panelDieuKhienUser_dkYC = new JComboBox();
+		cbxLoc_panelDieuKhienUser_dkYC.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbxLoc_panelDieuKhienUser_dkYC.setModel(new DefaultComboBoxModel(new String[] {"Email"}));
+		cbxLoc_panelDieuKhienUser_dkYC.setOpaque(true);
+		cbxLoc_panelDieuKhienUser_dkYC.setBounds(40, 124, 294, 36);
+		panelDieuKhienYeuCau.add(cbxLoc_panelDieuKhienUser_dkYC);
+		
+		JPanel panelCTUS = new JPanel();
+		panelCTUS.setBounds(10, 223, 354, 307);
+		panelDieuKhienYeuCau.add(panelCTUS);
+		panelCTUS.setLayout(null);
+		
+		
+		JButton btnUserNew_panelCTUS_dkYC = new JButton("Làm mới");
+		btnUserNew_panelCTUS_dkYC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.btnNewYeuCau();
+			}
+		});
+		btnUserNew_panelCTUS_dkYC.setFont(new Font("Arial", Font.BOLD, 10));
+		btnUserNew_panelCTUS_dkYC.setBounds(0, 280, 105, 27);
+		panelCTUS.add(btnUserNew_panelCTUS_dkYC);
+		
+		JButton btnSuaUser_panelCTUS_dkYC = new JButton("Lưu Yêu Cầu");
+		btnSuaUser_panelCTUS_dkYC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.addOrUpdateYeuCau();
+			}
+		});
+		btnSuaUser_panelCTUS_dkYC.setFont(new Font("Arial", Font.BOLD, 10));
+		btnSuaUser_panelCTUS_dkYC.setBounds(126, 280, 105, 27);
+		panelCTUS.add(btnSuaUser_panelCTUS_dkYC);
+		
+		JButton btnDeleteUser_panelCTUS_dkYC = new JButton("Xóa Yêu Cầu");
+		btnDeleteUser_panelCTUS_dkYC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDeleteUser_panelCTUS_dkYC.setFont(new Font("Arial", Font.BOLD, 10));
+		btnDeleteUser_panelCTUS_dkYC.setBounds(249, 280, 105, 27);
+		panelCTUS.add(btnDeleteUser_panelCTUS_dkYC);
+		
+		JLabel lblEmail_panelCTUS_dkYC = new JLabel("Email");
+		lblEmail_panelCTUS_dkYC.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEmail_panelCTUS_dkYC.setBounds(0, 0, 60, 20);
+		panelCTUS.add(lblEmail_panelCTUS_dkYC);
+		
+		JLabel lblPassword_panelCTUS_dkYC = new JLabel("Loại sách");
+		lblPassword_panelCTUS_dkYC.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPassword_panelCTUS_dkYC.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblPassword_panelCTUS_dkYC.setBounds(0, 65, 60, 20);
+		panelCTUS.add(lblPassword_panelCTUS_dkYC);
+		
+		JLabel lblHoten_panelCTUS_dkYC = new JLabel("Tên Sách");
+		lblHoten_panelCTUS_dkYC.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHoten_panelCTUS_dkYC.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblHoten_panelCTUS_dkYC.setBounds(0, 135, 60, 20);
+		panelCTUS.add(lblHoten_panelCTUS_dkYC);
+		
+		txtEmail_panelCTUS_dkYC = new JTextField();
+		txtEmail_panelCTUS_dkYC.setBounds(20, 25, 314, 30);
+		panelCTUS.add(txtEmail_panelCTUS_dkYC);
+		txtEmail_panelCTUS_dkYC.setColumns(10);
+		
+		txtTenSach_panelCTUS_dkYC = new JTextField();
+		txtTenSach_panelCTUS_dkYC.setBounds(20, 165, 314, 30);
+		panelCTUS.add(txtTenSach_panelCTUS_dkYC);
+		txtTenSach_panelCTUS_dkYC.setColumns(10);
+		
+		JLabel lblSDT_panelCTUS_dkYC = new JLabel("Mô Tả");
+		lblSDT_panelCTUS_dkYC.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSDT_panelCTUS_dkYC.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblSDT_panelCTUS_dkYC.setBounds(0, 205, 75, 20);
+		panelCTUS.add(lblSDT_panelCTUS_dkYC);
+		
+		txtMoTa_panelCTUS_dkYC = new JTextField();
+		txtMoTa_panelCTUS_dkYC.setBounds(20, 235, 314, 30);
+		panelCTUS.add(txtMoTa_panelCTUS_dkYC);
+		txtMoTa_panelCTUS_dkYC.setColumns(10);
+		
+		txtLoaiSach_panelCTUS_dkYC = new JTextField();
+		txtLoaiSach_panelCTUS_dkYC.setBounds(20, 95, 314, 30);
+		panelCTUS.add(txtLoaiSach_panelCTUS_dkYC);
+		
+		JButton btnXuatFileLS_panelDieuKhienLS = new JButton("Xuất File");
+		btnXuatFileLS_panelDieuKhienLS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.xuatFileYeuCau();
+			}
+		});
+		btnXuatFileLS_panelDieuKhienLS.setFocusPainted(false);
+		btnXuatFileLS_panelDieuKhienLS.setFont(new Font("Arial", Font.BOLD, 18));
+		btnXuatFileLS_panelDieuKhienLS.setBounds(247, 182, 117, 32);
+		panelDieuKhienYeuCau.add(btnXuatFileLS_panelDieuKhienLS);
+		
+		return panelDieuKhienYeuCau;
+	}
+		
+	
+	public JPanel panel_dieukhienDangMuon() {
+		JPanel panelDieuKhienDangMuon = new JPanel();
+		panelDieuKhienDangMuon.setBounds(845, 36, 374, 540);
+
+		panelDieuKhienDangMuon.setLayout(null);
+		
+		
+		JLabel lblTimKiem_panelDieuKhienUser = new JLabel("Tìm kiếm");
+		lblTimKiem_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblTimKiem_panelDieuKhienUser.setBounds(10, 10, 103, 43);
+		panelDieuKhienDangMuon.add(lblTimKiem_panelDieuKhienUser);
+		
+		
+		txtTimKiem_panelDieuKhienUser_dkDM = new JTextField();
+		txtTimKiem_panelDieuKhienUser_dkDM.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				controller.timPMSTheoCBX_panelDangMuon();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				controller.timPMSTheoCBX_panelDangMuon();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		txtTimKiem_panelDieuKhienUser_dkDM.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTimKiem_panelDieuKhienUser_dkDM.setBounds(40, 63, 294, 36);
+		panelDieuKhienDangMuon.add(txtTimKiem_panelDieuKhienUser_dkDM);
+		txtTimKiem_panelDieuKhienUser_dkDM.setColumns(10);
+		
+		JLabel lblDK_panelDieuKhienUser = new JLabel("Điều khiển");
+		lblDK_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblDK_panelDieuKhienUser.setBounds(10, 182, 134, 43);
+		panelDieuKhienDangMuon.add(lblDK_panelDieuKhienUser);
+		
+		cbxLoc_panelDieuKhienUser_dkDM = new JComboBox();
+		cbxLoc_panelDieuKhienUser_dkDM.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbxLoc_panelDieuKhienUser_dkDM.setModel(new DefaultComboBoxModel(new String[] {"Email", "Mã sách"}));
+		cbxLoc_panelDieuKhienUser_dkDM.setOpaque(true);
+		cbxLoc_panelDieuKhienUser_dkDM.setBounds(40, 124, 294, 36);
+		panelDieuKhienDangMuon.add(cbxLoc_panelDieuKhienUser_dkDM);
+		
+		JPanel panelCTUS = new JPanel();
+		panelCTUS.setBounds(10, 223, 354, 307);
+		panelDieuKhienDangMuon.add(panelCTUS);
+		panelCTUS.setLayout(null);
+		
+		JButton btnSuaUser_panelCTUS_dkDM = new JButton("Đã Trả");
+		btnSuaUser_panelCTUS_dkDM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.chuyenTrangThaiPhieuThanhDaTra_DangMuon();
+			}
+		});
+		btnSuaUser_panelCTUS_dkDM.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSuaUser_panelCTUS_dkDM.setBounds(126, 280, 105, 27);
+		panelCTUS.add(btnSuaUser_panelCTUS_dkDM);
+		
+		JLabel lblEmail_panelCTUS_dkDM = new JLabel("Email");
+		lblEmail_panelCTUS_dkDM.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEmail_panelCTUS_dkDM.setBounds(0, 0, 60, 20);
+		panelCTUS.add(lblEmail_panelCTUS_dkDM);
+		
+		JLabel lblPassword_panelCTUS_dkDM = new JLabel("Mã Sách");
+		lblPassword_panelCTUS_dkDM.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPassword_panelCTUS_dkDM.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblPassword_panelCTUS_dkDM.setBounds(0, 65, 60, 20);
+		panelCTUS.add(lblPassword_panelCTUS_dkDM);
+		
+		JLabel lblNgayMuon_panelCTUS_dkDM = new JLabel("Ngày Mượn");
+		lblNgayMuon_panelCTUS_dkDM.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNgayMuon_panelCTUS_dkDM.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblNgayMuon_panelCTUS_dkDM.setBounds(0, 135, 60, 20);
+		panelCTUS.add(lblNgayMuon_panelCTUS_dkDM);
+		
+		txtEmail_panelCTUS_dkDM = new JTextField();
+		txtEmail_panelCTUS_dkDM.setBounds(20, 25, 314, 30);
+		panelCTUS.add(txtEmail_panelCTUS_dkDM);
+		txtEmail_panelCTUS_dkDM.setColumns(10);
+		
+		txtNgayMuon_panelCTUS_dkDM = new JTextField();
+		txtNgayMuon_panelCTUS_dkDM.setBounds(20, 165, 314, 30);
+		panelCTUS.add(txtNgayMuon_panelCTUS_dkDM);
+		txtNgayMuon_panelCTUS_dkDM.setColumns(10);
+		
+		JLabel lblNgayTra_panelCTUS_dkDM = new JLabel("Ngày Trả");
+		lblNgayTra_panelCTUS_dkDM.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNgayTra_panelCTUS_dkDM.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblNgayTra_panelCTUS_dkDM.setBounds(0, 205, 75, 20);
+		panelCTUS.add(lblNgayTra_panelCTUS_dkDM);
+		
+		txtNgayTra_panelCTUS_dkDM = new JTextField();
+		txtNgayTra_panelCTUS_dkDM.setBounds(20, 235, 314, 30);
+		panelCTUS.add(txtNgayTra_panelCTUS_dkDM);
+		txtNgayTra_panelCTUS_dkDM.setColumns(10);
+		
+		txtMaSach_panelCTUS_dkDM = new JTextField();
+		txtMaSach_panelCTUS_dkDM.setBounds(20, 95, 314, 30);
+		panelCTUS.add(txtMaSach_panelCTUS_dkDM);
+		
+		JButton btnNewDM_panelCTUS_dkDM = new JButton("Làm Mới");
+		btnNewDM_panelCTUS_dkDM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.btnNewDangMuon();
+			}
+		});
+		btnNewDM_panelCTUS_dkDM.setFont(new Font("Arial", Font.BOLD, 14));
+		btnNewDM_panelCTUS_dkDM.setBounds(0, 280, 105, 27);
+		panelCTUS.add(btnNewDM_panelCTUS_dkDM);
+		
+		JButton btnSaveDM_panelCTUS_dkDM = new JButton("Thêm Mới");
+		btnSaveDM_panelCTUS_dkDM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveDangMuon();
+			}
+		});
+		btnSaveDM_panelCTUS_dkDM.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSaveDM_panelCTUS_dkDM.setBounds(249, 280, 105, 27);
+		panelCTUS.add(btnSaveDM_panelCTUS_dkDM);
+		
+		JButton btnXuatFileLS_panelDieuKhienLS = new JButton("Xuất File");
+		btnXuatFileLS_panelDieuKhienLS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.xuatFileDangMuon();
+			}
+		});
+		btnXuatFileLS_panelDieuKhienLS.setFocusPainted(false);
+		btnXuatFileLS_panelDieuKhienLS.setFont(new Font("Arial", Font.BOLD, 18));
+		btnXuatFileLS_panelDieuKhienLS.setBounds(247, 182, 117, 32);
+		panelDieuKhienDangMuon.add(btnXuatFileLS_panelDieuKhienLS);
+		
+		return panelDieuKhienDangMuon;
+	}
+
+	public JPanel panel_dieukhienQuaHan() {
+		JPanel panelDieuKhienQuaHan = new JPanel();
+		panelDieuKhienQuaHan.setBounds(845, 36, 374, 540);
+
+		panelDieuKhienQuaHan.setLayout(null);
+		
+		
+		JLabel lblTimKiem_panelDieuKhienUser = new JLabel("Tìm kiếm");
+		lblTimKiem_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblTimKiem_panelDieuKhienUser.setBounds(10, 10, 103, 43);
+		panelDieuKhienQuaHan.add(lblTimKiem_panelDieuKhienUser);
+		
+		
+		txtTimKiem_panelDieuKhienUser_dkQH = new JTextField();
+		txtTimKiem_panelDieuKhienUser_dkQH.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				controller.timPMSTheoCBX_panelQuaHan();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				controller.timPMSTheoCBX_panelQuaHan();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		txtTimKiem_panelDieuKhienUser_dkQH.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTimKiem_panelDieuKhienUser_dkQH.setBounds(40, 63, 294, 36);
+		panelDieuKhienQuaHan.add(txtTimKiem_panelDieuKhienUser_dkQH);
+		txtTimKiem_panelDieuKhienUser_dkQH.setColumns(10);
+		
+		JLabel lblDK_panelDieuKhienUser = new JLabel("Điều khiển");
+		lblDK_panelDieuKhienUser.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblDK_panelDieuKhienUser.setBounds(10, 182, 134, 43);
+		panelDieuKhienQuaHan.add(lblDK_panelDieuKhienUser);
+		
+		cbxLoc_panelDieuKhienUser_dkQH = new JComboBox();
+		cbxLoc_panelDieuKhienUser_dkQH.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbxLoc_panelDieuKhienUser_dkQH.setModel(new DefaultComboBoxModel(new String[] {"Email", "Mã sách"}));
+		cbxLoc_panelDieuKhienUser_dkQH.setOpaque(true);
+		cbxLoc_panelDieuKhienUser_dkQH.setBounds(40, 124, 294, 36);
+		panelDieuKhienQuaHan.add(cbxLoc_panelDieuKhienUser_dkQH);
+		
+		JPanel panelCTUS = new JPanel();
+		panelCTUS.setBounds(10, 223, 354, 307);
+		panelDieuKhienQuaHan.add(panelCTUS);
+		panelCTUS.setLayout(null);
+		
+		JButton btnSuaUser_panelCTUS_dkQH = new JButton("Đã Trả");
+		btnSuaUser_panelCTUS_dkQH.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.chuyenTrangThaiPhieuThanhDaTra_QuaHan();
+			}
+		});
+		btnSuaUser_panelCTUS_dkQH.setFont(new Font("Arial", Font.BOLD, 16));
+		btnSuaUser_panelCTUS_dkQH.setBounds(126, 280, 105, 27);
+		panelCTUS.add(btnSuaUser_panelCTUS_dkQH);
+		
+		JLabel lblEmail_panelCTUS_dkQH = new JLabel("Email");
+		lblEmail_panelCTUS_dkQH.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEmail_panelCTUS_dkQH.setBounds(0, 0, 60, 20);
+		panelCTUS.add(lblEmail_panelCTUS_dkQH);
+		
+		JLabel lblMaSach_panelCTUS_dkQH = new JLabel("Mã Sách");
+		lblMaSach_panelCTUS_dkQH.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMaSach_panelCTUS_dkQH.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblMaSach_panelCTUS_dkQH.setBounds(0, 65, 60, 20);
+		panelCTUS.add(lblMaSach_panelCTUS_dkQH);
+		
+		JLabel lblNgayMuon_panelCTUS_dkQH = new JLabel("Ngày Mượn");
+		lblNgayMuon_panelCTUS_dkQH.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNgayMuon_panelCTUS_dkQH.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblNgayMuon_panelCTUS_dkQH.setBounds(0, 135, 60, 20);
+		panelCTUS.add(lblNgayMuon_panelCTUS_dkQH);
+		
+		txtEmail_panelCTUS_dkQH = new JTextField();
+		txtEmail_panelCTUS_dkQH.setBounds(20, 25, 314, 30);
+		panelCTUS.add(txtEmail_panelCTUS_dkQH);
+		txtEmail_panelCTUS_dkQH.setColumns(10);
+		
+		txtNgayMuon_panelCTUS_dkQH = new JTextField();
+		txtNgayMuon_panelCTUS_dkQH.setBounds(20, 165, 314, 30);
+		panelCTUS.add(txtNgayMuon_panelCTUS_dkQH);
+		txtNgayMuon_panelCTUS_dkQH.setColumns(10);
+		
+		JLabel lblNgayTra_panelCTUS_dkQH = new JLabel("Ngày Trả");
+		lblNgayTra_panelCTUS_dkQH.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNgayTra_panelCTUS_dkQH.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblNgayTra_panelCTUS_dkQH.setBounds(0, 205, 75, 20);
+		panelCTUS.add(lblNgayTra_panelCTUS_dkQH);
+		
+		txtNgayTra_panelCTUS_dkQH = new JTextField();
+		txtNgayTra_panelCTUS_dkQH.setBounds(20, 235, 314, 30);
+		panelCTUS.add(txtNgayTra_panelCTUS_dkQH);
+		txtNgayTra_panelCTUS_dkQH.setColumns(10);
+		
+		txtMaSach_panelCTUS_dkQH = new JTextField();
+		txtMaSach_panelCTUS_dkQH.setBounds(20, 95, 314, 30);
+		panelCTUS.add(txtMaSach_panelCTUS_dkQH);
+		
+		JButton btnXuatFileLS_panelDieuKhienLS = new JButton("Xuất File");
+		btnXuatFileLS_panelDieuKhienLS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.xuatFileQuaHan();
+			}
+		});
+		btnXuatFileLS_panelDieuKhienLS.setFocusPainted(false);
+		btnXuatFileLS_panelDieuKhienLS.setFont(new Font("Arial", Font.BOLD, 18));
+		btnXuatFileLS_panelDieuKhienLS.setBounds(247, 182, 117, 32);
+		panelDieuKhienQuaHan.add(btnXuatFileLS_panelDieuKhienLS);
+		
+		return panelDieuKhienQuaHan;
+	}
+	
+	public JPanel panel_ThongKe() {
+		JPanel panel_ThongKe = new JPanel();
+		panel_ThongKe.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_ThongKe.setBackground(new Color(255, 255, 255));
+		panel_ThongKe.setBounds(0, 148, 1286, 616);
+		panel_ThongKe.setLayout(null);
+		
+		// bat dau code
+		
+		JPanel panel_TongSoNguoiDung = new JPanel();
+		panel_TongSoNguoiDung.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_TongSoNguoiDung.setBounds(157, 77, 291, 204);
+		panel_ThongKe.add(panel_TongSoNguoiDung);
+		panel_TongSoNguoiDung.setLayout(null);
+		
+
+		JLabel lblTitle_panelTongSoNguoiDung = new JLabel("Tổng số người dùng");
+		lblTitle_panelTongSoNguoiDung.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelTongSoNguoiDung.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelTongSoNguoiDung.setForeground(new Color(255, 255, 255));
+		lblTitle_panelTongSoNguoiDung.setBounds(36, 26, 218, 44);
+		panel_TongSoNguoiDung.add(lblTitle_panelTongSoNguoiDung);
+		
+		JLabel lblTong__panelTongSoNguoiDung = new JLabel(userDAO.getuserDAO().soNguoiDung() + " người dùng");
+		lblTong__panelTongSoNguoiDung.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong__panelTongSoNguoiDung.setForeground(Color.WHITE);
+		lblTong__panelTongSoNguoiDung.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong__panelTongSoNguoiDung.setBounds(36, 70, 218, 44);
+		panel_TongSoNguoiDung.add(lblTong__panelTongSoNguoiDung);
+		
+		JLabel imgBG_panelTongSoNguoiDung = new JLabel("");
+		imgBG_panelTongSoNguoiDung.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseQLUser();
+			}
+		});
+		imgBG_panelTongSoNguoiDung.setBounds(0, 0, panel_TongSoNguoiDung.getWidth(), panel_TongSoNguoiDung.getHeight());
+//		ImageIcon imgITongSoNguoiDung_panelThongKe = new ImageIcon(
+//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelThongKe = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoNguoiDung.jpg");
+		Image imBG_panelThongKe = imgIBG_panelThongKe.getImage();
+		Image imageBG_panelThongKe = imBG_panelThongKe.getScaledInstance(imgBG_panelTongSoNguoiDung.getWidth(), imgBG_panelTongSoNguoiDung.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelThongKe = new ImageIcon(imageBG_panelThongKe);
+		imgBG_panelTongSoNguoiDung.setIcon(imageIconBG_panelThongKe);
+		panel_TongSoNguoiDung.add(imgBG_panelTongSoNguoiDung);
+		
+		
+		JPanel panel_TongSoSach = new JPanel();
+		panel_TongSoSach.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_TongSoSach.setBounds(498, 77, 291, 204);
+		panel_ThongKe.add(panel_TongSoSach);
+		panel_TongSoSach.setLayout(null);
+		
+		JLabel lblTong_panelTongSoSach = new JLabel(sachDAO.getsachDAO().soLuongSach() + " cuốn sách");
+//		JLabel lblTong_panelTongSoSach = new JLabel(11 + " cuốn sách");
+		lblTong_panelTongSoSach.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelTongSoSach.setForeground(Color.WHITE);
+		lblTong_panelTongSoSach.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelTongSoSach.setBounds(36, 70, 218, 44);
+		panel_TongSoSach.add(lblTong_panelTongSoSach);
+		
+		JLabel lblTitle_panelTongSoSach = new JLabel("Tổng số sách");
+		lblTitle_panelTongSoSach.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelTongSoSach.setForeground(Color.WHITE);
+		lblTitle_panelTongSoSach.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelTongSoSach.setBounds(36, 26, 218, 44);
+		panel_TongSoSach.add(lblTitle_panelTongSoSach);
+		
+		JLabel imgBG_panelTongSoSach = new JLabel("");
+		imgBG_panelTongSoSach.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseQLSach();
+			}
+		});
+		imgBG_panelTongSoSach.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelTongSoSach = new ImageIcon(
+//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelTongSoSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoSach.jpg");
+		Image imBG_panelTongSoSach = imgIBG_panelTongSoSach.getImage();
+		Image imageBG_panelTongSoSach = imBG_panelTongSoSach.getScaledInstance(imgBG_panelTongSoSach.getWidth(), imgBG_panelTongSoSach.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelTongSoSach = new ImageIcon(imageBG_panelTongSoSach);
+		imgBG_panelTongSoSach.setIcon(imageIconBG_panelTongSoSach);	
+		panel_TongSoSach.add(imgBG_panelTongSoSach);
+		
+		
+		JPanel panel_DoPhoBienCuaSach = new JPanel();
+		panel_DoPhoBienCuaSach.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_DoPhoBienCuaSach.setBounds(839, 77, 291, 204);
+		panel_ThongKe.add(panel_DoPhoBienCuaSach);
+		panel_DoPhoBienCuaSach.setLayout(null);
+		
+		JLabel lblTitle_panelDoPhoBienCuaSach = new JLabel("Độ phổ biến của sách");
+		lblTitle_panelDoPhoBienCuaSach.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelDoPhoBienCuaSach.setForeground(Color.WHITE);
+		lblTitle_panelDoPhoBienCuaSach.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelDoPhoBienCuaSach.setBounds(10, 26, 271, 44);
+		panel_DoPhoBienCuaSach.add(lblTitle_panelDoPhoBienCuaSach);
+		
+		JButton btnXemChiTiet_panelDoPhoBienCuaSach = new JButton("Xem chi tiết");
+		btnXemChiTiet_panelDoPhoBienCuaSach.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.createdChart();
+			}
+		});
+		btnXemChiTiet_panelDoPhoBienCuaSach.setFocusPainted(false);
+		btnXemChiTiet_panelDoPhoBienCuaSach.setFont(new Font("Arial", Font.BOLD, 18));
+		btnXemChiTiet_panelDoPhoBienCuaSach.setBounds(74, 70, 143, 44);
+		panel_DoPhoBienCuaSach.add(btnXemChiTiet_panelDoPhoBienCuaSach);
+		
+		JLabel imgBG_panelDoPhoBienCuaSach = new JLabel("");
+		imgBG_panelDoPhoBienCuaSach.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachDangMuon  = new ImageIcon(
+//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelDoPhoBienCuaSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\doPhoBienCuaSachjpg.jpg");
+		Image imBG_panelDoPhoBienCuaSach = imgIBG_panelDoPhoBienCuaSach.getImage();
+		Image imageBG_panelDoPhoBienCuaSach = imBG_panelDoPhoBienCuaSach.getScaledInstance(imgBG_panelDoPhoBienCuaSach.getWidth(), imgBG_panelDoPhoBienCuaSach.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelDoPhoBienCuaSach = new ImageIcon(imageBG_panelDoPhoBienCuaSach);
+		imgBG_panelDoPhoBienCuaSach.setIcon(imageIconBG_panelDoPhoBienCuaSach);	
+		panel_DoPhoBienCuaSach.add(imgBG_panelDoPhoBienCuaSach);
+		
+		
+		JPanel panel_SachQuaHan = new JPanel();
+		panel_SachQuaHan.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_SachQuaHan.setBounds(839, 321, 291, 204);
+		panel_ThongKe.add(panel_SachQuaHan);
+		panel_SachQuaHan.setLayout(null);
+		
+		JLabel lblTitle_panelSachQuaHan = new JLabel("Tống số sách quá hạn");
+		lblTitle_panelSachQuaHan.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelSachQuaHan.setForeground(Color.WHITE);
+		lblTitle_panelSachQuaHan.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelSachQuaHan.setBounds(10, 26, 271, 44);
+		panel_SachQuaHan.add(lblTitle_panelSachQuaHan);
+		
+		JLabel lblTong_panelSachQuaHan = new JLabel(phieuMuonSachDAO.getphieuMuonSachDAO().soLuongSachDaQuaHan() + " cuốn sách");
+//		JLabel lblTong_panelSachQuaHan = new JLabel(11 + " cuốn sách");
+		lblTong_panelSachQuaHan.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelSachQuaHan.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelSachQuaHan.setForeground(Color.WHITE);
+		lblTong_panelSachQuaHan.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelSachQuaHan.setBounds(36, 70, 218, 44);
+		panel_SachQuaHan.add(lblTong_panelSachQuaHan);
+		
+		JLabel imgBG_panelSachQuaHan = new JLabel("");
+		imgBG_panelSachQuaHan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseQLUser();
+				controller.changeToQuaHan();
+			}
+		});
+		imgBG_panelSachQuaHan.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon(
+//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachQuaHanjpg.jpg");
+		Image imBG_panelSachQuaHan  = imgIBG_panelSachQuaHan.getImage();
+		Image imageBG_panelSachQuaHan  = imBG_panelSachQuaHan.getScaledInstance(imgBG_panelSachQuaHan.getWidth(), imgBG_panelSachQuaHan.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelSachQuaHan  = new ImageIcon(imageBG_panelSachQuaHan);
+		imgBG_panelSachQuaHan.setIcon(imageIconBG_panelSachQuaHan);	
+		panel_SachQuaHan.add(imgBG_panelSachQuaHan);
+		
+		JPanel panel_SachDangDat = new JPanel();
+		panel_SachDangDat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_SachDangDat.setBounds(498, 321, 291, 204);
+		panel_ThongKe.add(panel_SachDangDat);
+		panel_SachDangDat.setLayout(null);
+		
+		JLabel lblTitle_panelSachDangDat = new JLabel("Tống số sách đang đặt");
+		lblTitle_panelSachDangDat.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelSachDangDat.setForeground(Color.WHITE);
+		lblTitle_panelSachDangDat.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelSachDangDat.setBounds(10, 26, 271, 44);
+		panel_SachDangDat.add(lblTitle_panelSachDangDat);
+		
+//		JLabel lblTong_panelSachDangDat = new JLabel(11 + " cuốn sách");
+		JLabel lblTong_panelSachDangDat = new JLabel(phieuMuonSachDAO.getphieuMuonSachDAO().soLuongSachDangDat() + " cuốn sách");
+		lblTong_panelSachDangDat.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelSachDangDat.setForeground(Color.WHITE);
+		lblTong_panelSachDangDat.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelSachDangDat.setBounds(36, 70, 218, 44);
+		panel_SachDangDat.add(lblTong_panelSachDangDat);
+		
+		JLabel imgBG_panelSachDangDat = new JLabel("");
+		imgBG_panelSachDangDat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseQLUser();
+				controller.changeToDatSach();
+			}
+		});
+		imgBG_panelSachDangDat.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachDangDat = new ImageIcon(
+//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelSachDangDat  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangDatjpg.jpg");
+		Image imBG_panelSachDangDat  = imgIBG_panelSachDangDat.getImage();
+		Image imageBG_panelSachDangDat  = imBG_panelSachDangDat.getScaledInstance(imgBG_panelSachDangDat.getWidth(), imgBG_panelSachDangDat.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelSachDangDat  = new ImageIcon(imageBG_panelSachDangDat);
+		imgBG_panelSachDangDat.setIcon(imageIconBG_panelSachDangDat);	
+		panel_SachDangDat.add(imgBG_panelSachDangDat);
+		
+		JPanel panel_SachDangMuon = new JPanel();
+		panel_SachDangMuon.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_SachDangMuon.setBounds(157, 321, 291, 204);
+		panel_ThongKe.add(panel_SachDangMuon);
+		panel_SachDangMuon.setLayout(null);
+		
+		JLabel lblTitle_panelSachDangMuon = new JLabel("Tống số sách đang mượn");
+		lblTitle_panelSachDangMuon.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle_panelSachDangMuon.setForeground(Color.WHITE);
+		lblTitle_panelSachDangMuon.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTitle_panelSachDangMuon.setBounds(10, 26, 271, 44);
+		panel_SachDangMuon.add(lblTitle_panelSachDangMuon);
+		
+		JLabel lblTong_panelSachDangMuon = new JLabel(phieuMuonSachDAO.getphieuMuonSachDAO().soLuongSachDangMuon() + " cuốn sách");
+//		JLabel lblTong_panelSachDangMuon = new JLabel(11 + " cuốn sách");
+		lblTong_panelSachDangMuon.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTong_panelSachDangMuon.setForeground(Color.WHITE);
+		lblTong_panelSachDangMuon.setFont(new Font("Calibri", Font.BOLD, 23));
+		lblTong_panelSachDangMuon.setBounds(36, 70, 218, 44);
+		panel_SachDangMuon.add(lblTong_panelSachDangMuon);
+		
+		JLabel imgBG_panelSachDangMuon = new JLabel("");
+		imgBG_panelSachDangMuon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				controller.choseQLUser();
+				controller.changeToDangMuon();
+			}
+		});
+		imgBG_panelSachDangMuon.setBounds(0, 0, 291, 204);
+//		ImageIcon imgIBG_panelSachDangMuon  = new ImageIcon(
+//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelSachDangMuon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangMuonjpg.jpg");
+		Image imBG_panelSachDangMuon = imgIBG_panelSachDangMuon.getImage();
+		Image imageBG_panelSachDangMuon = imBG_panelSachDangMuon.getScaledInstance(imgBG_panelSachDangMuon.getWidth(), imgBG_panelSachDangMuon.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIconBG_panelSachDangMuon = new ImageIcon(imageBG_panelSachDangMuon);
+		imgBG_panelSachDangMuon.setIcon(imageIconBG_panelSachDangMuon);	
+		panel_SachDangMuon.add(imgBG_panelSachDangMuon);
+		
+		// ket thuc code
+		
+		return panel_ThongKe;
+	}
 }
