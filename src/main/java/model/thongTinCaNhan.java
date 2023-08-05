@@ -1,28 +1,35 @@
 package model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class thongTinCaNhan {
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "custom-generator")
+    @GenericGenerator(name = "custom-generator", strategy = "custom.thongTinCaNhanGenerator")
 	private String maTTCN;
 	
 	@OneToOne
 	@JoinColumn(name = "email")
 	private user email;
 	
-	private String ten, soDienThoai, diaChi, hinh;
+	private String ten, soDienThoai, diaChi, hinh, trangThai;
 	
-	public thongTinCaNhan(String maTTCN, user email, String ten, String soDienThoai, String diaChi, String hinh) {
+	public thongTinCaNhan(String maTTCN, user email, String ten, String soDienThoai, String diaChi, String hinh, String trangThai) {
 		this.maTTCN = maTTCN;
 		this.email = email;
 		this.ten = ten;
 		this.soDienThoai = soDienThoai;
 		this.diaChi = diaChi;
 		this.hinh = hinh;
+		this.trangThai = trangThai;
 	}
 
 	public thongTinCaNhan() {
@@ -75,6 +82,14 @@ public class thongTinCaNhan {
 
 	public void setHinh(String hinh) {
 		this.hinh = hinh;
+	}
+
+	public String getTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(String trangThai) {
+		this.trangThai = trangThai;
 	}
 
 	@Override

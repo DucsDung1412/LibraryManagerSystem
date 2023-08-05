@@ -38,8 +38,9 @@ public class loginListener {
 		if(passWord.equals("") || userName.equals("")) {
 			JOptionPane.showMessageDialog(this.loginView, "Vui lòng nhập đày đủ thông tin");
 		} else {
-			user u = new user(userName, passWord , "");
+			user u = new user(userName, passWord , "", "Tồn tại");
 			user user = userDAO.getuserDAO().selectG(u);
+			System.out.println(user.getUsername());
 			if(user != null)
 			{
 				if(user.getPassword().equals(passWord)) {

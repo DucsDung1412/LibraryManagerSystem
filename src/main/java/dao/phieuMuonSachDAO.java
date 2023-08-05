@@ -11,6 +11,9 @@ import org.hibernate.Transaction;
 
 import model.danhGia;
 import model.phieuMuonSach;
+import model.sach;
+import model.thongTinCaNhan;
+import model.user;
 import util.hibernateUtil;
 
 public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
@@ -53,10 +56,12 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 					phieuMuonSach pmsClone = this.selectG(pms);
 					if(!pmsClone.getListDG().isEmpty()) {
 						for (danhGia dg : pmsClone.getListDG()) {
+							dg.setTrangThai("Đã xóa");
 							danhGiaDAO.getdanhGiaDAO().deletaX(dg);
 						}
 					}
-					s.remove(pms);
+					pms.setTrangThai("Đã xóa");
+					s.update(pms);
 					
 					ts.commit();
 				} finally {
@@ -130,7 +135,7 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					String hql = "FROM phieuMuonSach";
+					String hql = "FROM phieuMuonSach pms WHERE pms.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
@@ -167,10 +172,343 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					String hql = "SELECT COUNT(pms.maSach), pms.maSach, pms.maPhieu FROM phieuMuonSach pms GROUP BY pms.maSach";
+					String hql = "SELECT COUNT(pms.maSach), pms.maSach, pms.maPhieu FROM phieuMuonSach pms WHERE pms.trangThai != 'Đã xóa' GROUP BY pms.maSach";
 					Query query = s.createQuery(hql, Object[].class);
+					query.setMaxResults(10);
 					list = query.getResultList();
 
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	public Long soLuongSachDaQuaHan() {
+		long result = 0;
+		List<Long> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+						
+					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đã quá hạn'";
+					Query query = s.createQuery(hql);
+					list = query.getResultList();
+					
+					
+					result = list.get(0);
+					
+
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		return result;
+	}
+
+	public Long soLuongSachDangDat() {
+		long result = 0;
+		List<Long> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+						
+					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang đặt'";
+					Query query = s.createQuery(hql);
+					list = query.getResultList();
+					
+					
+					result = list.get(0);
+					
+
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		return result;
+	}
+	
+	public Long soLuongSachDangMuon() {
+		long result = 0;
+		List<Long> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+						
+					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang mượn'";
+					Query query = s.createQuery(hql);
+					list = query.getResultList();
+					
+					
+					result = list.get(0);
+					
+
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		return result;
+	}
+	
+	public List<phieuMuonSach> selectAllQuaHan() {
+        List<phieuMuonSach> list = new ArrayList<>();
+
+        try {
+            SessionFactory sf = hibernateUtil.getSessionFactory();
+            if(sf != null) {
+                Session s = sf.openSession();
+                try {
+                    Transaction ts = s.beginTransaction();
+
+                    String hql = "SELECT pms FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đã quá hạn' AND pms.trangThai != 'Đã xóa' ORDER BY pms.ngayMuon ASC";
+                    Query query = s.createQuery(hql);
+                    list = query.getResultList();
+
+                    ts.commit();
+                } finally {
+                    s.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+	
+	public List<phieuMuonSach> selectAllDangMuon() {
+        List<phieuMuonSach> list = new ArrayList<>();
+
+        try {
+            SessionFactory sf = hibernateUtil.getSessionFactory();
+            if(sf != null) {
+                Session s = sf.openSession();
+                try {
+                    Transaction ts = s.beginTransaction();
+
+                    String hql = "SELECT pms FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang mượn' AND pms.trangThai != 'Đã xóa' ORDER BY pms.ngayMuon ASC";
+                    Query query = s.createQuery(hql);
+                    list = query.getResultList();
+
+                    ts.commit();
+                } finally {
+                    s.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+	
+	public List<phieuMuonSach> selectAllDangDat() {
+        List<phieuMuonSach> list = new ArrayList<>();
+
+        try {
+            SessionFactory sf = hibernateUtil.getSessionFactory();
+            if(sf != null) {
+                Session s = sf.openSession();
+                try {
+                    Transaction ts = s.beginTransaction();
+
+                    String hql = "SELECT pms FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang đặt' AND pms.trangThai != 'Đã xóa' ORDER BY pms.ngayMuon ASC";
+                    Query query = s.createQuery(hql);
+                    list = query.getResultList();
+
+                    ts.commit();
+                } finally {
+                    s.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+	
+	public List<phieuMuonSach> selectAllDaTra() {
+        List<phieuMuonSach> list = new ArrayList<>();
+
+        try {
+            SessionFactory sf = hibernateUtil.getSessionFactory();
+            if(sf != null) {
+                Session s = sf.openSession();
+                try {
+                    Transaction ts = s.beginTransaction();
+
+                    String hql = "SELECT pms FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đã trả' AND pms.trangThai != 'Đã xóa' ORDER BY pms.ngayMuon ASC";
+                    Query query = s.createQuery(hql);
+                    list = query.getResultList();
+
+                    ts.commit();
+                } finally {
+                    s.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+	
+	public phieuMuonSach selectDangDat(sach sa, user u) {
+	    phieuMuonSach pm = null; // Initialize to null to handle no matching record case
+
+	    if (sa != null && u != null) { // Check for null arguments
+	        try (Session s = hibernateUtil.getSessionFactory().openSession()) {
+	            Transaction ts = s.beginTransaction();
+
+	            String hql = "FROM phieuMuonSach pms WHERE pms.email = :email AND pms.maSach = :maSach AND pms.trangThaiPhieu = 'Đang đặt' AND pms.trangThai != 'Đã xóa'";
+	            Query query = s.createQuery(hql);
+	            query.setParameter("email", u);
+	            query.setParameter("maSach", sa);
+
+	            List<phieuMuonSach> list = query.getResultList();
+	            if (!list.isEmpty()) {
+	                pm = list.get(0);
+	            }
+
+	            ts.commit();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return pm;
+	}
+	
+	public phieuMuonSach selectDangMuon(sach sa, user u) {
+	    phieuMuonSach pm = null; // Initialize to null to handle no matching record case
+
+	    if (sa != null && u != null) { // Check for null arguments
+	        try (Session s = hibernateUtil.getSessionFactory().openSession()) {
+	            Transaction ts = s.beginTransaction();
+
+	            String hql = "FROM phieuMuonSach pms WHERE pms.email = :email AND pms.maSach = :maSach AND pms.trangThaiPhieu = 'Đang mượn' AND pms.trangThai != 'Đã xóa'";
+	            Query query = s.createQuery(hql);
+	            query.setParameter("email", u);
+	            query.setParameter("maSach", sa);
+
+	            List<phieuMuonSach> list = query.getResultList();
+	            if (!list.isEmpty()) {
+	                pm = list.get(0);
+	            }
+
+	            ts.commit();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return pm;
+	}
+	
+	public phieuMuonSach selectQuaHan(sach sa, user u) {
+	    phieuMuonSach pm = null; // Initialize to null to handle no matching record case
+
+	    if (sa != null && u != null) { // Check for null arguments
+	        try (Session s = hibernateUtil.getSessionFactory().openSession()) {
+	            Transaction ts = s.beginTransaction();
+
+	            String hql = "FROM phieuMuonSach pms WHERE pms.email = :email AND pms.maSach = :maSach AND pms.trangThaiPhieu = 'Đã quá hạn' AND pms.trangThai != 'Đã xóa'";
+	            Query query = s.createQuery(hql);
+	            query.setParameter("email", u);
+	            query.setParameter("maSach", sa);
+
+	            List<phieuMuonSach> list = query.getResultList();
+	            if (!list.isEmpty()) {
+	                pm = list.get(0);
+	            }
+
+	            ts.commit();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return pm;
+	}
+	
+	public List<phieuMuonSach> selectTheoString(String traTheo, String duLieu, String option) {
+		List<phieuMuonSach> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM phieuMuonSach pms WHERE pms." + traTheo + " LIKE :id AND pms.trangThai != 'Đã xóa' AND pms.trangThaiPhieu = :option ORDER BY pms.ngayMuon ASC";
+					Query query = s.createQuery(hql);
+					query.setParameter("id", "%" + duLieu + "%");
+					query.setParameter("option", option);
+					list = query.getResultList();
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public List<phieuMuonSach> selectTheoObj(user duLieu, String option) {
+		List<phieuMuonSach> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM phieuMuonSach pms WHERE pms.email.username LIKE :email AND pms.trangThai != 'Đã xóa' AND pms.trangThaiPhieu = :option ORDER BY pms.ngayMuon ASC";
+					Query query = s.createQuery(hql);
+					query.setParameter("email", "%" + duLieu.getUsername() + "%");
+					System.out.println(duLieu.getUsername());
+					query.setParameter("option", option);
+					list = query.getResultList();
+					
 					ts.commit();
 				} finally {
 					s.close();

@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import model.thongTinCaNhan;
+import model.user;
 import model.yeuCau;
 import util.hibernateUtil;
 
@@ -50,7 +51,8 @@ public class thongTinCaNhanDAO implements daoInterface<thongTinCaNhan>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					s.remove(ttcn);
+					ttcn.setTrangThai("Đã xóa");
+					s.update(ttcn);
 					
 					ts.commit();
 				} finally {
@@ -122,7 +124,7 @@ public class thongTinCaNhanDAO implements daoInterface<thongTinCaNhan>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					String hql = "FROM thongTinCaNhan";
+					String hql = "FROM thongTinCaNhan ttcn WHERE ttcn.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
@@ -138,5 +140,58 @@ public class thongTinCaNhanDAO implements daoInterface<thongTinCaNhan>{
 		return list;
 	}
 	
+	public List<thongTinCaNhan> selectTheoString(String traTheo, String duLieu) {
+		List<thongTinCaNhan> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM thongTinCaNhan ttcn WHERE ttcn." + traTheo + " LIKE :id AND ttcn.trangThai != 'Đã xóa'";
+					Query query = s.createQuery(hql);
+					query.setParameter("id", "%" + duLieu + "%");
+					list = query.getResultList();
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 	
+	public List<thongTinCaNhan> selectTheoObj(user duLieu) {
+		List<thongTinCaNhan> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM thongTinCaNhan ttcn WHERE ttcn.email.username LIKE :email AND ttcn.trangThai != 'Đã xóa'";
+					Query query = s.createQuery(hql);
+					query.setParameter("email", "%" + duLieu.getUsername() + "%");
+					System.out.println(duLieu.getUsername());
+					list = query.getResultList();
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }

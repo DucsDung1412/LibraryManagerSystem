@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import model.danhGia;
+import model.thongTinCaNhan;
+import model.user;
 import model.yeuCau;
 import util.hibernateUtil;
 
@@ -51,7 +53,8 @@ public class yeuCauDAO implements daoInterface<yeuCau>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					s.remove(yeuC);
+					yeuC.setTrangThai("Đã xóa");
+					s.update(yeuC);
 					
 					ts.commit();
 				} finally {
@@ -125,7 +128,7 @@ public class yeuCauDAO implements daoInterface<yeuCau>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					String hql = "FROM yeuCau";
+					String hql = "FROM yeuCau yc WHERE yc.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
@@ -141,5 +144,31 @@ public class yeuCauDAO implements daoInterface<yeuCau>{
 		return list;
 	}
 	
-	
+	public List<yeuCau> selectTheoObj(user duLieu) {
+		List<yeuCau> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM yeuCau yc WHERE yc.email.username LIKE :email AND yc.trangThai != 'Đã xóa'";
+					Query query = s.createQuery(hql);
+					query.setParameter("email", "%" + duLieu.getUsername() + "%");
+					System.out.println(duLieu.getUsername());
+					list = query.getResultList();
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }

@@ -4,27 +4,34 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class sach {
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "custom-generator")
+    @GenericGenerator(name = "custom-generator", strategy = "custom.sachGenerator")
 	private String maSach;
 	private String tenSach, tacGia, hinhSach, moTa, nhaXuatBan;
 	private Integer namXB, soLuong, soLanTaiBan;
+	private String trangThai;
 	
 	@ManyToOne
 	@JoinColumn(name = "maLoaiSach")
 	private loaiSach maLoaiSach;
 	
-	@OneToMany(mappedBy = "maSach", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "maSach")
 	private List<phieuMuonSach> listPM;
 
 	public sach(String maSach, String tenSach, String tacGia, String hinhSach, String moTa, String nhaXuatBan,
-			Integer namXB, Integer soLuong, Integer soLanTaiBan, loaiSach maLoaiSach) {
+			Integer namXB, Integer soLuong, Integer soLanTaiBan, loaiSach maLoaiSach, String trangThai) {
 		this.maSach = maSach;
 		this.tenSach = tenSach;
 		this.tacGia = tacGia;
@@ -35,6 +42,7 @@ public class sach {
 		this.soLuong = soLuong;
 		this.soLanTaiBan = soLanTaiBan;
 		this.maLoaiSach = maLoaiSach;
+		this.trangThai = trangThai;
 	}
 
 	public sach() {
@@ -129,4 +137,12 @@ public class sach {
 		this.nhaXuatBan = nhaXuatBan;
 	}
 
+	public String getTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(String trangThai) {
+		this.trangThai = trangThai;
+	}
+	
 }

@@ -53,10 +53,13 @@ public class sachDAO implements daoInterface<sach>{
 					sach sachClone = this.selectG(sachS);
 					if(!sachClone.getListPM().isEmpty()) {
 						for (phieuMuonSach pms : sachClone.getListPM()) {
+							pms.setTrangThai("Đã xóa");
 							phieuMuonSachDAO.getphieuMuonSachDAO().deletaX(pms);
 						}
 					}
-					s.remove(sachS);
+					
+					sachS.setTrangThai("Đã xóa");
+					s.update(sachS);
 					
 					ts.commit();
 				} finally {
@@ -105,7 +108,9 @@ public class sachDAO implements daoInterface<sach>{
 					Transaction ts = s.beginTransaction();
 					
 					sa = s.get(sach.class, sachS.getMaSach());
-					sa.getListPM().size();
+					if(sa != null) {
+						sa.getListPM().size();
+					}
 					
 					ts.commit();
 				} finally {
@@ -130,7 +135,7 @@ public class sachDAO implements daoInterface<sach>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					String hql = "FROM sach";
+					String hql = "FROM sach s WHERE s.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
@@ -157,4 +162,63 @@ public class sachDAO implements daoInterface<sach>{
 		return list;
 	}
 
+	public List<sach> selectTheoString(String traTheo, String duLieu) {
+		List<sach> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM sach s WHERE s." + traTheo + " LIKE :id AND s.trangThai != 'Đã xóa'";
+					Query query = s.createQuery(hql);
+					query.setParameter("id", "%" + duLieu + "%");
+					list = query.getResultList();
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	public Long soLuongSach() {
+		long result = 0;
+		List<Long> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+						
+					String hql = "SELECT COUNT(s) FROM sach s";
+					Query query = s.createQuery(hql);
+					list = query.getResultList();
+					
+					
+					result = list.get(0);
+					
+
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		return result;
+	}
+	
+	
 }

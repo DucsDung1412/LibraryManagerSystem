@@ -51,7 +51,8 @@ public class danhGiaDAO implements daoInterface<danhGia>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					s.remove(dg);
+					dg.setTrangThai("Đã xóa");
+					s.update(dg);
 					
 					ts.commit();
 				} finally {
@@ -125,7 +126,7 @@ public class danhGiaDAO implements daoInterface<danhGia>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					String hql = "FROM danhGia";
+					String hql = "FROM danhGia dg WHERE dg.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					

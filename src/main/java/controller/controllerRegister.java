@@ -111,7 +111,7 @@ public class controllerRegister implements ActionListener {
 			String user = this.v_reg.txtEmail_panelRegister.getText();
 			String pass = this.v_reg.txtPass_panelRegister.getText();
 			String role = "Độc giả";
-			user u = new user(user, pass, role);
+			user u = new user(user, pass, role, "Tồn tại");
 			if (userDAO.getuserDAO().selectG(u) != null) {
 				JOptionPane.showMessageDialog(this.v_reg, "Email này đã tồn tại");
 			} else {
@@ -156,22 +156,13 @@ public class controllerRegister implements ActionListener {
 						userDAO.getuserDAO().insertX(u);
 						
 						thongTinCaNhan ttcnClone = new thongTinCaNhan();
+						ttcnClone.setMaTTCN(null);
 						ttcnClone.setHinh("employee.png");
 						ttcnClone.setTen(this.v_reg.txtName_panelRegister.getText());
-						List<thongTinCaNhan> listTTCN = thongTinCaNhanDAO.getthongTinCaNhanDAO().selectAll();
-						for (int i = 0 ;i <= listTTCN.size() ;i++) {
-							if(i == listTTCN.size()) {
-								ttcnClone.setMaTTCN("TT" + i);
-								break;
-							}
-							if(Integer.valueOf(listTTCN.get(i).getMaTTCN().substring(2).trim()) != i) {
-								ttcnClone.setMaTTCN("TT" + i);
-								break;
-							}
-						}
 						ttcnClone.setDiaChi("");
 						ttcnClone.setSoDienThoai("");
 						ttcnClone.setEmail(u);
+						ttcnClone.setTrangThai("Tồn tại");
 						thongTinCaNhanDAO.getthongTinCaNhanDAO().insertX(ttcnClone);
 						JOptionPane.showMessageDialog(this.v_reg, "Đăng ký thành công");
 					} else {

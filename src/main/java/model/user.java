@@ -4,9 +4,13 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class user {
@@ -27,10 +31,13 @@ public class user {
 	@OneToMany(mappedBy = "email", cascade = CascadeType.ALL)
 	private List<yeuCau> listYC;
 	
-	public user(String username, String password, String role) {
+	private String trangThai;
+	
+	public user(String username, String password, String role, String trangthai) {
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.trangThai = trangthai;
 	}
 
 	public user() {
@@ -91,6 +98,14 @@ public class user {
 
 	public void setTtcn(thongTinCaNhan ttcn) {
 		this.ttcn = ttcn;
+	}
+
+	public String getTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(String trangThai) {
+		this.trangThai = trangThai;
 	}
 
 //	@Override

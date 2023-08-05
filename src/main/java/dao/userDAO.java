@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -73,7 +74,9 @@ public class userDAO implements daoInterface<user>{
 					if(userClone.getTtcn() != null) {
 						thongTinCaNhanDAO.getthongTinCaNhanDAO().deletaX(userClone.getTtcn());
 					}			
-					s.remove(us);
+					
+					us.setTrangThai("Đã xóa");
+					s.update(us);
 					ts.commit();
 				} finally {
 					s.close();
@@ -121,10 +124,12 @@ public class userDAO implements daoInterface<user>{
 					Transaction ts = s.beginTransaction();
 					
 					u = s.get(user.class, us.getUsername());
-					u.getListDG().size();
-					u.getListPM().size();
-					u.getListYC().size();
-					u.getTtcn();
+					if(u != null) {
+						u.getListDG().size();
+						u.getListPM().size();
+						u.getListYC().size();
+						u.getTtcn();
+					}
 					
 					ts.commit();
 				} finally {
@@ -149,7 +154,7 @@ public class userDAO implements daoInterface<user>{
 				try {
 					Transaction ts = s.beginTransaction();
 					
-					String hql = "FROM user";
+					String hql = "FROM user us WHERE us.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
@@ -206,4 +211,34 @@ public class userDAO implements daoInterface<user>{
 		return list;
 	}
 
+	public Long soNguoiDung() {
+		long result = 0;
+		List<Long> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+						
+					String hql = "SELECT COUNT(u) FROM user u";
+					Query query = s.createQuery(hql);
+					list = query.getResultList();
+					
+					
+					result = list.get(0);
+					
+
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		return result;
+	}
 }
