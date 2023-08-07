@@ -69,7 +69,7 @@ public class googleLogin extends JPanel {
 		}
 		
 		String code = JOptionPane.showInputDialog(null, "Vùi lòng nhập authorization code");
-		if(code.trim() != null) {
+		if (code != null && !code.trim().isEmpty()) {
 			try {
 				GoogleTokenResponse token = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
 				

@@ -220,5 +220,37 @@ public class sachDAO implements daoInterface<sach>{
 		return result;
 	}
 	
-	
+	public sach selectTheoTenSach(String string) {
+		sach sa = new sach();
+		List<sach> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM sach s WHERE s.tenSach = :string AND s.trangThai != 'Đã xóa'";
+					Query query = s.createQuery(hql);
+					query.setParameter("string", string);
+					list = query.getResultList();
+					
+					sa = list.get(0);
+					
+					if(sa!=null) {
+						sa.getListPM().size();
+					}
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return sa;
+	}
 }

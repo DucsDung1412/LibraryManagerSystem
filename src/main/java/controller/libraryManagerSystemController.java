@@ -294,6 +294,29 @@ public class libraryManagerSystemController {
 		this.view.contentPane.repaint();
 		this.view.contentPane.revalidate();
 	}
+	
+	public void choseTTCTS(String tenSach) {
+		this.view.imgHome_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgHome_panelTop.setOpaque(false);
+		
+		this.view.imgMyBook_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgMyBook_panelTop.setOpaque(false);
+		
+		this.view.imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgBookManager_panelTop.setOpaque(false);
+		
+		this.view.imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgUserManager_panelTop.setOpaque(false);
+		
+		this.view.imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgThongKe_panelTop.setOpaque(false);
+		
+		this.view.contentPane.removeAll();
+		this.view.contentPane.add(this.view.panel_top);
+		this.view.contentPane.add(this.view.panel_TTS(tenSach));
+		this.view.contentPane.repaint();
+		this.view.contentPane.revalidate();
+	}
 
 	public void logOut() {
 		loginView viewLogin = new loginView();
@@ -318,19 +341,49 @@ public class libraryManagerSystemController {
 			int month = calendar.getMonthChooser().getMonth();
 			int year = calendar.getYearChooser().getYear();
 			
-			Date date = new Date(year - 1900, month, day);
-			Date date1 = new Date(year, month, day, month, i, year);
+			Date ngayMuon = new Date(year - 1900, month, day);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-			String dateClone = sdf.format(date);
-			
-			user u = new user();
-			u.setUsername("daoducdung2000@gmail.com");
-			
-			sach s = new sach();
-			s.setMaSach("MS01");
-			
-//			phieuMuonSach pms = new phieuMuonSach("PM09", date, date, u, s, dateClone);
-//			phieuMuonSachDAO.getphieuMuonSachDAO().insertX(pms);
+			String ngayMuonSach = sdf.format(ngayMuon);
+			Date ngayHienTai = Calendar.getInstance().getTime();
+			String ngayBayGio = sdf.format(ngayHienTai);
+			if(ngayMuonSach.compareTo(ngayBayGio) < 0) {
+				JOptionPane.showMessageDialog(this.view, "Ngày đặt sách không hợp lệ");
+			} else {
+				
+				Date ngayTra = new Date(year - 1900, month + 1, day);
+				
+				user u = new user();
+				u.setUsername(this.view.emailLogin);
+				user uDAO = userDAO.getuserDAO().selectG(u);
+				
+				sach s = sachDAO.getsachDAO().selectTheoTenSach(this.view.lblTitle_panelGT.getText());
+				Boolean b = false;
+				
+				for (phieuMuonSach pms : uDAO.getListPM()) {
+					if(pms.getMaSach().getMaSach().equals(s.getMaSach())) {
+						if(!pms.getTrangThaiPhieu().equals("Đã trả")) {
+							b = true; 
+							break;
+						}
+					}
+				}
+				
+				if(b == false) {
+					if(s.getSoLuong() <= 0) {
+						JOptionPane.showMessageDialog(this.view, "Sách này đang tạm hết. Vui lòng quay lại sau");
+					} else {
+						phieuMuonSach pms = new phieuMuonSach(null, ngayMuon, ngayTra, u, s, "Đang đặt", "Tồn tại");
+						phieuMuonSachDAO.getphieuMuonSachDAO().insertX(pms);
+						s.setSoLuong(s.getSoLuong() - 1);
+						sachDAO.getsachDAO().updateX(s);
+						
+						JOptionPane.showMessageDialog(this.view, "Đặt sách thành công");
+						this.view.txtValue_panelTTCT_1.setText(" " + s.getNamXB() + "\r\n Tái bản lần thứ " + s.getSoLanTaiBan() + "\r\n " + s.getSoLuong() + " cuốn");
+					}
+				} else {
+					JOptionPane.showMessageDialog(this.view, "Bạn đã mượn sách này trước đây hoặc đã đặt sách này rồi. Vui lòng trả lại sách để tiến hành đặt lại");
+				}
+			}
 		}
 	}
 
@@ -1173,7 +1226,7 @@ public class libraryManagerSystemController {
 		view.txtEmail_panelCTUS_dkDM.setText("");
 		view.txtMaSach_panelCTUS_dkDM.setText("");
 		Date d = Calendar.getInstance().getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String ngayMuon = sdf.format(d);
 		view.txtNgayMuon_panelCTUS_dkDM.setText(ngayMuon);
 		d.setMonth(d.getMonth() + 1);
@@ -1505,14 +1558,33 @@ public class libraryManagerSystemController {
 					Date ngayMuon = sdf.parse(this.view.txtNgayMuon_panelCTUS_dkDM.getText());
 					Date ngayTra = sdf.parse(this.view.txtNgayTra_panelCTUS_dkDM.getText());
 					
-					phieuMuonSach pms = new phieuMuonSach(null, ngayMuon, ngayTra, uDAO, s, "Đang mượn", "Tồn tại");
-					phieuMuonSachDAO.getphieuMuonSachDAO().insertX(pms);
-					JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
-					this.loadTableDangMuon();
-					this.view.tblQuanLyDangMuon.setRowSelectionInterval(this.view.tblQuanLyDangMuon.getRowCount() - 1, this.view.tblQuanLyDangMuon.getRowCount() - 1);
-					this.chooseQlDangMuon();
-					sDAO.setSoLuong(sDAO.getSoLuong() - 1);
-					sachDAO.getsachDAO().updateX(sDAO);
+					Boolean b = false;
+					
+					for (phieuMuonSach pms : uDAO.getListPM()) {
+						if(pms.getMaSach().getMaSach().equals(s.getMaSach())) {
+							if(!pms.getTrangThaiPhieu().equals("Đã trả")) {
+								b = true; 
+								break;
+							}
+						}
+					}
+					
+					if(b == false) {
+						if(sDAO.getSoLuong() <= 0) {
+							JOptionPane.showMessageDialog(this.view, "Sách này đang tạm hết. Vui lòng quay lại sau");
+						} else {
+							phieuMuonSach pms = new phieuMuonSach(null, ngayMuon, ngayTra, uDAO, sDAO, "Đang mượn", "Tồn tại");
+							phieuMuonSachDAO.getphieuMuonSachDAO().insertX(pms);
+							JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
+							this.loadTableDangMuon();
+							this.view.tblQuanLyDangMuon.setRowSelectionInterval(this.view.tblQuanLyDangMuon.getRowCount() - 1, this.view.tblQuanLyDangMuon.getRowCount() - 1);
+							this.chooseQlDangMuon();
+							sDAO.setSoLuong(sDAO.getSoLuong() - 1);
+							sachDAO.getsachDAO().updateX(sDAO);
+						}
+					} else {
+						JOptionPane.showMessageDialog(this.view, "Bạn đã mượn sách này trước đây hoặc đã đặt sách này rồi. Vui lòng trả lại sách để tiến hành đặt lại");
+					}
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}

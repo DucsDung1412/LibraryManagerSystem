@@ -40,11 +40,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
 import controller.libraryManagerSystemController;
+import dao.danhGiaDAO;
 import dao.loaiSachDAO;
 import dao.phieuMuonSachDAO;
 import dao.sachDAO;
 import dao.userDAO;
 import dao.yeuCauDAO;
+import model.danhGia;
 import model.loaiSach;
 import model.phieuMuonSach;
 import model.sach;
@@ -157,6 +159,8 @@ public class libraryManagerSystemView extends JFrame {
 	public JComboBox cbxLoc_panelDieuKhienUser_dkYC;
 	public JTextArea txtMatKhauUser_panelTop;
 	public JLabel lblEmailUser_panelTop;
+	public JLabel lblTitle_panelGT;
+	public JTextPane txtValue_panelTTCT_1;
 	
 	
 
@@ -495,7 +499,7 @@ public class libraryManagerSystemView extends JFrame {
 		panel_top.add(imgBG_panelTop);
 
 		// Thêm panel tại đây
-		contentPane.add(panel_TTS());
+		contentPane.add(panel_TTS("Lập trình hướng đối tượng JAVA core"));
 		
 	}
 	
@@ -674,12 +678,9 @@ public class libraryManagerSystemView extends JFrame {
 	}
 	
 	
-	public JScrollPane panel_TTS() {
+	public JScrollPane panel_TTS(String tenSach) {
 		// tim sach
-		sach sachClone = new sach();
-		this.maSach = "MS08";
-		sachClone.setMaSach(maSach);
-		sach sach = sachDAO.getsachDAO().selectG(sachClone);
+		sach sach = sachDAO.getsachDAO().selectTheoTenSach(tenSach);
 		
 //		System.out.println(sach.getMoTa());
 		
@@ -718,8 +719,7 @@ public class libraryManagerSystemView extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		imgSach_panelGT.setBounds(0, 0, 1140, 268);
 //			ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelTTS = new ImageIcon(
-				"C:\\Users\\Admin\\OneDrive\\Pictures\\Screenshots\\Screenshot 2023-07-16 154106.png");
+		ImageIcon imgIBG_panelTTS = new ImageIcon(Paths.get("src/main/java/icon/" + sach.getHinhSach()).toAbsolutePath().toString());
 		Image imBG_panelTTS = imgIBG_panelTTS.getImage();
 		Image imageBG_panelTTS = imBG_panelTTS.getScaledInstance(imgSach_panelGT.getWidth(),
 				imgSach_panelGT.getHeight(), Image.SCALE_SMOOTH);
@@ -740,8 +740,7 @@ public class libraryManagerSystemView extends JFrame {
 		btnDatSach_panelGT.setBounds(10, 278, 144, 49);
 		panel_GT.add(btnDatSach_panelGT);
 
-		JLabel lblTitle_panelGT = new JLabel(
-				"Lập trình hướng đối tượng JAVA core dành cho người mới bắt đầu học lập trình");
+		lblTitle_panelGT = new JLabel(sach.getTenSach());
 		lblTitle_panelGT.setFont(new Font("Arial", Font.PLAIN, 22));
 		lblTitle_panelGT.setBounds(164, 278, 931, 49);
 		panel_GT.add(lblTitle_panelGT);
@@ -778,14 +777,14 @@ public class libraryManagerSystemView extends JFrame {
 
 		JTextPane txtValue_panelTTCT = new JTextPane();
 		txtValue_panelTTCT.setEditable(false);
-		txtValue_panelTTCT.setText(" Nhà Xuất Bản Lao Động\r\n\r\n Đào Đức Dũng");
+		txtValue_panelTTCT.setText(" " + sach.getNhaXuatBan() + "\r\n\r\n " + sach.getTacGia());
 		txtValue_panelTTCT.setFont(new Font("Calibri Light", Font.PLAIN, 24));
 		txtValue_panelTTCT.setBackground(new Color(255, 255, 255));
 		txtValue_panelTTCT.setBounds(232, 54, 252, 98);
 		panel_TTCT.add(txtValue_panelTTCT);
 		
-		JTextPane txtValue_panelTTCT_1 = new JTextPane();
-		txtValue_panelTTCT_1.setText(" 2021\r\n Tái bản lần thứ nhất\r\n 21 cuốn");
+		txtValue_panelTTCT_1 = new JTextPane();
+		txtValue_panelTTCT_1.setText(" " + sach.getNamXB() + "\r\n Tái bản lần thứ " + sach.getSoLanTaiBan() + "\r\n " + sach.getSoLuong() + " cuốn");
 		txtValue_panelTTCT_1.setFont(new Font("Calibri Light", Font.PLAIN, 24));
 		txtValue_panelTTCT_1.setEditable(false);
 		txtValue_panelTTCT_1.setBackground(Color.WHITE);
@@ -818,8 +817,8 @@ public class libraryManagerSystemView extends JFrame {
 
 		JTextPane txtMTSP_panelMTSP = new JTextPane();
 		txtMTSP_panelMTSP.setEditable(false);
-		txtMTSP_panelMTSP.setText( //sach.getMoTa());
-				"I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA");
+		txtMTSP_panelMTSP.setText( sach.getMoTa());
+//				"I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA");
 		txtMTSP_panelMTSP.setFont(new Font("Calibri Light", Font.PLAIN, 16));
 		txtMTSP_panelMTSP.setBackground(Color.WHITE);
 		txtMTSP_panelMTSP.setBounds(20, 40, 1092, 404);
@@ -849,9 +848,19 @@ public class libraryManagerSystemView extends JFrame {
 		panel_DG.add(scrollPane_panelDG);
 
 		JTextPane txtDG_panelDG = new JTextPane();
+		txtDG_panelDG.setText("");
 		txtDG_panelDG.setEditable(false);
 		txtDG_panelDG.setFont(new Font("Calibri Light", Font.PLAIN, 24));
-		txtDG_panelDG.setText("asjdjasd: aksdhlkasd");
+		List<danhGia> list = danhGiaDAO.getdanhGiaDAO().selectAll();
+		for (danhGia danhGia : list) {
+			if(danhGia.getMaPhieuMuon().getMaSach().getMaSach().equals(sach.getMaSach())) {
+				if(txtDG_panelDG.getText().equals("")) {
+					txtDG_panelDG.setText(danhGia.getEmail().getTtcn().getTen() + ": " + danhGia.getDanhGia());
+				} else {
+					txtDG_panelDG.setText(txtDG_panelDG.getText() + "\n" + danhGia.getEmail().getTtcn().getTen() + ": " + danhGia.getDanhGia());
+				}
+			}
+		}
 		scrollPane_panelDG.setViewportView(txtDG_panelDG);
 
 		
