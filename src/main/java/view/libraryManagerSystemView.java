@@ -500,9 +500,9 @@ public class libraryManagerSystemView extends JFrame {
 
 		// Thêm panel tại đây
 		contentPane.add(panel_TTS("Lập trình hướng đối tượng JAVA core"));
+//		contentPane.add(panel_QuanLyUser());
 		
 	}
-	
 
 	public JPanel panel_TTCN() {
 		// Find user login
@@ -676,7 +676,6 @@ public class libraryManagerSystemView extends JFrame {
 
 		return panel_TTCN;
 	}
-	
 	
 	public JScrollPane panel_TTS(String tenSach) {
 		// tim sach
@@ -928,6 +927,7 @@ public class libraryManagerSystemView extends JFrame {
 		return panel_QLS;
 	}
 	
+	
 	public JPanel timKiemSach() {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -1043,8 +1043,7 @@ public class libraryManagerSystemView extends JFrame {
 		DefaultComboBoxModel<String> cbxmodelMLS = (DefaultComboBoxModel<String>) cbxMaLS_panelCTS.getModel();
 		List<loaiSach> layloaisach = loaiSachDAO.getloaiSachDAO().selectAll();
 		for (loaiSach loaiSach : layloaisach) {
-			cbxmodelMLS.addElement(loaiSach.getMaLoaiSach());
-			
+			cbxmodelMLS.addElement(loaiSach.getTenLoaiSach());
 		}
 		
 		panelDieuKhien.add(cbxMaLS_panelCTS);
@@ -1284,7 +1283,6 @@ public class libraryManagerSystemView extends JFrame {
 		return panelDieuKhienLS;
 	}
 	
-	
 	public JScrollPane tblQuanLySach() {
 		 tblQuanLySach = new JTable();
 		tblQuanLySach.addMouseListener(new MouseAdapter() {
@@ -1331,7 +1329,7 @@ public class libraryManagerSystemView extends JFrame {
 	                    sach.getSoLanTaiBan(),
 	                    sach.getNamXB(),
 	                    sach.getSoLuong(),
-	                    sach.getMaLoaiSach().getMaLoaiSach()
+	                    sach.getMaLoaiSach().getTenLoaiSach()
 	                    
 	            });
 		}
@@ -1342,7 +1340,6 @@ public class libraryManagerSystemView extends JFrame {
 		scrollPane_QLS.setViewportView(tblQuanLySach);
 		return scrollPane_QLS;
 	}
-	
 	
 	public JScrollPane tblQuanLyLoaiSach() {
 		tblQuanLyLoaiSach = new JTable();
@@ -1483,7 +1480,6 @@ public class libraryManagerSystemView extends JFrame {
 		return panel_QLUS;
 	}	
 	
-	
 	public JScrollPane tblQuanLyUser() {
 		tblQuanLyUser = new JTable();
 		tblQuanLyUser.addMouseListener(new MouseAdapter() {
@@ -1529,7 +1525,6 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return scrollPaneUser;
 	}
-	
 	
 	public JScrollPane tblQuanLyDatSach() {
 		tblQuanLyDatSach = new JTable();
@@ -1622,7 +1617,6 @@ public class libraryManagerSystemView extends JFrame {
 		return scrollPaneUser;
 	}
 	
-	
 	public JScrollPane tblQuanLyDangMuon() {
 		tblQuanLyDangMuon = new JTable();
 		tblQuanLyDangMuon.addMouseListener(new MouseAdapter() {
@@ -1670,7 +1664,6 @@ public class libraryManagerSystemView extends JFrame {
 		return scrollPaneUser;
 	}
 	
-	
 	public JScrollPane tblQuanLyQuaHan() {
 		tblQuanLyQuaHan = new JTable();
 		tblQuanLyQuaHan.addMouseListener(new MouseAdapter() {
@@ -1717,7 +1710,6 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return scrollPaneUser;
 	}
-	
 	
 	public JPanel panel_dieukhienUser() {
 		JPanel panelDieuKhienUser = new JPanel();
@@ -1885,7 +1877,6 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return panelDieuKhienUser;
 	}
-	
 	
 	public JPanel panel_dieukhienDatSach() {
 		JPanel panelDieuKhienDatSach = new JPanel();
@@ -2158,7 +2149,6 @@ public class libraryManagerSystemView extends JFrame {
 		return panelDieuKhienYeuCau;
 	}
 		
-	
 	public JPanel panel_dieukhienDangMuon() {
 		JPanel panelDieuKhienDangMuon = new JPanel();
 		panelDieuKhienDangMuon.setBounds(845, 36, 374, 540);

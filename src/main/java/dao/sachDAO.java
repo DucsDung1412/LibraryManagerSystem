@@ -200,7 +200,7 @@ public class sachDAO implements daoInterface<sach>{
 				try {
 					Transaction ts = s.beginTransaction();
 						
-					String hql = "SELECT COUNT(s) FROM sach s";
+					String hql = "SELECT COUNT(s) FROM sach s WHERE s.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					

@@ -200,7 +200,7 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 				try {
 					Transaction ts = s.beginTransaction();
 						
-					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đã quá hạn'";
+					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đã quá hạn' AND pms.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
@@ -231,7 +231,7 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 				try {
 					Transaction ts = s.beginTransaction();
 						
-					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang đặt'";
+					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang đặt' AND pms.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
@@ -262,7 +262,7 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 				try {
 					Transaction ts = s.beginTransaction();
 						
-					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang mượn'";
+					String hql = "SELECT COUNT(pms) FROM phieuMuonSach pms WHERE pms.trangThaiPhieu like 'Đang mượn' AND pms.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					

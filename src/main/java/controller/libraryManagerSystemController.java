@@ -112,15 +112,18 @@ public class libraryManagerSystemController {
 				user.getTtcn().setHinh(name);
 			}
 			String sdt_test = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
-		
-			if(this.view.txtSDT_panelTTCN.getText().matches(sdt_test)) {
-				this.updateTTCN_Of_user(user);
-			} else {
-				if(this.view.txtSDT_panelTTCN.getText().equals("")) {
+			if(validateName(this.view.txtHoTen_panelTTCN.getText())) {
+				if(this.view.txtSDT_panelTTCN.getText().matches(sdt_test)) {
 					this.updateTTCN_Of_user(user);
 				} else {
-					JOptionPane.showMessageDialog(this.view, "Số điện thoại không đúng định dạng");
+					if(this.view.txtSDT_panelTTCN.getText().equals("")) {
+						this.updateTTCN_Of_user(user);
+					} else {
+						JOptionPane.showMessageDialog(this.view, "Số điện thoại không đúng định dạng");
+					}
 				}
+			} else {
+				JOptionPane.showMessageDialog(this.view, "Tên không hợp lệ");
 			}
 		}
 	}
@@ -653,8 +656,7 @@ public class libraryManagerSystemController {
 			
 			String maSach = this.view.txtMaSach_panelCTS.getText();
 			
-			loaiSach ls = new loaiSach();
-			ls.setMaLoaiSach(this.view.cbxMaLS_panelCTS.getSelectedItem()+"");
+			loaiSach ls = loaiSachDAO.getloaiSachDAO().selectTheoTen("tenLoaiSach", this.view.cbxMaLS_panelCTS.getSelectedItem()+"");
 
 			String tacGia = this.view.txtTacGia_panelCTS.getText();
 			
@@ -690,35 +692,37 @@ public class libraryManagerSystemController {
 				{				
 					JOptionPane.showMessageDialog(this.view, "Vùi lòng nhập đầy đủ thông tin");
 				} else {
-					
-					Boolean b = sclone == null;
-					if(b) {
-						sachDAO.getsachDAO().insertX(sach);
-						JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
-						this.loadSach();
-						this.view.tblQuanLySach.setRowSelectionInterval(this.view.tblQuanLySach.getRowCount() - 1, this.view.tblQuanLySach.getRowCount() - 1);
-					} else {
-						sachDAO.getsachDAO().updateX(sach);
-						JOptionPane.showMessageDialog(this.view, "Cập nhật thành công");
-						this.loadSach();
-						for (int j = 0; j < this.view.tblQuanLySach.getRowCount(); j++) {
-							if(this.view.tblQuanLySach.getValueAt(j, 0).equals(sclone.getMaSach())) {
-								this.view.tblQuanLySach.setRowSelectionInterval(j,j);
+					if(validateName(tacGia)) {
+						if(validatePublisherName(nhaXB)) {
+							if(tenSach.matches("^[a-zA-Z].*$")) {
+								Boolean b = sclone == null;
+								if(b) {
+									sachDAO.getsachDAO().insertX(sach);
+									JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
+									this.loadSach();
+									this.view.tblQuanLySach.setRowSelectionInterval(this.view.tblQuanLySach.getRowCount() - 1, this.view.tblQuanLySach.getRowCount() - 1);
+								} else {
+									sachDAO.getsachDAO().updateX(sach);
+									JOptionPane.showMessageDialog(this.view, "Cập nhật thành công");
+									this.loadSach();
+									for (int j = 0; j < this.view.tblQuanLySach.getRowCount(); j++) {
+										if(this.view.tblQuanLySach.getValueAt(j, 0).equals(sclone.getMaSach())) {
+											this.view.tblQuanLySach.setRowSelectionInterval(j,j);
+										}
+									}
+								}
+							} else {
+								JOptionPane.showMessageDialog(this.view, "Tên sách không hợp lệ");
 							}
+						} else {
+							JOptionPane.showMessageDialog(this.view, "Nhà Xuất Bản không hợp lệ");
 						}
+					} else {
+						JOptionPane.showMessageDialog(this.view, "Tên tác giả không hợp lệ");
 					}
 				}
 			} catch (Exception e) {
-				if(hinhSach.equals("") || mota.equals("") || this.view.txtTenSach_panelCTS.getText().equals("") 
-						|| this.view.txtNhaXuatBan_panelCTS.getText().equals("") || this.view.txtTacGia_panelCTS.getText().equals("") 
-						|| this.view.txtNamXuatBan_panelCTS.getText().equals("") || this.view.txtSoLuong_panelCTS.getText().equals("") 
-						|| this.view.txtTaiBan_panelCTS.getText().equals("") || this.view.txtMaSach_panelCTS.getText().equals("")) 
-				{				
-					JOptionPane.showMessageDialog(this.view, "Vùi lòng nhập đầy đủ thông tin");
-				} else {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(this.view, "Số lương, năm xuất bản và tái bản phải là số");
-				}
+				JOptionPane.showMessageDialog(this.view, "Số lương, năm xuất bản và tái bản phải là số");
 			}
 			
 		}
@@ -870,29 +874,34 @@ public class libraryManagerSystemController {
 		loaiSach.setTenLoaiSach(this.view.txtTenLS_panelCTLS.getText());
 		loaiSach.setMoTa(this.view.txtMoTa_panelCTLS.getText());
 		loaiSach.setTrangThai("Tồn tại");
-		
-		
 
 		Boolean b = loaiSachDAO.getloaiSachDAO().selectG(loaiSach) == null;
-		if(b) {
-			//INSERT
-			loaiSachDAO.getloaiSachDAO().insertX(loaiSach);
-			JOptionPane.showMessageDialog(this.view, "Thêm thành công");
-			loadLoaiSach();
-			this.view.tblQuanLyLoaiSach.setRowSelectionInterval(this.view.tblQuanLyLoaiSach.getRowCount() - 1, this.view.tblQuanLyLoaiSach.getRowCount() - 1);
+		if(this.view.txtMoTa_panelCTLS.getText().equals("") || this.view.txtTenLS_panelCTLS.getText().equals("")) {
+			JOptionPane.showMessageDialog(this.view, "Vui lòng nhập đầy đủ thông tin");
 		} else {
-			//UPDATE
-			loaiSach ls = loaiSachDAO.getloaiSachDAO().selectG(loaiSach);
-			loaiSachDAO.getloaiSachDAO().updateX(loaiSach);
-			JOptionPane.showMessageDialog(this.view, "Cập nhật thành công");
-			loadLoaiSach();
-			for (int j = 0; j < this.view.tblQuanLyLoaiSach.getRowCount(); j++) {
-				if(this.view.tblQuanLyLoaiSach.getValueAt(j, 0).equals(ls.getMaLoaiSach())) {
-					this.view.tblQuanLyLoaiSach.setRowSelectionInterval(j,j);
+			if(validatePublisherName(loaiSach.getTenLoaiSach())) {
+				if(b) {
+					//INSERT
+					loaiSachDAO.getloaiSachDAO().insertX(loaiSach);
+					JOptionPane.showMessageDialog(this.view, "Thêm thành công");
+					loadLoaiSach();
+					this.view.tblQuanLyLoaiSach.setRowSelectionInterval(this.view.tblQuanLyLoaiSach.getRowCount() - 1, this.view.tblQuanLyLoaiSach.getRowCount() - 1);
+				} else {
+					//UPDATE
+					loaiSach ls = loaiSachDAO.getloaiSachDAO().selectG(loaiSach);
+					loaiSachDAO.getloaiSachDAO().updateX(loaiSach);
+					JOptionPane.showMessageDialog(this.view, "Cập nhật thành công");
+					loadLoaiSach();
+					for (int j = 0; j < this.view.tblQuanLyLoaiSach.getRowCount(); j++) {
+						if(this.view.tblQuanLyLoaiSach.getValueAt(j, 0).equals(ls.getMaLoaiSach())) {
+							this.view.tblQuanLyLoaiSach.setRowSelectionInterval(j,j);
+						}
+					}
 				}
+			} else {
+				JOptionPane.showMessageDialog(this.view, "Tên loại sách không đúng");
 			}
 		}
-		
 	}
 	
 	public void xoaLoaiSach() {
@@ -991,7 +1000,7 @@ public class libraryManagerSystemController {
 	                    sach.getSoLanTaiBan(),
 	                    sach.getNamXB(),
 	                    sach.getSoLuong(),
-	                    sach.getMaLoaiSach().getMaLoaiSach()
+	                    sach.getMaLoaiSach().getTenLoaiSach()
 	                    
 	            });
 		}
@@ -1081,7 +1090,7 @@ public class libraryManagerSystemController {
 				FileOutputStream fos = new FileOutputStream(file + ".pdf");
 				PdfWriter.getInstance(document, fos);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 			document.open();
 			
@@ -1168,7 +1177,7 @@ public class libraryManagerSystemController {
 		ImageIcon imageIcon_AvatarUs = new ImageIcon(image_AvatarUs);
 		this.view.imgUser_panelCTUS.setText("");
 		this.view.imgUser_panelCTUS.setIcon(imageIcon_AvatarUs);
-		
+		this.view.txtEmail_panelCTUS.setEditable(false);
 	}
 	
 	public void chooseQLDatsach() {
@@ -1213,6 +1222,7 @@ public class libraryManagerSystemController {
 		view.txtSDT_panelCTUS.setText("");
 		this.view.imgUser_panelCTUS.setIcon(null);
 		this.view.imgUser_panelCTUS.setText("Nhấn để tải hình ảnh");
+		this.view.txtEmail_panelCTUS.setEditable(true);
 	}
 	
 	public void btnNewYeuCau() {
@@ -1266,7 +1276,7 @@ public class libraryManagerSystemController {
 				} else {
 					if(this.view.tblQuanLyUser.getRowCount() - 1 == this.view.tblQuanLyUser.getSelectedRow()) {
 						this.loadUser();
-						if(this.view.tblQuanLySach.getRowCount() != 0) {
+						if(this.view.tblQuanLyUser.getRowCount() != 0) {
 							this.view.tblQuanLyUser.setRowSelectionInterval(this.view.tblQuanLyUser.getRowCount() - 1, this.view.tblQuanLyUser.getRowCount() - 1);
 						}
 					} else {
@@ -1303,6 +1313,9 @@ public class libraryManagerSystemController {
 	}
 	
 	public void addOrUpdateUser() {
+		String sdt_test = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
+		String chkEmail = "^[A-Za-z0-9-\\+]+([A-Za-z0-9-]+)*@" + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		
 		int i = JOptionPane.showConfirmDialog(this.view, "Bạn có chắc chắn với quyết định này?", "Confirm", JOptionPane.YES_NO_OPTION);
 		if(i == JOptionPane.YES_OPTION) {
 			// luu hinh anh vao file
@@ -1331,38 +1344,50 @@ public class libraryManagerSystemController {
 				{				
 					JOptionPane.showMessageDialog(this.view, "Vùi lòng nhập đầy đủ thông tin");
 				} else {
-					user uclone = userDAO.getuserDAO().selectG(u);
-					Boolean b = uclone == null;
-					if(b) {
-						userDAO.getuserDAO().insertX(u);
-						ttcn.setDiaChi("...");
-						ttcn.setEmail(u);
-						ttcn.setTrangThai("Tồn tại");
-						thongTinCaNhanDAO.getthongTinCaNhanDAO().insertX(ttcn);
-						JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
-						this.loadUser();
-						for (int j = 0; j < this.view.tblQuanLyUser.getRowCount(); j++) {
-							if(this.view.tblQuanLyUser.getValueAt(j, 0).equals(u.getUsername())) {
-								this.view.tblQuanLyUser.setRowSelectionInterval(j,j);
+					if(this.view.txtEmail_panelCTUS.getText().matches(chkEmail)) {
+						if(this.view.txtSDT_panelCTUS.getText().matches(sdt_test)) {
+							if(validateName(this.view.txtHoten_panelCTUS.getText())) {
+								user uclone = userDAO.getuserDAO().selectG(u);
+								Boolean b = uclone == null;
+								if(b) {
+									userDAO.getuserDAO().insertX(u);
+									ttcn.setDiaChi("...");
+									ttcn.setEmail(u);
+									ttcn.setTrangThai("Tồn tại");
+									thongTinCaNhanDAO.getthongTinCaNhanDAO().insertX(ttcn);
+									JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
+									this.loadUser();
+									for (int j = 0; j < this.view.tblQuanLyUser.getRowCount(); j++) {
+										if(this.view.tblQuanLyUser.getValueAt(j, 0).equals(u.getUsername())) {
+											this.view.tblQuanLyUser.setRowSelectionInterval(j,j);
+										}
+									}
+								} else {
+									userDAO.getuserDAO().updateX(u);
+									
+									ttcn.setMaTTCN(uclone.getTtcn().getMaTTCN());
+									ttcn.setDiaChi(uclone.getTtcn().getDiaChi());
+									ttcn.setEmail(uclone);
+									ttcn.setTrangThai(uclone.getTrangThai());
+									
+									thongTinCaNhanDAO.getthongTinCaNhanDAO().updateX(ttcn);
+									
+									JOptionPane.showMessageDialog(this.view, "Cập nhật thành công");
+									this.loadUser();
+									for (int j = 0; j < this.view.tblQuanLyUser.getRowCount(); j++) {
+										if(this.view.tblQuanLyUser.getValueAt(j, 0).equals(uclone.getUsername())) {
+											this.view.tblQuanLyUser.setRowSelectionInterval(j,j);
+										}
+									}
+								}
+							} else {
+								JOptionPane.showMessageDialog(this.view, "Tên không hợp lệ");
 							}
+						} else {
+							JOptionPane.showMessageDialog(this.view, "Số điện thoại không hợp lệ");
 						}
 					} else {
-						userDAO.getuserDAO().updateX(u);
-						
-						ttcn.setMaTTCN(uclone.getTtcn().getMaTTCN());
-						ttcn.setDiaChi(uclone.getTtcn().getDiaChi());
-						ttcn.setEmail(uclone);
-						ttcn.setTrangThai(uclone.getTrangThai());
-						
-						thongTinCaNhanDAO.getthongTinCaNhanDAO().updateX(ttcn);
-						
-						JOptionPane.showMessageDialog(this.view, "Cập nhật thành công");
-						this.loadUser();
-						for (int j = 0; j < this.view.tblQuanLyUser.getRowCount(); j++) {
-							if(this.view.tblQuanLyUser.getValueAt(j, 0).equals(uclone.getUsername())) {
-								this.view.tblQuanLyUser.setRowSelectionInterval(j,j);
-							}
-						}
+						JOptionPane.showMessageDialog(this.view, "Email không hợp lê");
 					}
 				}
 			} catch (Exception e) {
@@ -1816,5 +1841,49 @@ public class libraryManagerSystemController {
 		} else if(option == 1) {
 			exportToPDF(this.view.tblQuanLyQuaHan, "Quản lý sách đã quá hạn");
 		}
+	}
+	
+	public boolean validateName(String name) {
+	    // Check if the name is empty
+	    if (name.isEmpty()) {
+	        return false;
+	    }
+
+	    // Check if the name contains any invalid characters
+	    for (char c : name.toCharArray()) {
+	        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+	            return false;
+	        }
+	    }
+
+	    // Check if the name is too long
+	    if (name.length() > 100) {
+	        return false;
+	    }
+
+	    // The name is valid
+	    return true;
+	}
+	
+	public boolean validatePublisherName(String publisherName) {
+	    // Check if the publisher name is empty
+	    if (publisherName.isEmpty()) {
+	        return false;
+	    }
+
+	    // Check if the publisher name contains any invalid characters
+	    for (char c : publisherName.toCharArray()) {
+	        if (!Character.isLetter(c) && !Character.isWhitespace(c) && c != '-') {
+	            return false;
+	        }
+	    }
+
+	    // Check if the publisher name is too long
+	    if (publisherName.length() > 100) {
+	        return false;
+	    }
+
+	    // The publisher name is valid
+	    return true;
 	}
 }

@@ -197,4 +197,33 @@ public class loaiSachDAO implements daoInterface<loaiSach>{
 		
 		return list;
 	}
+	
+	public loaiSach selectTheoTen(String traTheo, String duLieu) {
+		loaiSach ls = new loaiSach();
+		List<loaiSach> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM loaiSach ls WHERE ls." + traTheo + " LIKE :id AND ls.trangThai != 'Đã xóa'";
+					Query query = s.createQuery(hql);
+					query.setParameter("id", duLieu);
+					list = query.getResultList();
+					ls = list.get(0);
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ls;
+	}
 }

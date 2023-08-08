@@ -222,7 +222,7 @@ public class userDAO implements daoInterface<user>{
 				try {
 					Transaction ts = s.beginTransaction();
 						
-					String hql = "SELECT COUNT(u) FROM user u";
+					String hql = "SELECT COUNT(u) FROM user u WHERE u.trangThai != 'Đã xóa'";
 					Query query = s.createQuery(hql);
 					list = query.getResultList();
 					
