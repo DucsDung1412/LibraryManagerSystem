@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -16,14 +18,18 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JTextPane;
 
 import java.awt.Font;
+import java.awt.GridLayout;
+
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -57,8 +63,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -161,6 +170,13 @@ public class libraryManagerSystemView extends JFrame {
 	public JLabel lblEmailUser_panelTop;
 	public JLabel lblTitle_panelGT;
 	public JTextPane txtValue_panelTTCT_1;
+	public JPanel panel_home;
+	public JPanel panel_mainHome;
+	public JScrollPane scrollPane_mainHome;
+	public JScrollPane scrollPane_theLoai;
+	public JPanel panel_sapXep;
+	public JPanel panel_topHome;
+	public JTextField txttimKiem_paneltopHome;
 	
 	
 
@@ -223,20 +239,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgHome_panelTop.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				imgHome_panelTop.setBackground(new Color(255, 255, 255));
-				imgHome_panelTop.setOpaque(true);
-				
-				imgMyBook_panelTop.setBackground(new Color(244, 244, 244));
-				imgMyBook_panelTop.setOpaque(false);
-				
-				imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
-				imgBookManager_panelTop.setOpaque(false);
-				
-				imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
-				imgUserManager_panelTop.setOpaque(false);
-				
-				imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
-				imgThongKe_panelTop.setOpaque(false);
+				controller.choseHome();
 			}
 		});
 		imgHome_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -499,9 +502,259 @@ public class libraryManagerSystemView extends JFrame {
 		panel_top.add(imgBG_panelTop);
 
 		// Thêm panel tại đây
-		contentPane.add(panel_TTS("Lập trình hướng đối tượng JAVA core"));
-//		contentPane.add(panel_QuanLyUser());
+//		contentPane.add(panel_TTS("Lập trình hướng đối tượng JAVA core"));
+		contentPane.add(panel_Home());
 		
+	}
+
+	public JPanel panel_Home() {
+//		panel home
+		panel_home = new JPanel();
+		panel_home.setBackground(new Color(255, 255, 255));
+		panel_home.setBounds(-1, 147, 1286, 616);
+		panel_home.setLayout(null);
+		contentPane.add(panel_home);
+
+//		panel top home
+		panel_topHome = new JPanel();
+		panel_topHome.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_topHome.setBackground(new Color(240, 240, 240));
+		panel_topHome.setBounds(75, 15, 1136, 60);
+		panel_home.add(panel_topHome);
+		panel_topHome.setLayout(null);
+
+//		panel sap xep
+		panel_sapXep = new JPanel();
+		panel_sapXep.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_sapXep.setVisible(false);
+			}
+		});
+		panel_sapXep.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_sapXep.setBounds(160, 100, 159, 90);
+		panel_home.add(panel_sapXep);
+		panel_sapXep.setLayout(null);
+		panel_sapXep.setVisible(false);
+		panel_sapXep.setBackground(Color.white);
+
+		JLabel lbltang_panelsapXep = new JLabel("Tên sách A-Z");
+		lbltang_panelsapXep.setFont(new Font("Arial", Font.PLAIN, 18));
+		lbltang_panelsapXep.setBounds(20, 10, 110, 30);
+		panel_sapXep.add(lbltang_panelsapXep);
+
+		JLabel lblgiam_panelsapXep = new JLabel("Tên sách Z-A");
+		lblgiam_panelsapXep.setBackground(Color.WHITE);
+		lblgiam_panelsapXep.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblgiam_panelsapXep.setBounds(20, 50, 110, 32);
+		panel_sapXep.add(lblgiam_panelsapXep);
+
+//		JScrollPane the loai
+		scrollPane_theLoai = new JScrollPane();
+		scrollPane_theLoai.setBounds(75, 100, 270, 150);
+		scrollPane_theLoai.setBackground(Color.white);
+		scrollPane_theLoai.setVisible(false);
+
+//		panel the loai
+		JPanel panel_theLoai = new JPanel();
+		panel_theLoai.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_theLoai.setVisible(false);
+			}
+		});
+		panel_theLoai.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_theLoai.setBackground(new Color(255, 255, 255));
+		panel_theLoai.setBounds(75, 90, 270, 150);
+		scrollPane_theLoai.setViewportView(panel_theLoai);
+		panel_theLoai.setLayout(new GridLayout(0, 1, 10, 10));
+
+//		JScrollPane main home
+		scrollPane_mainHome = new JScrollPane();
+		scrollPane_mainHome.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				scrollPane_theLoai.setVisible(false);
+			}
+		});
+		scrollPane_mainHome.setBounds(75, 100, 1136, 506);
+
+//		panel main home
+		panel_mainHome = new JPanel();
+		panel_mainHome.setBackground(new Color(240, 240, 240));
+		scrollPane_mainHome.setViewportView(panel_mainHome);
+		panel_mainHome.setLayout(new GridLayout(0, 3, 25, 25));
+
+		JLabel lblsapXep_paneltopHome = new JLabel("Sắp xếp");
+		lblsapXep_paneltopHome.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_sapXep.setVisible(true);
+				scrollPane_theLoai.setVisible(false);
+			}
+		});
+		lblsapXep_paneltopHome.setFont(new Font("Arial", Font.BOLD, 17));
+		lblsapXep_paneltopHome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblsapXep_paneltopHome.setBounds(120, 0, 90, 60);
+		panel_topHome.add(lblsapXep_paneltopHome);
+
+		JLabel lbltheLoai_paneltopHome = new JLabel("Thể loại");
+		lbltheLoai_paneltopHome.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				scrollPane_theLoai.setVisible(true);
+				panel_sapXep.setVisible(false);
+			}
+		});
+
+		lbltheLoai_paneltopHome.setHorizontalAlignment(SwingConstants.CENTER);
+		lbltheLoai_paneltopHome.setFont(new Font("Arial", Font.BOLD, 17));
+		lbltheLoai_paneltopHome.setBounds(10, 0, 90, 60);
+		panel_topHome.add(lbltheLoai_paneltopHome);
+
+		JLabel lblyeuCau_paneltopHome = new JLabel("Yêu cầu sách mới");
+		lblyeuCau_paneltopHome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblyeuCau_paneltopHome.setFont(new Font("Arial", Font.BOLD, 17));
+		lblyeuCau_paneltopHome.setBounds(230, 0, 165, 60);
+		panel_topHome.add(lblyeuCau_paneltopHome);
+
+		JLabel imgtimKiem_paneltopHome = new JLabel("");
+		imgtimKiem_paneltopHome.setBounds(1080, 15, 30, 30);
+		// imgtimKiem_panelTopHome.setIcon(new ImageIcon(
+		// "C:\\Users\\men\\eclipse-workspace\\LibraryManagerSystem\\LibraryManagerSystem\\src\\main\\java\\icon\\iconSearch.png"));
+		ImageIcon imgiconTK = new ImageIcon(Paths.get("src/main/java/icon/iconSearch.png").toAbsolutePath().toString());
+		Image imgTK = imgiconTK.getImage();
+		Image imgsearch = imgTK.getScaledInstance(imgtimKiem_paneltopHome.getWidth(),
+				imgtimKiem_paneltopHome.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imgicon = new ImageIcon(imgsearch);
+		imgtimKiem_paneltopHome.setIcon(imgicon);
+		panel_topHome.add(imgtimKiem_paneltopHome);
+		imgtimKiem_paneltopHome.setHorizontalAlignment(SwingConstants.CENTER);
+		imgtimKiem_paneltopHome.setFont(new Font("Calibri", Font.PLAIN, 18));
+		panel_topHome.add(imgtimKiem_paneltopHome);
+
+		txttimKiem_paneltopHome = new JTextField();
+		txttimKiem_paneltopHome.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				controller.searchSach();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				controller.searchSach();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				controller.searchSach();
+			}
+		});
+		txttimKiem_paneltopHome.setBounds(786, 15, 284, 30);
+		panel_topHome.add(txttimKiem_paneltopHome);
+
+		JLabel lblTimKiem_paneltopHome = new JLabel("Tìm kiếm");
+		lblTimKiem_paneltopHome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTimKiem_paneltopHome.setFont(new Font("Arial", Font.BOLD, 17));
+		lblTimKiem_paneltopHome.setBounds(671, 0, 105, 60);
+		panel_topHome.add(lblTimKiem_paneltopHome);
+
+		int temp = -1;
+		int xx = 0;
+
+		List<sach> listSach = sachDAO.getsachDAO().selectAll();
+
+		for (sach ds : listSach) {
+			temp++;
+			if (temp > 8 && temp % 3 == 0) {
+				xx++;
+				panel_mainHome.setPreferredSize(
+						new Dimension(scrollPane_mainHome.getWidth() - 22, scrollPane_mainHome.getHeight() + 730 * xx));
+			} else if (temp <= 8 && temp >= 6) {
+				panel_mainHome.setPreferredSize(
+						new Dimension(scrollPane_mainHome.getWidth() - 22, scrollPane_mainHome.getHeight() + 450));
+			} else if (temp <= 5) {
+				panel_mainHome.setPreferredSize(
+						new Dimension(scrollPane_mainHome.getWidth() - 22, scrollPane_mainHome.getHeight() + 120));
+			}
+
+			JPanel panel_sach = new JPanel();
+			panel_sach.setName(ds.getTenSach());
+			panel_sach.setBackground(new Color(255, 255, 255));
+			panel_sach.setForeground(new Color(255, 255, 255));
+			panel_sach.setLayout(null);
+			panel_mainHome.add(panel_sach);
+
+			JLabel lbltenSach_panelsach = new JLabel(ds.getTenSach());
+			lbltenSach_panelsach.setHorizontalAlignment(SwingConstants.CENTER);
+			lbltenSach_panelsach.setFont(new Font("Arial", Font.BOLD, 16));
+			lbltenSach_panelsach.setBounds(20, 215, 289, 33);
+			panel_sach.add(lbltenSach_panelsach);
+
+			JButton btnxemThem_panelsach = new JButton("Xem thêm");
+			btnxemThem_panelsach.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnxemThem_panelsach.setBackground(new Color(255, 255, 255));
+			btnxemThem_panelsach.setFont(new Font("Arial", Font.BOLD, 14));
+			btnxemThem_panelsach.setForeground(Color.blue);
+			btnxemThem_panelsach.setBounds(115, 255, 110, 27);
+			btnxemThem_panelsach.setFocusPainted(false);
+			btnxemThem_panelsach.setOpaque(false);
+			btnxemThem_panelsach.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					String tenSach = ((Component)e.getSource()).getParent().getName();
+					controller.choseSachCT(tenSach);
+				}
+			});
+			panel_sach.add(btnxemThem_panelsach);
+
+			JLabel imghinhSach_panelsach = new JLabel("");
+			imghinhSach_panelsach.setBounds(0, 0, 360, 205);
+
+			ImageIcon imgiconSach = new ImageIcon((Paths.get("src/main/java/icon/" + ds.getHinhSach())).toString());
+			Image imgsach = imgiconSach.getImage();
+			Image img = imgsach.getScaledInstance(imghinhSach_panelsach.getWidth(), imghinhSach_panelsach.getHeight(),
+					Image.SCALE_SMOOTH);
+			ImageIcon imgIcon = new ImageIcon(img);
+			imghinhSach_panelsach.setIcon(imgIcon);
+			panel_sach.add(imghinhSach_panelsach);
+
+		}
+
+		List<loaiSach> listLoai = loaiSachDAO.getloaiSachDAO().selectAll();
+
+		for (loaiSach loai : listLoai) {
+			JLabel loaiSach_paneltheLoai = new JLabel(loai.getTenLoaiSach());
+			loaiSach_paneltheLoai.setHorizontalAlignment(SwingConstants.CENTER);
+			loaiSach_paneltheLoai.setFont(new Font("Arial", Font.PLAIN, 18));
+			loaiSach_paneltheLoai.setBounds(0, 30, 100, 30);
+			panel_theLoai.add(loaiSach_paneltheLoai);
+
+			loaiSach_paneltheLoai.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					String theLoai = ((JLabel) e.getSource()).getText();
+					controller.clickFillterLS_Home(theLoai);
+				};
+			});
+		}
+
+		panel_home.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_theLoai.setVisible(false);
+				panel_sapXep.setVisible(false);
+			}
+		});
+
+		panel_home.setLayout(null);
+
+		panel_home.add(scrollPane_theLoai);
+		panel_home.add(scrollPane_mainHome);
+
+		return panel_home;
+
 	}
 
 	public JPanel panel_TTCN() {
@@ -779,7 +1032,7 @@ public class libraryManagerSystemView extends JFrame {
 		txtValue_panelTTCT.setText(" " + sach.getNhaXuatBan() + "\r\n\r\n " + sach.getTacGia());
 		txtValue_panelTTCT.setFont(new Font("Calibri Light", Font.PLAIN, 24));
 		txtValue_panelTTCT.setBackground(new Color(255, 255, 255));
-		txtValue_panelTTCT.setBounds(232, 54, 252, 98);
+		txtValue_panelTTCT.setBounds(232, 54, 361, 98);
 		panel_TTCT.add(txtValue_panelTTCT);
 		
 		txtValue_panelTTCT_1 = new JTextPane();
@@ -875,8 +1128,7 @@ public class libraryManagerSystemView extends JFrame {
 
 		return scrollPane_TTS;
 	}
-	
-	
+		
 	public JPanel panel_QuanLySach() {
 		panel_QLS = new JPanel();
 		panel_QLS.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -926,8 +1178,7 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return panel_QLS;
 	}
-	
-	
+		
 	public JPanel timKiemSach() {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -967,8 +1218,7 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return panel;
 	}
-	
-	
+		
 	public JPanel dieuKhienSach() {
 		JPanel panelDieuKhien = new JPanel();
 		panelDieuKhien.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -1152,8 +1402,7 @@ public class libraryManagerSystemView extends JFrame {
 		
 		return panelDieuKhien;
 	}
-	
-	
+		
 	public JPanel dieuKhienLoaiSach () {
 		JPanel panelDieuKhienLS = new JPanel();
 		panelDieuKhienLS.setBounds(845, 36, 374, 540);
@@ -1970,11 +2219,15 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblHoten_panelCTUS_dkDS);
 		
 		txtEmail_panelCTUS_dkDS = new JTextField();
+		txtEmail_panelCTUS_dkDS.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtEmail_panelCTUS_dkDS.setEditable(false);
 		txtEmail_panelCTUS_dkDS.setBounds(20, 24, 314, 30);
 		panelCTUS.add(txtEmail_panelCTUS_dkDS);
 		txtEmail_panelCTUS_dkDS.setColumns(10);
 		
 		txtNgayMuon_panelCTUS_dkDS = new JTextField();
+		txtNgayMuon_panelCTUS_dkDS.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtNgayMuon_panelCTUS_dkDS.setEditable(false);
 		txtNgayMuon_panelCTUS_dkDS.setBounds(20, 164, 314, 30);
 		panelCTUS.add(txtNgayMuon_panelCTUS_dkDS);
 		txtNgayMuon_panelCTUS_dkDS.setColumns(10);
@@ -1986,11 +2239,15 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblSDT_panelCTUS_dkDS);
 		
 		txtTrangThai_panelCTUS_dkDS = new JTextField();
+		txtTrangThai_panelCTUS_dkDS.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTrangThai_panelCTUS_dkDS.setEditable(false);
 		txtTrangThai_panelCTUS_dkDS.setBounds(20, 234, 314, 30);
 		panelCTUS.add(txtTrangThai_panelCTUS_dkDS);
 		txtTrangThai_panelCTUS_dkDS.setColumns(10);
 		
 		txtMaSach_panelCTUS_dkDS = new JTextField();
+		txtMaSach_panelCTUS_dkDS.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtMaSach_panelCTUS_dkDS.setEditable(false);
 		txtMaSach_panelCTUS_dkDS.setBounds(20, 94, 314, 30);
 		panelCTUS.add(txtMaSach_panelCTUS_dkDS);
 		
@@ -2231,11 +2488,14 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblNgayMuon_panelCTUS_dkDM);
 		
 		txtEmail_panelCTUS_dkDM = new JTextField();
+		txtEmail_panelCTUS_dkDM.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtEmail_panelCTUS_dkDM.setBounds(20, 25, 314, 30);
 		panelCTUS.add(txtEmail_panelCTUS_dkDM);
 		txtEmail_panelCTUS_dkDM.setColumns(10);
 		
 		txtNgayMuon_panelCTUS_dkDM = new JTextField();
+		txtNgayMuon_panelCTUS_dkDM.setEditable(false);
+		txtNgayMuon_panelCTUS_dkDM.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNgayMuon_panelCTUS_dkDM.setBounds(20, 165, 314, 30);
 		panelCTUS.add(txtNgayMuon_panelCTUS_dkDM);
 		txtNgayMuon_panelCTUS_dkDM.setColumns(10);
@@ -2247,13 +2507,24 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblNgayTra_panelCTUS_dkDM);
 		
 		txtNgayTra_panelCTUS_dkDM = new JTextField();
+		txtNgayTra_panelCTUS_dkDM.setEditable(false);
+		txtNgayTra_panelCTUS_dkDM.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNgayTra_panelCTUS_dkDM.setBounds(20, 235, 314, 30);
 		panelCTUS.add(txtNgayTra_panelCTUS_dkDM);
 		txtNgayTra_panelCTUS_dkDM.setColumns(10);
 		
 		txtMaSach_panelCTUS_dkDM = new JTextField();
+		txtMaSach_panelCTUS_dkDM.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtMaSach_panelCTUS_dkDM.setBounds(20, 95, 314, 30);
 		panelCTUS.add(txtMaSach_panelCTUS_dkDM);
+		
+		Date d = Calendar.getInstance().getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String ngayMuon = sdf.format(d);
+		txtNgayMuon_panelCTUS_dkDM.setText(ngayMuon);
+		d.setMonth(d.getMonth() + 1);
+		String ngayTra = sdf.format(d);
+		txtNgayTra_panelCTUS_dkDM.setText(ngayTra);
 		
 		JButton btnNewDM_panelCTUS_dkDM = new JButton("Làm Mới");
 		btnNewDM_panelCTUS_dkDM.addActionListener(new ActionListener() {
@@ -2371,11 +2642,15 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblNgayMuon_panelCTUS_dkQH);
 		
 		txtEmail_panelCTUS_dkQH = new JTextField();
+		txtEmail_panelCTUS_dkQH.setEditable(false);
+		txtEmail_panelCTUS_dkQH.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtEmail_panelCTUS_dkQH.setBounds(20, 25, 314, 30);
 		panelCTUS.add(txtEmail_panelCTUS_dkQH);
 		txtEmail_panelCTUS_dkQH.setColumns(10);
 		
 		txtNgayMuon_panelCTUS_dkQH = new JTextField();
+		txtNgayMuon_panelCTUS_dkQH.setEditable(false);
+		txtNgayMuon_panelCTUS_dkQH.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNgayMuon_panelCTUS_dkQH.setBounds(20, 165, 314, 30);
 		panelCTUS.add(txtNgayMuon_panelCTUS_dkQH);
 		txtNgayMuon_panelCTUS_dkQH.setColumns(10);
@@ -2387,11 +2662,15 @@ public class libraryManagerSystemView extends JFrame {
 		panelCTUS.add(lblNgayTra_panelCTUS_dkQH);
 		
 		txtNgayTra_panelCTUS_dkQH = new JTextField();
+		txtNgayTra_panelCTUS_dkQH.setEditable(false);
+		txtNgayTra_panelCTUS_dkQH.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNgayTra_panelCTUS_dkQH.setBounds(20, 235, 314, 30);
 		panelCTUS.add(txtNgayTra_panelCTUS_dkQH);
 		txtNgayTra_panelCTUS_dkQH.setColumns(10);
 		
 		txtMaSach_panelCTUS_dkQH = new JTextField();
+		txtMaSach_panelCTUS_dkQH.setEditable(false);
+		txtMaSach_panelCTUS_dkQH.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtMaSach_panelCTUS_dkQH.setBounds(20, 95, 314, 30);
 		panelCTUS.add(txtMaSach_panelCTUS_dkQH);
 		

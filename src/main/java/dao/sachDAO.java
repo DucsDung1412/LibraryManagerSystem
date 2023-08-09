@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import model.loaiSach;
 import model.phieuMuonSach;
 import model.sach;
 import util.hibernateUtil;
@@ -252,5 +253,43 @@ public class sachDAO implements daoInterface<sach>{
 		}
 		
 		return sa;
+	}
+	
+	public List<sach> selectTheoLS(loaiSach ls) {
+		List<sach> list = new ArrayList<>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM sach s WHERE s.maLoaiSach.maLoaiSach = :maLoaiSach";
+					Query query = s.createQuery(hql);
+					query.setParameter("maLoaiSach", ls.getMaLoaiSach());
+					list = query.getResultList();
+					
+					List<phieuMuonSach> listPM_sach = new ArrayList<>();
+					for (sach sach : list) {
+						List<phieuMuonSach> listPM = phieuMuonSachDAO.getphieuMuonSachDAO().selectAll();
+						for (phieuMuonSach pms : listPM) {
+							if(pms.getMaSach().getMaSach().equals(sach.getMaSach())) {
+								listPM_sach.add(pms);
+							}
+						}
+						sach.setListPM(listPM_sach);
+					}
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }

@@ -226,4 +226,45 @@ public class loaiSachDAO implements daoInterface<loaiSach>{
 		
 		return ls;
 	}
+	
+	public loaiSach selectTheoTenLS(String string) {
+		loaiSach ls = new loaiSach();
+		List<loaiSach> list = new ArrayList<loaiSach>();
+		
+		try {
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			if(sf != null) {
+				Session s = sf.openSession();
+				try {
+					Transaction ts = s.beginTransaction();
+					
+					String hql = "FROM loaiSach ls WHERE ls.tenLoaiSach = :string";
+					Query query = s.createQuery(hql);
+					query.setParameter("string", string);
+					list = query.getResultList();
+					
+					ls = list.get(0);
+					
+					List<sach> listS_LS = new ArrayList<>();
+					for (loaiSach lsach : list) {
+						List<sach> listS = sachDAO.getsachDAO().selectAll();
+						for (sach sach : listS) {
+							if(sach.getMaLoaiSach().getMaLoaiSach().equals(lsach.getMaLoaiSach())) {
+								listS_LS.add(sach);
+							}
+						}
+						lsach.setListSach(listS_LS);
+					}
+					
+					ts.commit();
+				} finally {
+					s.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ls;
+	}
 }

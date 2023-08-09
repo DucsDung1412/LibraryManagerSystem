@@ -1,9 +1,13 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +36,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -271,6 +276,29 @@ public class libraryManagerSystemController {
 		this.view.contentPane.removeAll();
 		this.view.contentPane.add(this.view.panel_top);
 		this.view.contentPane.add(this.view.panel_QuanLySach());
+		this.view.contentPane.repaint();
+		this.view.contentPane.revalidate();
+	}
+	
+	public void choseHome() {
+		this.view.imgHome_panelTop.setBackground(new Color(255, 255, 255));
+		this.view.imgHome_panelTop.setOpaque(true);
+		
+		this.view.imgMyBook_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgMyBook_panelTop.setOpaque(false);
+		
+		this.view.imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgBookManager_panelTop.setOpaque(false);
+		
+		this.view.imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgUserManager_panelTop.setOpaque(false);
+		
+		this.view.imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgThongKe_panelTop.setOpaque(false);
+		
+		this.view.contentPane.removeAll();
+		this.view.contentPane.add(this.view.panel_top);
+		this.view.contentPane.add(this.view.panel_Home());
 		this.view.contentPane.repaint();
 		this.view.contentPane.revalidate();
 	}
@@ -1198,6 +1226,8 @@ public class libraryManagerSystemController {
 	}
 	
 	public void chooseQlDangMuon() {
+		this.view.txtMaSach_panelCTUS_dkDM.setEditable(false);
+		this.view.txtEmail_panelCTUS_dkDM.setEditable(false);
 		int row_s = view.tblQuanLyDangMuon.getSelectedRow();
 		view.txtEmail_panelCTUS_dkDM.setText(view.tblQuanLyDangMuon.getValueAt(row_s, 0)+"");
 		view.txtMaSach_panelCTUS_dkDM.setText(view.tblQuanLyDangMuon.getValueAt(row_s, 1)+"");
@@ -1233,15 +1263,17 @@ public class libraryManagerSystemController {
 	}
 	
 	public void btnNewDangMuon() {
-		view.txtEmail_panelCTUS_dkDM.setText("");
-		view.txtMaSach_panelCTUS_dkDM.setText("");
+		this.view.txtEmail_panelCTUS_dkDM.setText("");
+		this.view.txtEmail_panelCTUS_dkDM.setEditable(true);
+		this.view.txtMaSach_panelCTUS_dkDM.setText("");
+		this.view.txtMaSach_panelCTUS_dkDM.setEditable(true);
 		Date d = Calendar.getInstance().getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String ngayMuon = sdf.format(d);
-		view.txtNgayMuon_panelCTUS_dkDM.setText(ngayMuon);
+		this.view.txtNgayMuon_panelCTUS_dkDM.setText(ngayMuon);
 		d.setMonth(d.getMonth() + 1);
 		String ngayTra = sdf.format(d);
-		view.txtNgayTra_panelCTUS_dkDM.setText(ngayTra);
+		this.view.txtNgayTra_panelCTUS_dkDM.setText(ngayTra);
 	}
 	
 	public void btnNewQuaHan() {
@@ -1885,5 +1917,198 @@ public class libraryManagerSystemController {
 
 	    // The publisher name is valid
 	    return true;
+	}
+
+	public void choseSachCT(String tenSach) {
+		this.view.imgHome_panelTop.setBackground(new Color(255, 255, 255));
+		this.view.imgHome_panelTop.setOpaque(true);
+		
+		this.view.imgMyBook_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgMyBook_panelTop.setOpaque(false);
+		
+		this.view.imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgBookManager_panelTop.setOpaque(false);
+		
+		this.view.imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgUserManager_panelTop.setOpaque(false);
+		
+		this.view.imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgThongKe_panelTop.setOpaque(false);
+		
+		this.view.contentPane.removeAll();
+		this.view.contentPane.add(this.view.panel_top);
+		this.view.contentPane.add(this.view.panel_TTS(tenSach));
+		this.view.contentPane.repaint();
+		this.view.contentPane.revalidate();
+	}
+
+	public void clickFillterLS_Home(String theLoai) {
+		this.view.panel_home.removeAll();
+		this.view.panel_mainHome.removeAll();
+
+		int temp = -1;
+		int xx = 0;
+		
+		List<sach> listSach = sachDAO.getsachDAO().selectAll();
+		loaiSach lss = loaiSachDAO.getloaiSachDAO().selectTheoTenLS(theLoai);
+		List<sach> listS = sachDAO.getsachDAO().selectTheoLS(lss);
+
+		for (sach ds : listSach) {
+			if (ds.getMaLoaiSach().getMaLoaiSach().equals(lss.getMaLoaiSach())) {
+				temp++;
+				if (temp > 8 && temp % 3 == 0) {
+					xx++;
+					this.view.panel_mainHome.setPreferredSize(new Dimension(this.view.scrollPane_mainHome.getWidth() - 22,
+							this.view.scrollPane_mainHome.getHeight() + 730 * xx));
+				} else if (temp <= 8 && temp >= 6) {
+					this.view.panel_mainHome.setPreferredSize(new Dimension(this.view.scrollPane_mainHome.getWidth() - 22,
+							this.view.scrollPane_mainHome.getHeight() + 450));
+				} else if (temp <= 5) {
+					this.view.panel_mainHome.setPreferredSize(new Dimension(this.view.scrollPane_mainHome.getWidth() - 22,
+							this.view.scrollPane_mainHome.getHeight() + 120));
+				}
+
+				JPanel panel_sach = new JPanel();
+				panel_sach.setName(ds.getTenSach());
+				panel_sach.setBackground(new Color(255, 255, 255));
+				panel_sach.setForeground(new Color(255, 255, 255));
+				panel_sach.setLayout(null);
+
+				JLabel lbltenSach_panelsach = new JLabel(ds.getTenSach());
+				lbltenSach_panelsach.setHorizontalAlignment(SwingConstants.CENTER);
+				lbltenSach_panelsach.setFont(new Font("Arial", Font.BOLD, 16));
+				lbltenSach_panelsach.setBounds(20, 215, 289, 33);
+				panel_sach.add(lbltenSach_panelsach);
+
+				JButton btnxemThem_panelsach = new JButton("Xem thêm");
+				btnxemThem_panelsach.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				btnxemThem_panelsach.setBackground(new Color(255, 255, 255));
+				btnxemThem_panelsach.setFont(new Font("Arial", Font.BOLD, 14));
+				btnxemThem_panelsach.setForeground(Color.blue);
+				btnxemThem_panelsach.setBounds(115, 255, 110, 27);
+				btnxemThem_panelsach.setFocusPainted(false);
+				btnxemThem_panelsach.setOpaque(false);
+				btnxemThem_panelsach.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent e) {
+						String tenSach = ((Component)e.getSource()).getParent().getName();
+						choseSachCT(tenSach);
+					}
+				});
+				panel_sach.add(btnxemThem_panelsach);
+
+				JLabel imghinhSach_panelsach = new JLabel("");
+				imghinhSach_panelsach.setBounds(0, 0, 360, 205);
+
+				ImageIcon imgiconSach = new ImageIcon(
+						(Paths.get("src/main/java/icon/" + ds.getHinhSach())).toString());
+				Image imgsach = imgiconSach.getImage();
+				Image img = imgsach.getScaledInstance(imghinhSach_panelsach.getWidth(),
+						imghinhSach_panelsach.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon imgIcon = new ImageIcon(img);
+				imghinhSach_panelsach.setIcon(imgIcon);
+				panel_sach.add(imghinhSach_panelsach);
+				this.view.panel_mainHome.add(panel_sach);
+
+			}
+		}
+		
+		if(temp < 4) {
+			int cell = 4 - temp;
+			for(int i = 0; i < cell; i++) {
+				JPanel pa = new JPanel();
+				this.view.panel_mainHome.add(pa);
+				pa.setVisible(false);
+			}
+		}
+		
+		this.view.scrollPane_mainHome.setViewportView(this.view.panel_mainHome);
+		this.view.scrollPane_theLoai.setVisible(false);
+		this.view.panel_home.add(this.view.scrollPane_theLoai);
+		this.view.panel_home.add(this.view.panel_sapXep);
+		this.view.panel_home.add(this.view.panel_topHome);
+		this.view.panel_home.add(this.view.scrollPane_mainHome);
+		this.view.panel_home.validate();
+		this.view.panel_home.repaint();
+	}
+
+	public void searchSach() {
+		String duLieu = this.view.txttimKiem_paneltopHome.getText();
+		List<sach> listSach = sachDAO.getsachDAO().selectTheoString("tenSach", duLieu);
+		this.view.panel_mainHome.removeAll();
+
+		int temp = -1;
+		int xx = 0;
+		
+		for (sach ds : listSach) {
+			temp++;
+			if (temp > 8 && temp % 3 == 0) {
+				xx++;
+				this.view.panel_mainHome.setPreferredSize(new Dimension(this.view.scrollPane_mainHome.getWidth() - 22,
+						this.view.scrollPane_mainHome.getHeight() + 730 * xx));
+			} else if (temp <= 8 && temp >= 6) {
+				this.view.panel_mainHome.setPreferredSize(new Dimension(this.view.scrollPane_mainHome.getWidth() - 22,
+						this.view.scrollPane_mainHome.getHeight() + 450));
+			} else if (temp <= 5) {
+				this.view.panel_mainHome.setPreferredSize(new Dimension(this.view.scrollPane_mainHome.getWidth() - 22,
+						this.view.scrollPane_mainHome.getHeight() + 120));
+			}
+			
+			JPanel panel_sach = new JPanel();
+			panel_sach.setName(ds.getTenSach());
+			panel_sach.setBackground(new Color(255, 255, 255));
+			panel_sach.setForeground(new Color(255, 255, 255));
+			panel_sach.setLayout(null);
+			
+			JLabel lbltenSach_panelsach = new JLabel(ds.getTenSach());
+			lbltenSach_panelsach.setHorizontalAlignment(SwingConstants.CENTER);
+			lbltenSach_panelsach.setFont(new Font("Arial", Font.BOLD, 16));
+			lbltenSach_panelsach.setBounds(20, 215, 289, 33);
+			panel_sach.add(lbltenSach_panelsach);
+			
+			JButton btnxemThem_panelsach = new JButton("Xem thêm");
+			btnxemThem_panelsach.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnxemThem_panelsach.setBackground(new Color(255, 255, 255));
+			btnxemThem_panelsach.setFont(new Font("Arial", Font.BOLD, 14));
+			btnxemThem_panelsach.setForeground(Color.blue);
+			btnxemThem_panelsach.setBounds(115, 255, 110, 27);
+			btnxemThem_panelsach.setFocusPainted(false);
+			btnxemThem_panelsach.setOpaque(false);
+			btnxemThem_panelsach.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					String tenSach = ((Component)e.getSource()).getParent().getName();
+					choseSachCT(tenSach);
+				}
+			});
+			panel_sach.add(btnxemThem_panelsach);
+			
+			JLabel imghinhSach_panelsach = new JLabel("");
+			imghinhSach_panelsach.setBounds(0, 0, 360, 205);
+			
+			ImageIcon imgiconSach = new ImageIcon(
+					(Paths.get("src/main/java/icon/" + ds.getHinhSach())).toString());
+			Image imgsach = imgiconSach.getImage();
+			Image img = imgsach.getScaledInstance(imghinhSach_panelsach.getWidth(),
+					imghinhSach_panelsach.getHeight(), Image.SCALE_SMOOTH);
+			ImageIcon imgIcon = new ImageIcon(img);
+			imghinhSach_panelsach.setIcon(imgIcon);
+			panel_sach.add(imghinhSach_panelsach);
+			this.view.panel_mainHome.add(panel_sach);
+		}
+		
+		if(temp < 4) {
+			int cell = 4 - temp;
+			for(int i = 0; i < cell; i++) {
+				JPanel pa = new JPanel();
+				this.view.panel_mainHome.add(pa);
+				pa.setVisible(false);
+			}
+		}
+		
+		this.view.scrollPane_mainHome.setViewportView(this.view.panel_mainHome);
+		this.view.scrollPane_theLoai.setVisible(false);
+		this.view.panel_home.validate();
+		this.view.panel_home.repaint();
 	}
 }
