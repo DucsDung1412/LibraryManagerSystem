@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JList;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -24,8 +26,8 @@ import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -38,6 +40,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
@@ -67,7 +71,6 @@ import javax.swing.border.LineBorder;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -76,7 +79,7 @@ import java.awt.event.FocusEvent;
 
 public class libraryManagerSystemView extends JFrame {
 	// thong tin
-	public String emailLogin = "admin";
+	public String emailLogin = "";
 	public String emailClone = "";
 	public File fileClone = new File("");
 	public String maSach = "";
@@ -177,6 +180,22 @@ public class libraryManagerSystemView extends JFrame {
 	public JPanel panel_sapXep;
 	public JPanel panel_topHome;
 	public JTextField txttimKiem_paneltopHome;
+	public JScrollPane scrPane_TTS;
+	public JPanel pnl_GT;
+	public JLabel imgSach_pnlGT;
+	public ImageIcon imgIBG_pnlTTS;
+	public JLabel lblTitle_pnlGT;
+	public JTextPane txtValue_pnlTTCT;
+	public JTextPane txtValue_pnlTTCT_1;
+	public JTextPane txtMTSP_pnlMTSP;
+	public JTextPane txtDG_pnlDG;
+	public JComboBox cbxTheLoai_function;
+	public JList listBorrowed_pnlBorrowed;
+	public JList listReturned_pnlReturned;
+	public JPanel borrowed_home;
+	public JPanel pnlScrBorrowed_scrBorrowed;
+	public JPanel returned_home;
+	public JPanel pnlScrReturned_scrReturned;
 	
 	
 
@@ -187,7 +206,7 @@ public class libraryManagerSystemView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					libraryManagerSystemView frame = new libraryManagerSystemView();
+					libraryManagerSystemView frame = new libraryManagerSystemView("admin");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -200,7 +219,8 @@ public class libraryManagerSystemView extends JFrame {
 	 * Create the frame.
 	 * .setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	 */
-	public libraryManagerSystemView() {
+	public libraryManagerSystemView(String email) {
+		emailLogin = email;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 800);
 		this.setLocationRelativeTo(null);
@@ -264,20 +284,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgMyBook_panelTop.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				imgHome_panelTop.setBackground(new Color(244, 244, 244));
-				imgHome_panelTop.setOpaque(false);
-				
-				imgMyBook_panelTop.setBackground(new Color(255, 255, 255));
-				imgMyBook_panelTop.setOpaque(true);
-				
-				imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
-				imgBookManager_panelTop.setOpaque(false);
-				
-				imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
-				imgUserManager_panelTop.setOpaque(false);
-				
-				imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
-				imgThongKe_panelTop.setOpaque(false);
+				controller.choseSachCuaToi();
 			}
 		});
 		imgMyBook_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -297,6 +304,7 @@ public class libraryManagerSystemView extends JFrame {
 
 		// Quan ly sach
 		imgBookManager_panelTop = new JLabel("Quản lý sách");
+		
 		if(userLogin.getRole().equals("Đọc giả")) {
 			imgBookManager_panelTop.setVisible(false);
 		}
@@ -743,7 +751,7 @@ public class libraryManagerSystemView extends JFrame {
 		panel_home.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panel_theLoai.setVisible(false);
+				scrollPane_theLoai.setVisible(false);
 				panel_sapXep.setVisible(false);
 			}
 		});
@@ -757,6 +765,531 @@ public class libraryManagerSystemView extends JFrame {
 
 	}
 
+	public JLayeredPane panel_sachCuaToi(){
+		JLayeredPane panel_Home = new JLayeredPane();
+				panel_Home.setBorder(new EmptyBorder(0, 0, 0, 0));
+				panel_Home.setBackground(new Color(255, 255, 255));
+				panel_Home.setBounds(0, 148, 1286, 616);
+				panel_Home.setLayout(null);
+		
+				//bat dau code
+				
+				//Panel TTS
+
+				sach sachClone = new sach();
+				this.maSach = "MS08";
+				sachClone.setMaSach(maSach);
+				sach sach = sachDAO.getsachDAO().selectG(sachClone);
+				
+				scrPane_TTS = new JScrollPane();
+				scrPane_TTS.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+				scrPane_TTS.setBackground(Color.WHITE);
+				scrPane_TTS.setBounds(300, 0, 987, 615);
+				scrPane_TTS.setHorizontalScrollBarPolicy(scrPane_TTS.HORIZONTAL_SCROLLBAR_NEVER);
+
+				JPanel pnl_main = new JPanel();
+				pnl_main.setBorder(new EmptyBorder(0, 0, 0, 0));
+				pnl_main.setBackground(new Color(255, 255, 255));
+				scrPane_TTS.setViewportView(pnl_main);
+				pnl_main.setPreferredSize(new Dimension(987, 1274));
+				pnl_main.setLayout(new BoxLayout(pnl_main, BoxLayout.Y_AXIS));
+
+				JPanel pnl_TTS = new JPanel();
+				pnl_TTS.setBorder(new EmptyBorder(0, 0, 0, 0));
+				pnl_TTS.setBackground(new Color(255, 255, 255));
+				pnl_TTS.setPreferredSize(new Dimension(987, 4)); // Set the preferred size of panel_1
+				pnl_main.add(pnl_TTS);
+				pnl_TTS.setLayout(null);
+				
+				
+				// panel Gioi Thieu
+				pnl_GT = new JPanel();
+				pnl_GT.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				pnl_GT.setBounds(66, 10, 855, 337);
+				pnl_TTS.add(pnl_GT);
+				pnl_GT.setLayout(null);
+
+				imgSach_pnlGT = new JLabel("");
+				imgSach_pnlGT.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				imgSach_pnlGT.setBounds(0, 0, 855, 268);
+//					ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
+				imgIBG_pnlTTS = new ImageIcon( "E:/Eclipse Project/nhatdlps26322/src/main/java/icon/MS01.png");
+				Image imBG_pnlTTS = imgIBG_pnlTTS.getImage();
+				Image imageBG_pnlTTS = imBG_pnlTTS.getScaledInstance(imgSach_pnlGT.getWidth(),
+						imgSach_pnlGT.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon imageIconBG_pnlTTS = new ImageIcon(imageBG_pnlTTS);
+				imgSach_pnlGT.setIcon(imageIconBG_pnlTTS);
+				pnl_GT.add(imgSach_pnlGT);
+
+				JButton btnDS_pnlGT = new JButton("Gia hạn");
+				btnDS_pnlGT.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.datSach();
+					}
+				});
+				btnDS_pnlGT.setFocusPainted(false);
+				btnDS_pnlGT.setForeground(new Color(255, 255, 255));
+				btnDS_pnlGT.setBackground(new Color(27, 161, 226));
+				btnDS_pnlGT.setFont(new Font("Arial", Font.BOLD, 20));
+				btnDS_pnlGT.setBounds(10, 278, 130, 49);
+				pnl_GT.add(btnDS_pnlGT);
+
+				lblTitle_pnlGT = new JLabel(
+						"Lập trình hướng đối tượng JAVA core dành cho người mới bắt đầu học lập trình");
+				lblTitle_pnlGT.setFont(new Font("Arial", Font.PLAIN, 18));
+				lblTitle_pnlGT.setBounds(164, 278, 931, 49);
+				pnl_GT.add(lblTitle_pnlGT);
+				
+				
+				// panel Thong tin chi tiet
+				JPanel pnl_TTCT = new JPanel();
+				pnl_TTCT.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				pnl_TTCT.setBackground(new Color(255, 255, 255));
+				pnl_TTCT.setBounds(66, 368, 855, 160);
+				pnl_TTS.add(pnl_TTCT);
+				pnl_TTCT.setLayout(null);
+				
+				JLabel lblTitle_pnlTTCT = new JLabel("Thông tin chi tiết");
+				lblTitle_pnlTTCT.setFont(new Font("Calibri", Font.BOLD, 20));
+				lblTitle_pnlTTCT.setBounds(10, 10, 252, 33);
+				pnl_TTCT.add(lblTitle_pnlTTCT);
+				
+				JTextPane txtKey_pnlTTCT = new JTextPane();
+				txtKey_pnlTTCT.setEditable(false);
+				txtKey_pnlTTCT.setBackground(new Color(238, 238, 238));
+				txtKey_pnlTTCT.setFont(new Font("Calibri Light", Font.PLAIN, 18));
+				txtKey_pnlTTCT.setText(" Nhà xuất bản\r\n\r\n Tác giả");
+				txtKey_pnlTTCT.setBounds(10, 54, 180, 85);
+				pnl_TTCT.add(txtKey_pnlTTCT);
+
+				txtValue_pnlTTCT = new JTextPane();
+				txtValue_pnlTTCT.setEditable(false);
+				txtValue_pnlTTCT.setText(" Nhà Xuất Bản Lao Động\r\n\r\n Đào Đức Dũng");
+				txtValue_pnlTTCT.setFont(new Font("Calibri Light", Font.PLAIN, 18));
+				txtValue_pnlTTCT.setBackground(new Color(255, 255, 255));
+				txtValue_pnlTTCT.setBounds(210, 54, 252, 98);
+				pnl_TTCT.add(txtValue_pnlTTCT);
+				
+				txtValue_pnlTTCT_1 = new JTextPane();
+				txtValue_pnlTTCT_1.setText(" 2021\r\n Tái bản lần thứ nhất\r\n 21 cuốn");
+				txtValue_pnlTTCT_1.setFont(new Font("Calibri Light", Font.PLAIN, 18));
+				txtValue_pnlTTCT_1.setEditable(false);
+				txtValue_pnlTTCT_1.setBackground(Color.WHITE);
+				txtValue_pnlTTCT_1.setBounds(676, 54, 175, 98);
+				pnl_TTCT.add(txtValue_pnlTTCT_1);
+				
+				JTextPane txtKey_pnlTTCT_1 = new JTextPane();
+				txtKey_pnlTTCT_1.setText(" Năm xuất bản\r\n Số lần tái bản\r\n Số lượng còn lại");
+				txtKey_pnlTTCT_1.setFont(new Font("Calibri Light", Font.PLAIN, 18));
+				txtKey_pnlTTCT_1.setEditable(false);
+				txtKey_pnlTTCT_1.setBackground(new Color(238, 238, 238));
+				txtKey_pnlTTCT_1.setBounds(486, 54, 180, 85);
+				pnl_TTCT.add(txtKey_pnlTTCT_1);
+				
+				
+				// panel Mo ta san pham
+				JPanel pnl_MTSP = new JPanel();
+				pnl_MTSP.setLayout(null);
+				pnl_MTSP.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				pnl_MTSP.setBackground(Color.WHITE);
+				pnl_MTSP.setBounds(66, 557, 855, 460);
+				pnl_TTS.add(pnl_MTSP);
+
+				JLabel lblTitle_pnlMTSP = new JLabel("Mô tả sản phẩm");
+				lblTitle_pnlMTSP.setFont(new Font("Calibri", Font.BOLD, 20));
+				lblTitle_pnlMTSP.setBounds(10, 10, 252, 33);
+				pnl_MTSP.add(lblTitle_pnlMTSP);
+
+				txtMTSP_pnlMTSP = new JTextPane();
+				txtMTSP_pnlMTSP.setEditable(false);
+				txtMTSP_pnlMTSP.setText( //sach.getMoTa());
+						"I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA");
+				txtMTSP_pnlMTSP.setFont(new Font("Calibri Light", Font.PLAIN, 16));
+				txtMTSP_pnlMTSP.setBackground(Color.WHITE);
+				txtMTSP_pnlMTSP.setBounds(20, 40, 815, 404);
+				pnl_MTSP.add(txtMTSP_pnlMTSP);
+
+				
+				// panel Danh gia
+				JPanel pnl_DG = new JPanel();
+				pnl_DG.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				pnl_DG.setBackground(new Color(255, 255, 255));
+				pnl_DG.setBounds(66, 1042, 855, 222);
+				pnl_TTS.add(pnl_DG);
+				pnl_DG.setLayout(null);
+				
+				JLabel lblTitle_pnlDG = new JLabel("Đánh giá - nhận xét từ đọc giả");
+				lblTitle_pnlDG.setFont(new Font("Calibri", Font.BOLD, 20));
+				lblTitle_pnlDG.setBounds(10, 10, 400, 33);
+				pnl_DG.add(lblTitle_pnlDG);
+
+				JScrollPane scrPane_pnlDG = new JScrollPane();
+				scrPane_pnlDG.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				scrPane_pnlDG.setBounds(0, 44, 855, 178);
+				pnl_DG.add(scrPane_pnlDG);
+
+				txtDG_pnlDG = new JTextPane();
+				txtDG_pnlDG.setEditable(false);
+				txtDG_pnlDG.setFont(new Font("Calibri Light", Font.PLAIN, 18));
+				txtDG_pnlDG.setText("asjdjasd: aksdhlkasd");
+				scrPane_pnlDG.setViewportView(txtDG_pnlDG);
+
+				
+				// set scrollPane len dau
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						scrPane_TTS.getViewport().setViewPosition(new Point(-1, -1));
+					}
+				});
+
+				// ket thuc code
+
+
+				
+				scrPane_TTS.setVisible(false);
+		
+				//function home
+		JPanel function_home = new JPanel(null);
+				function_home.setBounds(0,0, 300 , 652);
+		
+		JPanel pnlLblHome_function = new JPanel(null);
+				pnlLblHome_function.setBackground(Color.WHITE);
+				pnlLblHome_function.setBounds(0, 0 ,function_home.getWidth() , 40 );
+				pnlLblHome_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		
+				//Home
+		ImageIcon imgHome = new ImageIcon(Paths.get("E:/Eclipse Project/nhatdlps26322/src/main/java/icon/home_icon.png").toAbsolutePath().toString());
+		Image imHome = imgHome.getImage();
+		Image imageHome = imHome.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		ImageIcon imgHome_lblHome = new ImageIcon(imageHome);
+		
+		JLabel lblHome_function = new JLabel("Home");
+				lblHome_function.setVerticalAlignment(SwingConstants.CENTER);
+				lblHome_function.setBounds(10,0, 125 , 40);
+				lblHome_function.setFont(new Font("Arial", Font.BOLD, 27));
+				lblHome_function.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				lblHome_function.addMouseListener(new MouseAdapter() {
+					public void mouseClicked (MouseEvent e)
+					{
+						
+					}
+					
+				});
+		lblHome_function.setIcon(imgHome_lblHome);
+		pnlLblHome_function.add(lblHome_function);
+		
+		// ComboBox the loai
+		cbxTheLoai_function = new JComboBox<>();
+				cbxTheLoai_function.setBounds(0 , 40 ,function_home.getWidth() - 50 , 40 );
+				cbxTheLoai_function.setFont(new Font("Arial", 0, 20));
+		
+		controller.loaiSach();
+		cbxTheLoai_function.setSelectedIndex(-1);
+
+		cbxTheLoai_function.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.filterSach(String.valueOf(cbxTheLoai_function.getSelectedItem()));
+			}
+		});
+				
+		//Up
+		JLabel lblUp_function = new JLabel();
+				lblUp_function.setBackground(Color.WHITE);
+				lblUp_function.setBounds(250 , 39 , 50 , 41);
+				lblUp_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+				
+		ImageIcon imgUp = new ImageIcon(Paths.get("src/main/java/icon/up_icon.png").toAbsolutePath().toString());
+		Image imUp = imgUp.getImage();
+		Image imageUp = imUp.getScaledInstance(50, 40, Image.SCALE_SMOOTH);
+		ImageIcon imgUp_lblUp = new ImageIcon(imageUp);
+				
+				lblUp_function.setIcon(imgUp_lblUp);
+				lblUp_function.setOpaque(true);
+				lblUp_function.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				lblUp_function.addMouseListener(new MouseAdapter()
+						{
+							public void mouseClicked(MouseEvent e)
+							{
+								cbxTheLoai_function.setSelectedIndex(-1);
+								controller.listSach();
+								scrPane_TTS.setVisible(false);
+							}
+						});
+
+		
+				//Search
+		
+		JLayeredPane pnlSearch_function = new JLayeredPane();
+				pnlSearch_function.setBackground(Color.WHITE);
+				pnlSearch_function.setBounds(0, 79 ,function_home.getWidth() , 40 );
+				pnlSearch_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		
+		ImageIcon imgSearch = new ImageIcon(Paths.get("src/main/java/icon/search_icon.png").toAbsolutePath().toString());
+		Image imSearch = imgSearch.getImage();
+		Image imageSearch = imSearch.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		ImageIcon imgSearch_lblSearch = new ImageIcon(imageSearch);
+
+		
+		JLabel lblSearch_function = new JLabel();
+				lblSearch_function.setVerticalAlignment(SwingConstants.BOTTOM);
+				lblSearch_function.setBounds(258 ,-5 , 45 , 40);
+				lblSearch_function.setFont(new Font("Arial", Font.BOLD, 27));
+				lblSearch_function.setIcon(imgSearch_lblSearch);
+				
+		JTextField txtSearch_function = new JTextField();
+		txtSearch_function.setBounds(0 , 0 ,300 , 40);
+		txtSearch_function.setFont(new Font("Calibri" , 0 , 25));
+		
+		txtSearch_function.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				String str =  txtSearch_function.getText().toLowerCase();
+				if(str.equals(""))
+				{
+					controller.listSach();
+				}
+				else
+				{
+					str = "^"+ str +".*";
+					controller.searchSach(str);
+				}
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				String str =  txtSearch_function.getText().toLowerCase();
+				if(str.equals(""))
+				{
+					controller.listSach();
+				}
+				else
+				{
+					str = "^"+ str +".*";
+					controller.searchSach(str);
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		pnlSearch_function.add(txtSearch_function , new Integer(1));
+		pnlSearch_function.add(lblSearch_function , new Integer(2));
+
+		
+		//Panel Borrowed Book function
+		JPanel pnlBorrowed_function = new JPanel(null);
+				pnlBorrowed_function.setBackground(Color.WHITE);
+				pnlBorrowed_function.setBounds(0, 118 ,function_home.getWidth() , 40 );
+				pnlBorrowed_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		
+		JLabel lblBorrowed_pnlBorrowed = new JLabel("Sách đang mượn");
+				lblBorrowed_pnlBorrowed.setVerticalAlignment(SwingConstants.BOTTOM);
+				lblBorrowed_pnlBorrowed.setBounds(10,0, 200 , 40);
+				lblBorrowed_pnlBorrowed.setFont(new Font("Calibri", Font.BOLD, 23));
+				pnlBorrowed_function.add(lblBorrowed_pnlBorrowed);
+		
+		listBorrowed_pnlBorrowed = new JList<>();
+				listBorrowed_pnlBorrowed.setFont(new Font("Arial" , 0 , 15));
+				listBorrowed_pnlBorrowed.addListSelectionListener(new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent e) {
+						controller.getTTS(listBorrowed_pnlBorrowed.getSelectedValue() + "");
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								scrPane_TTS.getViewport().setViewPosition(new Point(-1, -1));
+							}
+						});
+						scrPane_TTS.setVisible(true);
+					}
+				});
+				listBorrowed_pnlBorrowed.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						listBorrowed_pnlBorrowed.removeSelectionInterval(listBorrowed_pnlBorrowed.getSelectedIndex(), listBorrowed_pnlBorrowed.getSelectedIndex() );
+						if(listReturned_pnlReturned.isSelectionEmpty())
+						{
+							scrPane_TTS.setVisible(false);
+						}
+						
+					}
+				});
+				listBorrowed_pnlBorrowed.setBounds(0 , 0 , 300 , 225);
+				listBorrowed_pnlBorrowed.setBackground(Color.white);
+				listBorrowed_pnlBorrowed.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+				listBorrowed_pnlBorrowed.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				listBorrowed_pnlBorrowed.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		JScrollPane scrListBorrowed = new JScrollPane();
+				scrListBorrowed.setBounds(0 , 154, 300, 210);
+				scrListBorrowed.setBackground(Color.white);
+				scrListBorrowed.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+				scrListBorrowed.setViewportView(listBorrowed_pnlBorrowed);
+				
+				//Panel return book function
+		JPanel pnlReturned_function = new JPanel(null);
+				pnlReturned_function.setBackground(Color.WHITE);
+				pnlReturned_function.setBounds(0, 360 ,function_home.getWidth() , 40 );
+				pnlReturned_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		
+		JLabel lblReturned_pnlReturned = new JLabel("Sách đã trả");
+				lblReturned_pnlReturned.setVerticalAlignment(SwingConstants.BOTTOM);
+				lblReturned_pnlReturned.setBounds(10,0, 200 , 40);
+				lblReturned_pnlReturned.setFont(new Font("Calibri", Font.BOLD, 23));
+				pnlReturned_function.add(lblReturned_pnlReturned);
+		
+		listReturned_pnlReturned = new JList<>();
+				listReturned_pnlReturned.setFont(new Font("Arial" , 0 , 15));
+				listReturned_pnlReturned.addListSelectionListener(new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent e) {
+						controller.getTTS(listReturned_pnlReturned.getSelectedValue() + "");
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								scrPane_TTS.getViewport().setViewPosition(new Point(-1, -1));
+							}
+						});
+						scrPane_TTS.setVisible(true);
+					}
+				});
+				listReturned_pnlReturned.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						
+						listReturned_pnlReturned.removeSelectionInterval(listReturned_pnlReturned.getSelectedIndex(), listReturned_pnlReturned.getSelectedIndex() );
+						System.out.println(listBorrowed_pnlBorrowed.isSelectionEmpty());
+						if(listBorrowed_pnlBorrowed.isSelectionEmpty())
+						{
+							scrPane_TTS.setVisible(false);
+						}
+					}
+				});
+				listReturned_pnlReturned.setBounds(0 , 0 , 300 , 230);
+				listReturned_pnlReturned.setBackground(Color.white);
+				listReturned_pnlReturned.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+				listReturned_pnlReturned.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				listReturned_pnlReturned.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				
+		
+		JScrollPane scrListReturned = new JScrollPane();
+				scrListReturned.setBounds(0 , 397 , 300 , 219);
+				scrListReturned.setBackground(Color.white);
+				scrListReturned.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+				scrListReturned.setViewportView(listReturned_pnlReturned);
+		
+		controller.listSach();
+
+		
+		//Borrowed View
+		
+		borrowed_home = new JPanel(null);
+				borrowed_home.setBackground(Color.WHITE);
+				borrowed_home.setBounds(300 , 0 , 990 , 296);
+				borrowed_home.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		
+		
+		JPanel pnlBorrowedView_borrowed = new JPanel(null);
+				pnlBorrowedView_borrowed.setBackground(Color.WHITE);
+				pnlBorrowedView_borrowed.setBounds(0, 1 , 497 , 39);
+		
+		JLabel lblBorrowed_pnlBorrowedView = new JLabel("Sách đang mượn ");
+				lblBorrowed_pnlBorrowedView.setVerticalAlignment(SwingConstants.BOTTOM);
+				lblBorrowed_pnlBorrowedView.setBounds(10 , 0 , 200 , 39);
+				lblBorrowed_pnlBorrowedView.setFont(new Font("Calibri", Font.BOLD, 23));
+		pnlBorrowedView_borrowed.add(lblBorrowed_pnlBorrowedView);
+		
+		JScrollPane scrBorrowed_borrowedView = new JScrollPane();
+				scrBorrowed_borrowedView.setBounds(0 , 40 , 990, 255);
+				scrBorrowed_borrowedView.setBackground(Color.WHITE);
+				scrBorrowed_borrowedView.setBorder(new EmptyBorder(0,0,0,0));
+				scrBorrowed_borrowedView.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				
+		
+		
+		pnlScrBorrowed_scrBorrowed = new JPanel();
+			// pnlScrBorrowed_scrBorrowed.setBounds(0, 0 , borrowed_home.getWidth() , borrowed_home.getHeight() - 40);
+				pnlScrBorrowed_scrBorrowed.setBackground(Color.white);
+				controller.listBorrowedView();
+				
+		scrBorrowed_borrowedView.setViewportView(pnlScrBorrowed_scrBorrowed);
+		
+		borrowed_home.add(pnlBorrowedView_borrowed);
+		borrowed_home.add(scrBorrowed_borrowedView);
+		
+		//Return view
+		
+		returned_home = new JPanel(null);
+				returned_home.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+				returned_home.setBackground(Color.WHITE);
+				returned_home.setBounds(300 , 296 , 990 , 315);
+		
+		JPanel pnlReturnedView_returned = new JPanel(null);
+				pnlReturnedView_returned.setBackground(Color.WHITE);
+				pnlReturnedView_returned.setBounds(0, 1 , 495 , 39);
+		
+		JLabel lblReturned_pnlReturnedView = new JLabel("Sách đã trả ");
+				lblReturned_pnlReturnedView.setBackground(Color.WHITE);
+				lblReturned_pnlReturnedView.setVerticalAlignment(SwingConstants.BOTTOM);
+				lblReturned_pnlReturnedView.setBounds(10 , 0 , 200 , 39);
+				lblReturned_pnlReturnedView.setFont(new Font("Calibri", Font.BOLD, 23));
+		pnlReturnedView_returned.add(lblReturned_pnlReturnedView);
+		
+		JScrollPane scrReturned_returned = new JScrollPane();
+				scrReturned_returned.setBounds(0 , 40 , 990, 275);
+				scrReturned_returned.setBackground(Color.white);
+				scrReturned_returned.setBorder(new EmptyBorder(0,0,0,0));
+				scrReturned_returned.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		pnlScrReturned_scrReturned = new JPanel();
+				pnlScrReturned_scrReturned.setBackground(Color.white);
+				controller.listReturnedView();
+				
+		scrReturned_returned.setViewportView(pnlScrReturned_scrReturned);
+		
+		returned_home.add(pnlReturnedView_returned);
+		returned_home.add(scrReturned_returned);
+		
+
+		//add panel
+		
+		function_home.add(pnlLblHome_function);
+		function_home.add(cbxTheLoai_function);
+		function_home.add(lblUp_function);
+		function_home.add(pnlSearch_function);
+		function_home.add(pnlBorrowed_function);
+		function_home.add(scrListBorrowed);
+		function_home.add(pnlReturned_function);
+		function_home.add(scrListReturned);
+		
+		panel_Home.add(function_home , new Integer(1));
+		panel_Home.add(borrowed_home , new Integer(1));
+		panel_Home.add(returned_home , new Integer(1));
+		panel_Home.add(scrPane_TTS , new Integer(2));
+		
+		//ket thuc code
+		
+		return panel_Home;
+	}
+	
 	public JPanel panel_TTCN() {
 		// Find user login
 //		this.emailLogin = this.emailLogin;

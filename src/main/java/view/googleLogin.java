@@ -81,7 +81,7 @@ public class googleLogin extends JPanel {
 				u.setUsername(email);
 				if(userDAO.getuserDAO().selectG(u) != null) {
 					JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
-					libraryManagerSystemView view = new libraryManagerSystemView();
+					libraryManagerSystemView view = new libraryManagerSystemView(email);
 					view.setVisible(true);
 					view.emailLogin = email;
 				} else {

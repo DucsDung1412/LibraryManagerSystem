@@ -44,7 +44,7 @@ public class loginListener {
 			if(user != null)
 			{
 				if(user.getPassword().equals(passWord)) {
-					libraryManagerSystemView view = new libraryManagerSystemView();
+					libraryManagerSystemView view = new libraryManagerSystemView(user.getUsername());
 					this.loginView.setVisible(false);
 					view.setVisible(true);
 					view.emailLogin = user.getUsername();

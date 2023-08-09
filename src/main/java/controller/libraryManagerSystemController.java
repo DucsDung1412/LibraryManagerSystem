@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -19,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
@@ -36,9 +40,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -60,12 +70,14 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.toedter.calendar.JCalendar;
 
+import dao.danhGiaDAO;
 import dao.loaiSachDAO;
 import dao.phieuMuonSachDAO;
 import dao.sachDAO;
 import dao.thongTinCaNhanDAO;
 import dao.userDAO;
 import dao.yeuCauDAO;
+import model.danhGia;
 import model.loaiSach;
 import model.phieuMuonSach;
 import model.sach;
@@ -77,6 +89,14 @@ import view.loginView;
 
 public class libraryManagerSystemController {
 	private libraryManagerSystemView view;
+	private List<phieuMuonSach> lpms = new ArrayList<phieuMuonSach>();
+	private phieuMuonSachDAO pmsDAO = new phieuMuonSachDAO();
+	private Vector<String> lpmsBorrowed = new Vector<String>();
+	private Vector<String> lpmsReturned = new Vector<String>();
+	private sachDAO sDAO = new sachDAO();
+	private List<sach> lSach = sDAO.selectAll();
+	private danhGiaDAO dgDAO = new danhGiaDAO();
+	private List<danhGia> lDG = dgDAO.selectAll(); 
 
 	public libraryManagerSystemController(libraryManagerSystemView view) {
 		this.view = view;
@@ -2110,5 +2130,277 @@ public class libraryManagerSystemController {
 		this.view.scrollPane_theLoai.setVisible(false);
 		this.view.panel_home.validate();
 		this.view.panel_home.repaint();
+	}
+	
+	public void listSach()
+	{
+		
+		this.lpms = this.pmsDAO.selectAll();
+		this.lpmsBorrowed.removeAllElements();
+		this.lpmsReturned.removeAllElements();
+		for(phieuMuonSach pms : lpms)
+		{
+			if(pms.getTrangThaiPhieu().equals("Đang mượn") && pms.getEmail().getUsername().equals(this.view.emailLogin))
+			{
+				this.lpmsBorrowed.add(pms.getMaSach().getTenSach());
+			}
+			if(pms.getTrangThaiPhieu().equals("Đã trả")  && pms.getEmail().getUsername().equals(this.view.emailLogin))
+			{
+				this.lpmsReturned.add(pms.getMaSach().getTenSach());
+			}
+		}
+		System.err.println(this.lpmsBorrowed.size());
+		this.view.listBorrowed_pnlBorrowed.setListData(this.lpmsBorrowed);
+		
+		this.view.listReturned_pnlReturned.setListData(this.lpmsReturned);
+	}
+	
+	public void searchSach(String str)
+	{
+		this.lpmsBorrowed.removeAllElements();
+		this.lpmsReturned.removeAllElements();
+		for(phieuMuonSach pms : lpms)
+		{
+			if(pms.getTrangThaiPhieu().equals("Đang mượn") && pms.getMaSach().getTenSach().toLowerCase().matches(str))
+			{
+				this.lpmsBorrowed.add(pms.getMaSach().getTenSach());
+			}
+			if(pms.getTrangThaiPhieu().equals("Đã trả") && pms.getMaSach().getTenSach().toLowerCase().matches(str))
+			{
+				this.lpmsReturned.add(pms.getMaSach().getTenSach());
+			}
+		}
+		this.view.listBorrowed_pnlBorrowed.setListData(this.lpmsBorrowed);
+		
+		this.view.listReturned_pnlReturned.setListData(this.lpmsReturned);
+
+	}
+	
+	public void loaiSach()
+	{
+		loaiSachDAO lsDAO = new loaiSachDAO();
+		List<loaiSach> ls = new ArrayList<loaiSach>();
+		
+		ls = lsDAO.selectAll();
+		for (loaiSach lsach : ls)
+		{
+			this.view.cbxTheLoai_function.addItem(lsach.getTenLoaiSach());
+		}
+	}
+	
+	public void filterSach(String theloai)
+	{
+		
+		this.lpms = this.pmsDAO.selectAll();
+		this.lpmsBorrowed.removeAllElements();
+		this.lpmsReturned.removeAllElements();
+		for(phieuMuonSach pms : lpms)
+		{
+			if(pms.getTrangThaiPhieu().equals("Đang mượn") && pms.getMaSach().getMaLoaiSach().getTenLoaiSach().equals(theloai))
+			{
+				this.lpmsBorrowed.add(pms.getMaSach().getTenSach());
+			}
+			if(pms.getTrangThaiPhieu().equals("Đã trả") && pms.getMaSach().getMaLoaiSach().getTenLoaiSach().equals(theloai))
+			{
+				this.lpmsReturned.add(pms.getMaSach().getTenSach());
+			}
+		}
+		this.view.listBorrowed_pnlBorrowed.setListData(this.lpmsBorrowed);
+		
+		this.view.listReturned_pnlReturned.setListData(this.lpmsReturned);
+	}
+	
+	public void getTTS(String tenSach)
+	{
+		sach sachClone = new sach();
+		for(int i = 0 ; i < lSach.size(); i++)
+		{
+			if(lSach.get(i).getTenSach().equals(tenSach))
+			{
+				sachClone = lSach.get(i);
+				break;
+			}
+			
+		}
+		this.view.imgIBG_pnlTTS = new ImageIcon("src/main/java/icon/" + sachClone.getHinhSach());
+				Image imBG_pnlTTS = this.view.imgIBG_pnlTTS.getImage();
+				Image imageBG_pnlTTS = imBG_pnlTTS.getScaledInstance(this.view.imgSach_pnlGT.getWidth(),
+						this.view.imgSach_pnlGT.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon imageIconBG_pnlTTS = new ImageIcon(imageBG_pnlTTS);
+				this.view.imgSach_pnlGT.setIcon(imageIconBG_pnlTTS);
+				this.view.pnl_GT.add(this.view.imgSach_pnlGT);
+		this.view.lblTitle_pnlGT.setText(sachClone.getTenSach());
+		this.view.txtValue_pnlTTCT.setText(sachClone.getNhaXuatBan()+"\r\n\r\n" + sachClone.getTacGia());
+		this.view.txtValue_pnlTTCT_1.setText(sachClone.getNamXB()+"\r\nTái bản lần thứ "+sachClone.getSoLanTaiBan()+"\r\n"+sachClone.getSoLuong());
+		this.view.txtMTSP_pnlMTSP.setText(sachClone.getMoTa());
+		this.view.txtDG_pnlDG.setText("Đang phát triển!!!");
+//		for(int i = 0 ; i < lDG.size(); i++)
+//		{
+//			if(lDG.get(i).getMaPhieuMuon().getMaSach().getMaSach().equals(sachClone.getMaSach()))
+//			{
+//				this.view.txtDG_pnlDG.setText(this.view.txtDG_pnlDG.getText().equals("") ? lDG.get(i).getDanhGia() : this.view.txtDG_pnlDG.getText() + lDG.get(i).getDanhGia() + "\n");
+//			}
+//			
+//		}
+		
+//		System.out.println(sachClone.getTenSach());
+		
+	}
+	
+	public void listBorrowedView()
+	{
+		int brCount = this.lpmsBorrowed.size();
+
+		
+		if(brCount < 4)
+		{
+			this.view.pnlScrBorrowed_scrBorrowed.setBounds(0, 0 , this.view.borrowed_home.getWidth() , (this.view.borrowed_home.getHeight() - 40));
+			this.view.pnlScrBorrowed_scrBorrowed.setLayout(new FlowLayout(FlowLayout.LEFT , 10 , 10));
+		}
+		else
+		{
+			this.view.pnlScrBorrowed_scrBorrowed.setBounds(0, 0 , this.view.borrowed_home.getWidth()/3*brCount , (this.view.borrowed_home.getHeight() - 40));
+			this.view.pnlScrBorrowed_scrBorrowed.setLayout(new GridLayout(1, brCount, 10, 10));
+		}
+
+		
+		for(phieuMuonSach pms : lpms)
+		{
+			if(pms.getTrangThaiPhieu().equals("Đang mượn") && pms.getEmail().getUsername().equals(this.view.emailLogin))
+			{
+				JPanel pnlTemp = new JPanel(null);
+				pnlTemp.setPreferredSize(new Dimension(310, 215));
+				JLabel imglblBr = new JLabel();
+				imglblBr.setBounds(0,0, 310 , 155);
+				ImageIcon imgBr = new ImageIcon(Paths.get("src/main/java/icon/"+pms.getMaSach().getHinhSach()).toAbsolutePath().toString());
+				Image imBr = imgBr.getImage();
+				Image imageBr = imBr.getScaledInstance(imglblBr.getWidth(), imglblBr.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon imgBr_lblBr = new ImageIcon(imageBr);
+				imglblBr.setIcon(imgBr_lblBr);
+				pnlTemp.add(imglblBr);
+				
+				JTextPane tslblBr = new JTextPane();
+				StyledDocument doc = tslblBr.getStyledDocument();
+				try {
+					doc.insertString(doc.getLength(), pms.getMaSach().getTenSach(), null);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SimpleAttributeSet center = new SimpleAttributeSet();
+				StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+				doc.setParagraphAttributes(0, doc.getLength(), center, false);
+				tslblBr.setBounds(0 , 155 , 310, 60);
+				tslblBr.setFont(new Font("Calibri Light" , 0 , 18));
+				tslblBr.setEditable(false);
+				pnlTemp.add(tslblBr);
+				pnlTemp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				pnlTemp.addMouseListener(new MouseAdapter() {
+					
+					public void mousePressed(MouseEvent e)
+					{
+						getTTS(pms.getMaSach().getTenSach());
+						view.scrPane_TTS.setVisible(true);
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								view.scrPane_TTS.getViewport().setViewPosition(new Point(-1, -1));
+							}
+						});
+					}
+				});
+				this.view.pnlScrBorrowed_scrBorrowed.add(pnlTemp);
+				
+				
+			}
+		}
+	}
+	
+	public void listReturnedView()
+	{
+		int rtCount = this.lpmsReturned.size();
+		
+		if(rtCount < 4)
+		{
+			this.view.pnlScrReturned_scrReturned.setBounds(0, 0 , this.view.returned_home.getWidth() , (this.view.returned_home.getHeight() - 40));
+			this.view.pnlScrReturned_scrReturned.setLayout(new FlowLayout(FlowLayout.LEFT , 10 , 40));
+		}
+		else
+		{
+			this.view.pnlScrReturned_scrReturned.setBounds(0, 0 , this.view.returned_home.getWidth()/3*rtCount , this.view.returned_home.getHeight() - 40);
+			this.view.pnlScrReturned_scrReturned.setLayout(new GridLayout(1, rtCount, 10, 10));
+		}
+		for(phieuMuonSach pms : lpms)
+		{
+			
+			if(pms.getTrangThaiPhieu().equals("Đã trả") && pms.getEmail().getUsername().equals(this.view.emailLogin))
+			{
+				JPanel pnlTemp = new JPanel(null);
+				pnlTemp.setPreferredSize(new Dimension(310, 215));
+				JLabel imglblBr = new JLabel();
+				imglblBr.setBounds(0,0, 310 , 155);
+				ImageIcon imgBr = new ImageIcon(Paths.get("src/main/java/icon/"+pms.getMaSach().getHinhSach()).toAbsolutePath().toString());
+				Image imBr = imgBr.getImage();
+				Image imageBr = imBr.getScaledInstance(imglblBr.getWidth(), imglblBr.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon imgBr_lblBr = new ImageIcon(imageBr);
+				imglblBr.setIcon(imgBr_lblBr);
+				pnlTemp.add(imglblBr);
+				
+				JTextPane tslblBr = new JTextPane();
+				StyledDocument doc = tslblBr.getStyledDocument();
+				try {
+					doc.insertString(doc.getLength(), pms.getMaSach().getTenSach(), null);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SimpleAttributeSet center = new SimpleAttributeSet();
+				StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+				doc.setParagraphAttributes(0, doc.getLength(), center, false);
+				tslblBr.setBounds(0 , 155 , 310, 60);
+				tslblBr.setFont(new Font("Calibri Light" , 0 , 18));
+				tslblBr.setEditable(false);
+				pnlTemp.add(tslblBr);
+				pnlTemp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				pnlTemp.addMouseListener(new MouseAdapter() {
+					
+					public void mousePressed(MouseEvent e)
+					{
+						getTTS(pms.getMaSach().getTenSach());
+						view.scrPane_TTS.setVisible(true);
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								view.scrPane_TTS.getViewport().setViewPosition(new Point(-1, -1));
+							}
+						});
+					}
+				});
+				this.view.pnlScrReturned_scrReturned.add(pnlTemp);
+			}
+		}
+	}
+
+	public void choseSachCuaToi() {
+		this.view.imgHome_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgHome_panelTop.setOpaque(false);
+		
+		this.view.imgMyBook_panelTop.setBackground(new Color(255, 255, 255));
+		this.view.imgMyBook_panelTop.setOpaque(true);
+		
+		this.view.imgBookManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgBookManager_panelTop.setOpaque(false);
+		
+		this.view.imgUserManager_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgUserManager_panelTop.setOpaque(false);
+		
+		this.view.imgThongKe_panelTop.setBackground(new Color(244, 244, 244));
+		this.view.imgThongKe_panelTop.setOpaque(false);
+		
+		this.view.contentPane.removeAll();
+		this.view.contentPane.add(this.view.panel_top);
+		this.view.contentPane.add(this.view.panel_sachCuaToi());
+		this.view.contentPane.repaint();
+		this.view.contentPane.revalidate();
 	}
 }
