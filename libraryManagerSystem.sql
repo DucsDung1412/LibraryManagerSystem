@@ -53,7 +53,8 @@ REPLACE INTO `loaisach` (`maLoaiSach`, `moTa`, `tenLoaiSach`, `trangThai`) VALUE
 	('LS Tue Aug 01 18:02:54 ICT 2023', 'Sách dành cho thiết kế đồ họa', 'Thiết kế đồ hoạ', 'Tồn tại'),
 	('LS Tue Aug 02 18:02:54 ICT 2023', 'Sách sử dụng chung trong ngành công nghệ thông tin', 'Công nghệ thông tin', 'Tồn tại'),
 	('LS Tue Aug 03 18:02:54 ICT 2023', 'Sách chuyên về tin học văn phòng', 'Tin học văn phòng', 'Tồn tại'),
-	('LS Tue Aug 04 18:02:54 ICT 2023', 'Sách marketing', 'Marketing', 'Đã xoá');
+	('LS Tue Aug 04 18:02:54 ICT 2023', 'Sách marketing', 'Marketing', 'Đã xoá'),
+	('LS Tue Aug 08 18:26:36 ICT 2023', 'asd', 'akshd - asjhd', 'Đã xóa');
 
 -- Dumping structure for table library_system.phieumuonsach
 CREATE TABLE IF NOT EXISTS `phieumuonsach` (
@@ -71,14 +72,14 @@ CREATE TABLE IF NOT EXISTS `phieumuonsach` (
   CONSTRAINT `FKb10dgvyx6u9pfrsnsrecswgyg` FOREIGN KEY (`email`) REFERENCES `user` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table library_system.phieumuonsach: ~8 rows (approximately)
+-- Dumping data for table library_system.phieumuonsach: ~7 rows (approximately)
 REPLACE INTO `phieumuonsach` (`maPhieu`, `ngayMuon`, `ngayTra`, `trangThai`, `trangThaiPhieu`, `email`, `maSach`) VALUES
-	('PMS Fri Aug 04 10:44:28 ICT 2023', '2023-08-02', '2023-09-02', 'Tồn tại', 'Đã quá hạn', 'daoducdung2000@gmail.com', 'S Sat Aug 12 10:10:57 ICT 2023'),
-	('PMS Fri Aug 05 10:44:28 ICT 2023', '2023-08-02', '2023-08-03', 'Tồn tại', 'Đã trả', 'nguyenhoahung1007@gmail.com', 'S Sat Aug 06 10:10:57 ICT 2023'),
-	('PMS Fri Aug 06 10:44:28 ICT 2023', '2023-08-02', '2023-09-02', 'Tồn tại', 'Đã quá hạn', 'nguyenleloi2k3@gmail.com', 'S Sat Aug 12 10:10:57 ICT 2023'),
+	('PMS Fri Aug 04 10:44:28 ICT 2023', '2023-08-02', '2023-09-02', 'Tồn tại', 'Đã trả', 'daoducdung2000@gmail.com', 'S Sat Aug 12 10:10:57 ICT 2023'),
+	('PMS Fri Aug 05 10:44:28 ICT 2023', '2023-08-02', '2023-08-03', 'Tồn tại', 'Đã quá hạn', 'nguyenhoahung1007@gmail.com', 'S Sat Aug 06 10:10:57 ICT 2023'),
+	('PMS Fri Aug 06 10:44:28 ICT 2023', '2023-08-02', '2023-08-09', 'Tồn tại', 'Đã trả', 'nguyenleloi2k3@gmail.com', 'S Sat Aug 12 10:10:57 ICT 2023'),
 	('PMS Fri Aug 07 10:44:28 ICT 2023', '2023-08-03', '2023-08-07', 'Tồn tại', 'Đang mượn', 'nguyenhoahung1007@gmail.com', 'S Sat Aug 12 10:10:57 ICT 2023'),
-	('PMS Sat Aug 05 17:58:37 ICT 2023', '2023-08-05', '2023-08-05', 'Tồn tại', 'Đã trả', 'admin', 'S Sat Aug 12 10:10:57 ICT 2023'),
-	('PMS Sat Aug 05 17:59:42 ICT 2023', '2023-08-05', '2023-08-05', 'Tồn tại', 'Đã trả', 'admin', 'S Sat Aug 12 10:10:57 ICT 2023'),
+	('PMS Sat Aug 05 17:58:37 ICT 2023', '2023-08-05', '2023-08-05', 'Tồn tại', 'Đang mượn', 'admin', 'S Sat Aug 07 10:10:57 ICT 2023'),
+	('PMS Sat Aug 05 17:59:42 ICT 2023', '2023-08-05', '2023-08-05', 'Tồn tại', 'Đang đặt', 'admin', 'S Sat Aug 12 10:10:57 ICT 2023'),
 	('PMS Sat Aug 05 18:00:15 ICT 2023', '2023-08-05', '2023-08-05', 'Tồn tại', 'Đã trả', 'admin', 'S Sat Aug 12 10:10:57 ICT 2023');
 
 -- Dumping structure for table library_system.sach
@@ -108,7 +109,7 @@ REPLACE INTO `sach` (`maSach`, `hinhSach`, `moTa`, `namXB`, `nhaXuatBan`, `soLan
 	('S Sat Aug 09 10:10:57 ICT 2023', 'MS05.png', 'Sách Excel Power Query - Power Pivot tự động hóa dữ liệu báo cáo cơ bản là cuốn sách tuyệt vời để giúp bạn giải quyết các công việc về báo cáo tiện lợi hơn và nhanh chóng', 2021, 'Thông tin và truyền thông', 1, 21, 'Nguyễn Quang Vinh', 'Sách Excel Power Query Và Power Pivot Tự Động Hóa Dữ Liệu Báo Cáo Cơ Bản', 'Tồn tại', 'LS Tue Aug 03 18:02:54 ICT 2023'),
 	('S Sat Aug 10 10:10:57 ICT 2023', 'MS06.png', 'Làm phim với PREMIERE PRO CC. Gồm 2 phần với 18 chương', 2021, 'Thanh Niên', 1, 21, 'Nguyễn Đức Phú', 'Làm Phim Với Premiere Pro CC', 'Tồn tại', 'LS Tue Aug 01 18:02:54 ICT 2023'),
 	('S Sat Aug 11 10:10:57 ICT 2023', 'MS07.png', 'Nghệ thuật thiết kế Game của tác giả Jesse Schell, giáo sư về công nghệ giải trí của Đại học Carnegie Mellon, CEO của Schell Games,từ lâu đã là một cuốn sách gối đầu giường dành cho những nhà thiết kế game trên thế giới. Những người làm việc trong ngành p', 2022, 'Dân Trí', 1, 10, 'Jesse Schell', 'Nghệ Thuật Thiết Kế Game', 'Tồn tại', 'LS Tue Aug 03 18:02:54 ICT 2023'),
-	('S Sat Aug 12 10:10:57 ICT 2023', 'MS08.png', 'I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA', 2017, 'Lao Động', 1, 1, 'Neos.Thanh', 'Lập trình hướng đối tượng JAVA core', 'Tồn tại\r\n', 'LS Tue Aug 02 18:02:54 ICT 2023'),
+	('S Sat Aug 12 10:10:57 ICT 2023', 'MS08.png', 'I. Đôi điều về tác giả\r\nTôi là NEOS.THÀNH (Nguyễn Văn Thành) – Một lập trình viên Java-Android, tác giả cuốn sách “Lập trình hướng đối tượng Java Core”, CEO của công ty TNHH MTV DV   Giáo Dục Thành Nguyên, đồng thời là mentor tại trường ĐH trực tuyến FUNiX, giảng viên giảng dạy tại cao đẳng nghề PolyTechnic,  công ty phần mềm Luvina và công ty phần mềm FPT.\r\n\r\nII. Quyển sách này nói về điều gì?\r\n- JAVA là ngôn ngữ lập trình rất phổ biến nhất hiện nay, học Lập trình hướng đối tượng JAVA bạn sẽ có rất nhiều hướng đi, từ lập trình Mobile app, Java web, Desktop\r\n  App, Game, và tất cả đều sử dụng nền tảng của JAVA CORE.\r\n- Quyển sách này gồm 22 bài học từ Tư duy Lập trình hướng đối tượng JAVA(Đa hình, kế thừa) đến các đối tượng #JavaCore (String, Array, File), lập trình giao diện Swing.\r\n- Quyển sách Lập trình hướng đối tượng JAVA này sẽ giúp bạn:\r\n    + Đi vào thế giới lập trình hết sức tự nhiên, thân thiện và dễ hiểu - LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG LÀ TƯ DUY GẮN LIỀN VỚI CUỘC SỐNG HẰNG NGÀY\r\n    + Nắm vững được thế nào là tư duy lập trình hướng đối tượng và cách phân tích một bài toán lập trình\r\n    + Hiểu được các khái niệm lập trình Java cơ bản.\r\n    + Thực hành xây dựng được các giao diện phần mềm desktop bằng ngôn ngữ JAVA\r\n=> Sau khi có được nền tảng kiến thức Lập trình hướng đối tượng JAVA bạn có thể tự học các ngôn ngữ lập trình hướng đối tượng khác như C++/C, Python,\r\n\r\nIII. Quyển sách này dành cho ai?\r\n- Là sách tham khảo, hướng dẫn tự học Lập trình hướng đối tượng JAVA bằng ngôn ngữ JAVA Core\r\n- Dành cho người mới bắt đầu học lập trình, sinh viên chưa vững tư duy LTHĐT, Java core\r\n- Dành cho người mất gốc hoặc trái ngành muốn học Lập trình hướng đối tượng JAVA', 2017, 'Lao Động', 1, 2, 'Neos.Thanh', 'Lập trình hướng đối tượng JAVA core', 'Tồn tại\r\n', 'LS Tue Aug 02 18:02:54 ICT 2023'),
 	('S Sat Aug 13 10:10:57 ICT 2023', 'MS09.png', 'Cung cấp các kiến thức cơ bản về ngôn ngữ lập trình Java, kiến thức về lập trình hướng đối tượng, xử lý biệt lệ, lập trình đa luồng, lập trình from với swing và kết nối cơ sở dữ liệu với Java…', 2022, 'Xây Dựng', 2, 28, 'Phạm Văn Trung', 'Lập Trình Java Cơ Bản', 'Tồn tại', 'LS Tue Aug 02 18:02:54 ICT 2023');
 
 -- Dumping structure for table library_system.thongtincanhan
@@ -129,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `thongtincanhan` (
 REPLACE INTO `thongtincanhan` (`maTTCN`, `diaChi`, `hinh`, `soDienThoai`, `ten`, `trangThai`, `email`) VALUES
 	('TTCN Fri Aug 04 13:20:17 ICT 2023', 'Sài Gòn', 'employee.png', '0387574859', 'Nguyễn Hoà Hưng', 'Tồn tại', 'nguyenhoahung1007@gmail.com'),
 	('TTCN Fri Aug 04 13:27:17 ICT 2023', 'Sài Gòn', '1.png', '0375849385', 'admin', 'Tồn tại', 'admin'),
-	('TTCN Fri Aug 04 13:37:17 ICT 2023', 'Sài Gòn', '', '0746489309', 'Nguyễn Lẻ Lợi', 'Tồn tại', 'nguyenleloi2k3@gmail.com'),
+	('TTCN Fri Aug 04 13:37:17 ICT 2023', 'Sài Gòn', 'account.png', '0907890643', 'Nguyễn Lẻ Loi', 'Tồn tại', 'nguyenleloi2k3@gmail.com'),
 	('TTCN Fri Aug 04 13:47:17 ICT 2023', 'Sài Gòn', '1.png', '0343704932', 'Đào Đức Dũng', 'Tồn tại', 'daoducdung2000@gmail.com');
 
 -- Dumping structure for table library_system.user
@@ -144,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table library_system.user: ~4 rows (approximately)
 REPLACE INTO `user` (`username`, `password`, `role`, `trangThai`) VALUES
 	('admin', '123', 'admin', 'Tồn tại'),
-	('daoducdung2000@gmail.com', '123', 'Độc giả', 'Tồn tại'),
+	('daoducdung2000@gmail.com', '123', 'Đọc giả', 'Tồn tại'),
 	('nguyenhoahung1007@gmail.com', '123', 'Đọc giả', 'Tồn tại'),
 	('nguyenleloi2k3@gmail.com', '123', 'Đọc giả', 'Tồn tại');
 
