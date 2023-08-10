@@ -192,7 +192,7 @@ public class registerView extends JFrame {
 			}
 		});
 		btnHienPass_panelRegister
-				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/hien_mk.png").toAbsolutePath().toString()));
+				.setIcon(new ImageIcon(Paths.get("icon\\hien_mk.png").toAbsolutePath().toString()));
 		btnHienPass_panelRegister.setForeground(Color.BLACK);
 		btnHienPass_panelRegister.setBounds(744, 225, 37, 28);
 		panel_Register.add(btnHienPass_panelRegister);
@@ -208,7 +208,7 @@ public class registerView extends JFrame {
 		});
 		btnAnPass_panelRegister.setVisible(false);
 		btnAnPass_panelRegister
-				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/an_mk.png").toAbsolutePath().toString()));
+				.setIcon(new ImageIcon(Paths.get("icon\\an_mk.png").toAbsolutePath().toString()));
 		btnAnPass_panelRegister.setForeground(Color.BLACK);
 		btnAnPass_panelRegister.setBounds(744, 225, 37, 28);
 		panel_Register.add(btnAnPass_panelRegister);
@@ -222,7 +222,7 @@ public class registerView extends JFrame {
 			}
 		});
 		btnHienConfirm_panelRegister
-				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/hien_mk.png").toAbsolutePath().toString()));
+				.setIcon(new ImageIcon(Paths.get("icon\\hien_mk.png").toAbsolutePath().toString()));
 		btnHienConfirm_panelRegister.setForeground(Color.BLACK);
 		btnHienConfirm_panelRegister.setBounds(743, 268, 37, 28);
 		panel_Register.add(btnHienConfirm_panelRegister);
@@ -238,7 +238,7 @@ public class registerView extends JFrame {
 		});
 		btnAnConfirm_panelRegister.setVisible(false);
 		btnAnConfirm_panelRegister
-				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/an_mk.png").toAbsolutePath().toString()));
+				.setIcon(new ImageIcon(Paths.get("icon\\an_mk.png").toAbsolutePath().toString()));
 		btnAnConfirm_panelRegister.setForeground(Color.BLACK);
 		btnAnConfirm_panelRegister.setBounds(743, 268, 37, 28);
 		panel_Register.add(btnAnConfirm_panelRegister);
@@ -247,7 +247,7 @@ public class registerView extends JFrame {
 		imgBg_panelRegister = new JLabel("");
 		imgBg_panelRegister.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 15));
 		imgBg_panelRegister
-				.setIcon(new ImageIcon(Paths.get("src/main/java/icon/login_BG.png").toAbsolutePath().toString()));
+				.setIcon(new ImageIcon(Paths.get("icon\\login_BG.png").toAbsolutePath().toString()));
 		imgBg_panelRegister.setBounds(-30, -60, 920, 600);
 		panel_Register.add(imgBg_panelRegister);
 	}

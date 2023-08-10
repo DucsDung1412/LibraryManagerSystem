@@ -245,7 +245,7 @@ public class libraryManagerSystemView extends JFrame {
 		JLabel imgLogo_panelTop = new JLabel("");
 		imgLogo_panelTop.setBounds(16, -18, 155, 156);
 		ImageIcon imgILogo_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/logo.png").toAbsolutePath().toString());
+				Paths.get("icon\\logo.png").toAbsolutePath().toString());
 //		ImageIcon imgILogo_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\logo.png");
 		Image imLogo_panelTop = imgILogo_panelTop.getImage();
 		Image imageLogo_panelTop = imLogo_panelTop.getScaledInstance(imgLogo_panelTop.getWidth(),
@@ -271,7 +271,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgHome_panelTop.setVerticalTextPosition(JLabel.BOTTOM);
 		imgHome_panelTop.setHorizontalTextPosition(JLabel.CENTER);
 		ImageIcon imgIHome_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
+				Paths.get("icon\\icon_home_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIHome_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_home_setting.png");
 		Image imHome_panelTop = imgIHome_panelTop.getImage();
 		Image imageHome_panelTop = imHome_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -294,7 +294,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgMyBook_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgMyBook_panelTop.setBounds(370, 0, 118, 109);
 		ImageIcon imgIMyBook_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/icon_my_setting.png").toAbsolutePath().toString());
+				Paths.get("icon\\icon_my_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIMyBook_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_my_setting.png");
 		Image imMyBook_panelTop = imgIMyBook_panelTop.getImage();
 		Image imageMyBook_panelTop = imMyBook_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -321,7 +321,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgBookManager_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgBookManager_panelTop.setBounds(508, 0, 118, 109);
 		ImageIcon imgIBookManager_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/icon_book_setting.png").toAbsolutePath().toString());
+				Paths.get("icon\\icon_book_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIBookManager_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_book_setting.png");
 		Image imBookManager_panelTop = imgIBookManager_panelTop.getImage();
 		Image imageBookManager_panelTop = imBookManager_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -347,7 +347,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgUserManager_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgUserManager_panelTop.setBounds(646, 0, 118, 109);
 		ImageIcon imgIUserManager_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/icon_user_setting.png").toAbsolutePath().toString());
+				Paths.get("icon\\icon_user_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIUserManager_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imUserManager_panelTop = imgIUserManager_panelTop.getImage();
 		Image imageUserManager_panelTop = imUserManager_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -373,7 +373,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgThongKe_panelTop.setFont(new Font("Arial", Font.BOLD, 18));
 		imgThongKe_panelTop.setBounds(784, 0, 93, 109);
 		ImageIcon imgIThongKe_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/icon_thongke_setting.png").toAbsolutePath().toString());
+				Paths.get("icon\\icon_thongke_setting.png").toAbsolutePath().toString());
 //		ImageIcon imgIThongKe_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_thongke_setting.png");
 		Image imThongKe_panelTop = imgIThongKe_panelTop.getImage();
 		Image imageThongKe_panelTop = imThongKe_panelTop.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -400,7 +400,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgUser_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgUser_panelTop.setBounds(1176, 14, 36, 36);
 		ImageIcon imgIUser_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/user.png").toAbsolutePath().toString());
+				Paths.get("icon\\user.png").toAbsolutePath().toString());
 //		ImageIcon imgIUser_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imUser_panelTop = imgIUser_panelTop.getImage();
 		Image imageUser_panelTop = imUser_panelTop.getScaledInstance(imgUser_panelTop.getWidth(),
@@ -433,7 +433,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgNoti_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgNoti_panelTop.setBounds(1236, 14, 36, 36);
 		ImageIcon imgINoti_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/thongbao.png").toAbsolutePath().toString());
+				Paths.get("icon\\thongbao.png").toAbsolutePath().toString());
 //		ImageIcon imgINoti_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imNoti_panelTop = imgINoti_panelTop.getImage();
 		Image imageNoti_panelTop = imNoti_panelTop.getScaledInstance(imgNoti_panelTop.getWidth(),
@@ -466,7 +466,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgSetting_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgSetting_panelTop.setBounds(1176, 62, 36, 36);
 		ImageIcon imgISetting_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/setting_banhrang.png").toAbsolutePath().toString());
+				Paths.get("icon\\setting_banhrang.png").toAbsolutePath().toString());
 //		ImageIcon imgISetting_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imSetting_panelTop = imgISetting_panelTop.getImage();
 		Image imageSetting_panelTop = imSetting_panelTop.getScaledInstance(imgSetting_panelTop.getWidth(),
@@ -486,7 +486,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgLogout_panelTop.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imgLogout_panelTop.setBounds(1236, 62, 36, 36);
 		ImageIcon imgILogout_panelTop = new ImageIcon(
-				Paths.get("src/main/java/icon/dangxuat.png").toAbsolutePath().toString());
+				Paths.get("icon\\dangxuat.png").toAbsolutePath().toString());
 //		ImageIcon imgILogout_panelTop = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder (2)\\icon_user_setting.png");
 		Image imLogout_panelTop = imgILogout_panelTop.getImage();
 		Image imageLogout_panelTop = imLogout_panelTop.getScaledInstance(imgLogout_panelTop.getWidth(),
@@ -499,9 +499,9 @@ public class libraryManagerSystemView extends JFrame {
 		JLabel imgBG_panelTop = new JLabel("");
 		imgBG_panelTop.setBackground(new Color(0, 0, 0));
 		imgBG_panelTop.setBounds(0, 0, panel_top.getWidth(), panel_top.getHeight());
-//		ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelTop = new ImageIcon(
-				"C:\\Users\\Admin\\eclipse-workspace\\librarySys\\src\\main\\java\\icon\\main_BG1.png");
+		ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("icon\\main_BG1.png").toAbsolutePath().toString());
+//		ImageIcon imgIBG_panelTop = new ImageIcon(
+//				"C:\\Users\\Admin\\eclipse-workspace\\librarySys\\src\\main\\java\\icon\\main_BG1.png");
 		Image imBG_panelTop = imgIBG_panelTop.getImage();
 		Image imageBG_panelTop = imBG_panelTop.getScaledInstance(imgBG_panelTop.getWidth(), imgBG_panelTop.getHeight(),
 				Image.SCALE_SMOOTH);
@@ -511,7 +511,7 @@ public class libraryManagerSystemView extends JFrame {
 
 		// Thêm panel tại đây
 //		contentPane.add(panel_TTS("Lập trình hướng đối tượng JAVA core"));
-		contentPane.add(panel_Home());
+		contentPane.add(panel_sachCuaToi());
 		
 	}
 
@@ -630,7 +630,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgtimKiem_paneltopHome.setBounds(1080, 15, 30, 30);
 		// imgtimKiem_panelTopHome.setIcon(new ImageIcon(
 		// "C:\\Users\\men\\eclipse-workspace\\LibraryManagerSystem\\LibraryManagerSystem\\src\\main\\java\\icon\\iconSearch.png"));
-		ImageIcon imgiconTK = new ImageIcon(Paths.get("src/main/java/icon/iconSearch.png").toAbsolutePath().toString());
+		ImageIcon imgiconTK = new ImageIcon(Paths.get("icon\\iconSearch.png").toAbsolutePath().toString());
 		Image imgTK = imgiconTK.getImage();
 		Image imgsearch = imgTK.getScaledInstance(imgtimKiem_paneltopHome.getWidth(),
 				imgtimKiem_paneltopHome.getHeight(), Image.SCALE_SMOOTH);
@@ -720,7 +720,7 @@ public class libraryManagerSystemView extends JFrame {
 			JLabel imghinhSach_panelsach = new JLabel("");
 			imghinhSach_panelsach.setBounds(0, 0, 360, 205);
 
-			ImageIcon imgiconSach = new ImageIcon((Paths.get("src/main/java/icon/" + ds.getHinhSach())).toString());
+			ImageIcon imgiconSach = new ImageIcon((Paths.get("icon\\" + ds.getHinhSach())).toString());
 			Image imgsach = imgiconSach.getImage();
 			Image img = imgsach.getScaledInstance(imghinhSach_panelsach.getWidth(), imghinhSach_panelsach.getHeight(),
 					Image.SCALE_SMOOTH);
@@ -816,8 +816,8 @@ public class libraryManagerSystemView extends JFrame {
 						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 				imgSach_pnlGT.setBounds(0, 0, 855, 268);
-//					ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
-				imgIBG_pnlTTS = new ImageIcon( "E:/Eclipse Project/nhatdlps26322/src/main/java/icon/MS01.png");
+//					ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("icon\\main_BG1.png").toAbsolutePath().toString());
+				imgIBG_pnlTTS = new ImageIcon("E:/Eclipse Project/nhatdlps26322/src/main/java/icon/MS01.png");
 				Image imBG_pnlTTS = imgIBG_pnlTTS.getImage();
 				Image imageBG_pnlTTS = imBG_pnlTTS.getScaledInstance(imgSach_pnlGT.getWidth(),
 						imgSach_pnlGT.getHeight(), Image.SCALE_SMOOTH);
@@ -971,7 +971,7 @@ public class libraryManagerSystemView extends JFrame {
 				pnlLblHome_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		
 				//Home
-		ImageIcon imgHome = new ImageIcon(Paths.get("E:/Eclipse Project/nhatdlps26322/src/main/java/icon/home_icon.png").toAbsolutePath().toString());
+		ImageIcon imgHome = new ImageIcon(Paths.get("icon\\home_icon.png").toAbsolutePath().toString());
 		Image imHome = imgHome.getImage();
 		Image imageHome = imHome.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon imgHome_lblHome = new ImageIcon(imageHome);
@@ -1011,7 +1011,7 @@ public class libraryManagerSystemView extends JFrame {
 				lblUp_function.setBounds(250 , 39 , 50 , 41);
 				lblUp_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 				
-		ImageIcon imgUp = new ImageIcon(Paths.get("src/main/java/icon/up_icon.png").toAbsolutePath().toString());
+		ImageIcon imgUp = new ImageIcon(Paths.get("icon\\up_icon.png").toAbsolutePath().toString());
 		Image imUp = imgUp.getImage();
 		Image imageUp = imUp.getScaledInstance(50, 40, Image.SCALE_SMOOTH);
 		ImageIcon imgUp_lblUp = new ImageIcon(imageUp);
@@ -1037,7 +1037,7 @@ public class libraryManagerSystemView extends JFrame {
 				pnlSearch_function.setBounds(0, 79 ,function_home.getWidth() , 40 );
 				pnlSearch_function.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		
-		ImageIcon imgSearch = new ImageIcon(Paths.get("src/main/java/icon/search_icon.png").toAbsolutePath().toString());
+		ImageIcon imgSearch = new ImageIcon(Paths.get("icon\\search_icon.png").toAbsolutePath().toString());
 		Image imSearch = imgSearch.getImage();
 		Image imageSearch = imSearch.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		ImageIcon imgSearch_lblSearch = new ImageIcon(imageSearch);
@@ -1334,7 +1334,7 @@ public class libraryManagerSystemView extends JFrame {
 		imgAvata_panelMain.setLocation(493, 50);
 		imgAvata_panelMain.setSize(180, 160);
 		imgAvata_panelMain.setImage(new javax.swing.ImageIcon(
-				Paths.get("src\\main\\java\\icon\\" + userLogin.getTtcn().getHinh()).toAbsolutePath().toString()));
+				Paths.get("icon\\" + userLogin.getTtcn().getHinh()).toAbsolutePath().toString()));
 //		imgAvata_panelMain.setImage(new javax.swing.ImageIcon("C:\\Users\\Admin\\eclipse-workspace\\librarySys\\src\\main\\java\\icon\\employee.png")); 
 		panel_main.add(imgAvata_panelMain);
 
@@ -1503,8 +1503,8 @@ public class libraryManagerSystemView extends JFrame {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		imgSach_panelGT.setBounds(0, 0, 1140, 268);
-//			ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("src/main/java/icon/main_BG1.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelTTS = new ImageIcon(Paths.get("src/main/java/icon/" + sach.getHinhSach()).toAbsolutePath().toString());
+//			ImageIcon imgIBG_panelTop = new ImageIcon(Paths.get("icon\\main_BG1.png").toAbsolutePath().toString());
+		ImageIcon imgIBG_panelTTS = new ImageIcon(Paths.get("icon\\" + sach.getHinhSach()).toAbsolutePath().toString());
 		Image imBG_panelTTS = imgIBG_panelTTS.getImage();
 		Image imageBG_panelTTS = imBG_panelTTS.getScaledInstance(imgSach_panelGT.getWidth(),
 				imgSach_panelGT.getHeight(), Image.SCALE_SMOOTH);
@@ -3259,9 +3259,9 @@ public class libraryManagerSystemView extends JFrame {
 			}
 		});
 		imgBG_panelTongSoNguoiDung.setBounds(0, 0, panel_TongSoNguoiDung.getWidth(), panel_TongSoNguoiDung.getHeight());
-//		ImageIcon imgITongSoNguoiDung_panelThongKe = new ImageIcon(
-//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelThongKe = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoNguoiDung.jpg");
+		ImageIcon imgIBG_panelThongKe = new ImageIcon(
+				Paths.get("icon\\tongSoNguoiDung.jpg").toAbsolutePath().toString());
+//		ImageIcon imgIBG_panelThongKe = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoNguoiDung.jpg");
 		Image imBG_panelThongKe = imgIBG_panelThongKe.getImage();
 		Image imageBG_panelThongKe = imBG_panelThongKe.getScaledInstance(imgBG_panelTongSoNguoiDung.getWidth(), imgBG_panelTongSoNguoiDung.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconBG_panelThongKe = new ImageIcon(imageBG_panelThongKe);
@@ -3298,9 +3298,9 @@ public class libraryManagerSystemView extends JFrame {
 			}
 		});
 		imgBG_panelTongSoSach.setBounds(0, 0, 291, 204);
-//		ImageIcon imgIBG_panelTongSoSach = new ImageIcon(
-//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelTongSoSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoSach.jpg");
+		ImageIcon imgIBG_panelTongSoSach = new ImageIcon(
+				Paths.get("icon\\tongSoSach.jpg").toAbsolutePath().toString());
+//		ImageIcon imgIBG_panelTongSoSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSoSach.jpg");
 		Image imBG_panelTongSoSach = imgIBG_panelTongSoSach.getImage();
 		Image imageBG_panelTongSoSach = imBG_panelTongSoSach.getScaledInstance(imgBG_panelTongSoSach.getWidth(), imgBG_panelTongSoSach.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconBG_panelTongSoSach = new ImageIcon(imageBG_panelTongSoSach);
@@ -3334,9 +3334,9 @@ public class libraryManagerSystemView extends JFrame {
 		
 		JLabel imgBG_panelDoPhoBienCuaSach = new JLabel("");
 		imgBG_panelDoPhoBienCuaSach.setBounds(0, 0, 291, 204);
-//		ImageIcon imgIBG_panelSachDangMuon  = new ImageIcon(
-//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelDoPhoBienCuaSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\doPhoBienCuaSachjpg.jpg");
+		ImageIcon imgIBG_panelDoPhoBienCuaSach  = new ImageIcon(
+				Paths.get("icon\\doPhoBienCuaSachjpg.jpg").toAbsolutePath().toString());
+//		ImageIcon imgIBG_panelDoPhoBienCuaSach = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\doPhoBienCuaSachjpg.jpg");
 		Image imBG_panelDoPhoBienCuaSach = imgIBG_panelDoPhoBienCuaSach.getImage();
 		Image imageBG_panelDoPhoBienCuaSach = imBG_panelDoPhoBienCuaSach.getScaledInstance(imgBG_panelDoPhoBienCuaSach.getWidth(), imgBG_panelDoPhoBienCuaSach.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconBG_panelDoPhoBienCuaSach = new ImageIcon(imageBG_panelDoPhoBienCuaSach);
@@ -3375,9 +3375,9 @@ public class libraryManagerSystemView extends JFrame {
 			}
 		});
 		imgBG_panelSachQuaHan.setBounds(0, 0, 291, 204);
-//		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon(
-//				Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachQuaHanjpg.jpg");
+		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon(
+				Paths.get("icon\\tongSachQuaHanjpg.jpg").toAbsolutePath().toString());
+//		ImageIcon imgIBG_panelSachQuaHan  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachQuaHanjpg.jpg");
 		Image imBG_panelSachQuaHan  = imgIBG_panelSachQuaHan.getImage();
 		Image imageBG_panelSachQuaHan  = imBG_panelSachQuaHan.getScaledInstance(imgBG_panelSachQuaHan.getWidth(), imgBG_panelSachQuaHan.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconBG_panelSachQuaHan  = new ImageIcon(imageBG_panelSachQuaHan);
@@ -3414,9 +3414,9 @@ public class libraryManagerSystemView extends JFrame {
 			}
 		});
 		imgBG_panelSachDangDat.setBounds(0, 0, 291, 204);
-//		ImageIcon imgIBG_panelSachDangDat = new ImageIcon(
-//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelSachDangDat  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangDatjpg.jpg");
+		ImageIcon imgIBG_panelSachDangDat = new ImageIcon(
+				Paths.get("icon\\tongSachDangDatjpg.jpg").toAbsolutePath().toString());
+//		ImageIcon imgIBG_panelSachDangDat  = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangDatjpg.jpg");
 		Image imBG_panelSachDangDat  = imgIBG_panelSachDangDat.getImage();
 		Image imageBG_panelSachDangDat  = imBG_panelSachDangDat.getScaledInstance(imgBG_panelSachDangDat.getWidth(), imgBG_panelSachDangDat.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconBG_panelSachDangDat  = new ImageIcon(imageBG_panelSachDangDat);
@@ -3453,9 +3453,9 @@ public class libraryManagerSystemView extends JFrame {
 			}
 		});
 		imgBG_panelSachDangMuon.setBounds(0, 0, 291, 204);
-//		ImageIcon imgIBG_panelSachDangMuon  = new ImageIcon(
-//		Paths.get("src/main/java/icon/icon_home_setting.png").toAbsolutePath().toString());
-		ImageIcon imgIBG_panelSachDangMuon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangMuonjpg.jpg");
+		ImageIcon imgIBG_panelSachDangMuon  = new ImageIcon(
+				Paths.get("icon\\tongSachDangMuonjpg.jpg").toAbsolutePath().toString());
+//		ImageIcon imgIBG_panelSachDangMuon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\tongSachDangMuonjpg.jpg");
 		Image imBG_panelSachDangMuon = imgIBG_panelSachDangMuon.getImage();
 		Image imageBG_panelSachDangMuon = imBG_panelSachDangMuon.getScaledInstance(imgBG_panelSachDangMuon.getWidth(), imgBG_panelSachDangMuon.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconBG_panelSachDangMuon = new ImageIcon(imageBG_panelSachDangMuon);
@@ -3534,7 +3534,7 @@ public class libraryManagerSystemView extends JFrame {
 		JLabel imgAvatarUser_panelTop = new JLabel("");
 		imgAvatarUser_panelTop.setBounds(20, 20, 143, 140);
 		
-		ImageIcon imgI_AvatarUs = new ImageIcon(Paths.get("src/main/java/icon/" + uDAO.getTtcn().getHinh()).toAbsolutePath().toString());
+		ImageIcon imgI_AvatarUs = new ImageIcon(Paths.get("icon\\" + uDAO.getTtcn().getHinh()).toAbsolutePath().toString());
 		Image img_AvatarUs = imgI_AvatarUs.getImage();
 		Image image_AvatarUs = img_AvatarUs.getScaledInstance(imgAvatarUser_panelTop.getWidth(), imgAvatarUser_panelTop.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imgIcon_AvatarUs = new ImageIcon(image_AvatarUs);

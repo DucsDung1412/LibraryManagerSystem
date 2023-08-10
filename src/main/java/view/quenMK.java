@@ -91,7 +91,7 @@ public class quenMK extends JFrame {
 		});
 		lblSetEnEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSetEnEmail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblSetEnEmail.setIcon(new ImageIcon(Paths.get("src/main/java/icon/exit16.png").toAbsolutePath().toString()));
+		lblSetEnEmail.setIcon(new ImageIcon(Paths.get("icon\\exit16.png").toAbsolutePath().toString()));
 		lblSetEnEmail.setBounds(739, 209, 45, 32);
 		lblSetEnEmail.setVisible(false);
 		panelBG.add(lblSetEnEmail);
@@ -148,7 +148,7 @@ public class quenMK extends JFrame {
 		JLabel lblBG = new JLabel("");
 		lblBG.setVerticalAlignment(SwingConstants.TOP);
 		lblBG.setBounds(0, 0, 862, 569);
-		ImageIcon bg = new ImageIcon(Paths.get("src/main/java/icon/login_BG.png").toAbsolutePath().toString());
+		ImageIcon bg = new ImageIcon(Paths.get("icon\\login_BG.png").toAbsolutePath().toString());
 		lblBG.setIcon(bg);
 		panelBG.add(lblBG);
 		

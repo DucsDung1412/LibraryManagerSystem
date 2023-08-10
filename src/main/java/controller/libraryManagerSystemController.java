@@ -123,6 +123,7 @@ public class libraryManagerSystemController {
 			try {
 				BufferedImage bi = ImageIO.read(this.view.fileClone);
 				ImageIO.write(bi, duoi, new File(Paths.get("src\\main\\java\\icon\\" + name).toAbsolutePath().toString()));
+				ImageIO.write(bi, duoi, new File(Paths.get("icon\\" + name).toAbsolutePath().toString()));
 			} catch (Exception e) {
 //			e.printStackTrace();
 			}
@@ -695,12 +696,6 @@ public class libraryManagerSystemController {
 			// luu hinh anh vao file
 			String duoi = this.view.fileClone.getName().substring(this.view.fileClone.getName().indexOf(".")+1);
 			String name = this.view.fileClone.getName().trim();
-			try {
-				BufferedImage bi = ImageIO.read(this.view.fileClone);
-				ImageIO.write(bi, duoi, new File(Paths.get("src\\main\\java\\icon\\" + name).toAbsolutePath().toString()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			
 			String maSach = this.view.txtMaSach_panelCTS.getText();
 			
@@ -740,6 +735,19 @@ public class libraryManagerSystemController {
 				{				
 					JOptionPane.showMessageDialog(this.view, "Vùi lòng nhập đầy đủ thông tin");
 				} else {
+					if(soLuong < 0) {
+						JOptionPane.showMessageDialog(this.view, "Số lượng không thể là số âm");
+					}  else 
+					if(taiBan < 1) {
+						JOptionPane.showMessageDialog(this.view, "Số lần tái bản không thể nhỏ hơn 1");
+					} else 
+					if(namXB < 1800) {
+						if(namXB < 0) {
+							JOptionPane.showMessageDialog(this.view, "Năm xuất bản không thể là số âm");
+						} else {
+							JOptionPane.showMessageDialog(this.view, "Năm xuất bản phải từ năm 1800 trở đi");
+						}
+					} else 
 					if(validateName(tacGia)) {
 						if(validatePublisherName(nhaXB)) {
 							if(tenSach.matches("^[a-zA-Z].*$")) {
@@ -747,6 +755,13 @@ public class libraryManagerSystemController {
 								if(b) {
 									sachDAO.getsachDAO().insertX(sach);
 									JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
+									try {
+										BufferedImage bi = ImageIO.read(this.view.fileClone);
+										ImageIO.write(bi, duoi, new File(Paths.get("src\\main\\java\\icon\\" + name).toAbsolutePath().toString()));
+										ImageIO.write(bi, duoi, new File(Paths.get("icon\\" + name).toAbsolutePath().toString()));
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
 									this.loadSach();
 									this.view.tblQuanLySach.setRowSelectionInterval(this.view.tblQuanLySach.getRowCount() - 1, this.view.tblQuanLySach.getRowCount() - 1);
 								} else {
@@ -1016,7 +1031,7 @@ public class libraryManagerSystemController {
 		sach.setMaSach(this.view.tblQuanLySach.getValueAt(this.view.tblQuanLySach.getSelectedRow(), 0) + "");
 		sach s = sachDAO.getsachDAO().selectG(sach);
 		
-		ImageIcon imgIconSach = new ImageIcon(Paths.get("src\\main\\java\\icon\\" + s.getHinhSach()).toAbsolutePath().toString());
+		ImageIcon imgIconSach = new ImageIcon(Paths.get("icon\\" + s.getHinhSach()).toAbsolutePath().toString());
 		Image img = imgIconSach.getImage();
 		Image image = img.getScaledInstance(this.view.imgSach_panelCTS.getWidth(), this.view.imgSach_panelCTS.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIconSach = new ImageIcon(image);
@@ -1219,7 +1234,7 @@ public class libraryManagerSystemController {
 		user u = new user();
 		u.setUsername(view.tblQuanLyUser.getValueAt(row_s, 0)+"");
 		user uDAO = userDAO.getuserDAO().selectG(u);
-		ImageIcon imgI_AvatarUs = new ImageIcon(Paths.get("src\\main\\java\\icon\\" + uDAO.getTtcn().getHinh()).toAbsolutePath().toString());
+		ImageIcon imgI_AvatarUs = new ImageIcon(Paths.get("icon\\" + uDAO.getTtcn().getHinh()).toAbsolutePath().toString());
 		Image img_AvatarUs = imgI_AvatarUs.getImage();
 		Image image_AvatarUs = img_AvatarUs.getScaledInstance(this.view.imgUser_panelCTUS.getWidth(), this.view.imgUser_panelCTUS.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon imageIcon_AvatarUs = new ImageIcon(image_AvatarUs);
@@ -1273,6 +1288,7 @@ public class libraryManagerSystemController {
 		this.view.imgUser_panelCTUS.setIcon(null);
 		this.view.imgUser_panelCTUS.setText("Nhấn để tải hình ảnh");
 		this.view.txtEmail_panelCTUS.setEditable(true);
+		this.view.tblQuanLyUser.clearSelection();
 	}
 	
 	public void btnNewYeuCau() {
@@ -1294,6 +1310,7 @@ public class libraryManagerSystemController {
 		d.setMonth(d.getMonth() + 1);
 		String ngayTra = sdf.format(d);
 		this.view.txtNgayTra_panelCTUS_dkDM.setText(ngayTra);
+		this.view.tblQuanLyDangMuon.clearSelection();
 	}
 	
 	public void btnNewQuaHan() {
@@ -1373,12 +1390,6 @@ public class libraryManagerSystemController {
 			// luu hinh anh vao file
 			String duoi = this.view.fileClone.getName().substring(this.view.fileClone.getName().indexOf(".")+1);
 			String name = this.view.fileClone.getName().trim();
-			try {
-				BufferedImage bi = ImageIO.read(this.view.fileClone);
-				ImageIO.write(bi, duoi, new File(Paths.get("src\\main\\java\\icon\\" + name).toAbsolutePath().toString()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			
 			String userName = this.view.txtEmail_panelCTUS.getText();
 			String passWord = this.view.txtPassword_panelCTUS.getText();
@@ -1408,6 +1419,13 @@ public class libraryManagerSystemController {
 									ttcn.setTrangThai("Tồn tại");
 									thongTinCaNhanDAO.getthongTinCaNhanDAO().insertX(ttcn);
 									JOptionPane.showMessageDialog(this.view, "Thêm mới thành công");
+									try {
+										BufferedImage bi = ImageIO.read(this.view.fileClone);
+										ImageIO.write(bi, duoi, new File(Paths.get("src\\main\\java\\icon\\" + name).toAbsolutePath().toString()));
+										ImageIO.write(bi, duoi, new File(Paths.get("icon\\" + name).toAbsolutePath().toString()));
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
 									this.loadUser();
 									for (int j = 0; j < this.view.tblQuanLyUser.getRowCount(); j++) {
 										if(this.view.tblQuanLyUser.getValueAt(j, 0).equals(u.getUsername())) {
@@ -2021,7 +2039,7 @@ public class libraryManagerSystemController {
 				imghinhSach_panelsach.setBounds(0, 0, 360, 205);
 
 				ImageIcon imgiconSach = new ImageIcon(
-						(Paths.get("src/main/java/icon/" + ds.getHinhSach())).toString());
+						(Paths.get("icon\\" + ds.getHinhSach())).toString());
 				Image imgsach = imgiconSach.getImage();
 				Image img = imgsach.getScaledInstance(imghinhSach_panelsach.getWidth(),
 						imghinhSach_panelsach.getHeight(), Image.SCALE_SMOOTH);
@@ -2107,7 +2125,7 @@ public class libraryManagerSystemController {
 			imghinhSach_panelsach.setBounds(0, 0, 360, 205);
 			
 			ImageIcon imgiconSach = new ImageIcon(
-					(Paths.get("src/main/java/icon/" + ds.getHinhSach())).toString());
+					(Paths.get("icon\\" + ds.getHinhSach())).toString());
 			Image imgsach = imgiconSach.getImage();
 			Image img = imgsach.getScaledInstance(imghinhSach_panelsach.getWidth(),
 					imghinhSach_panelsach.getHeight(), Image.SCALE_SMOOTH);
@@ -2161,11 +2179,11 @@ public class libraryManagerSystemController {
 		this.lpmsReturned.removeAllElements();
 		for(phieuMuonSach pms : lpms)
 		{
-			if(pms.getTrangThaiPhieu().equals("Đang mượn") && pms.getMaSach().getTenSach().toLowerCase().matches(str))
+			if(pms.getTrangThaiPhieu().equals("Đang mượn") && pms.getEmail().getUsername().equals(this.view.emailLogin) && pms.getMaSach().getTenSach().toLowerCase().matches(str))
 			{
 				this.lpmsBorrowed.add(pms.getMaSach().getTenSach());
 			}
-			if(pms.getTrangThaiPhieu().equals("Đã trả") && pms.getMaSach().getTenSach().toLowerCase().matches(str))
+			if(pms.getTrangThaiPhieu().equals("Đã trả") && pms.getEmail().getUsername().equals(this.view.emailLogin) && pms.getMaSach().getTenSach().toLowerCase().matches(str))
 			{
 				this.lpmsReturned.add(pms.getMaSach().getTenSach());
 			}
@@ -2222,7 +2240,7 @@ public class libraryManagerSystemController {
 			}
 			
 		}
-		this.view.imgIBG_pnlTTS = new ImageIcon("src/main/java/icon/" + sachClone.getHinhSach());
+		this.view.imgIBG_pnlTTS = new ImageIcon("icon\\" + sachClone.getHinhSach());
 				Image imBG_pnlTTS = this.view.imgIBG_pnlTTS.getImage();
 				Image imageBG_pnlTTS = imBG_pnlTTS.getScaledInstance(this.view.imgSach_pnlGT.getWidth(),
 						this.view.imgSach_pnlGT.getHeight(), Image.SCALE_SMOOTH);
@@ -2272,7 +2290,7 @@ public class libraryManagerSystemController {
 				pnlTemp.setPreferredSize(new Dimension(310, 215));
 				JLabel imglblBr = new JLabel();
 				imglblBr.setBounds(0,0, 310 , 155);
-				ImageIcon imgBr = new ImageIcon(Paths.get("src/main/java/icon/"+pms.getMaSach().getHinhSach()).toAbsolutePath().toString());
+				ImageIcon imgBr = new ImageIcon(Paths.get("icon\\"+pms.getMaSach().getHinhSach()).toAbsolutePath().toString());
 				Image imBr = imgBr.getImage();
 				Image imageBr = imBr.getScaledInstance(imglblBr.getWidth(), imglblBr.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon imgBr_lblBr = new ImageIcon(imageBr);
@@ -2339,7 +2357,7 @@ public class libraryManagerSystemController {
 				pnlTemp.setPreferredSize(new Dimension(310, 215));
 				JLabel imglblBr = new JLabel();
 				imglblBr.setBounds(0,0, 310 , 155);
-				ImageIcon imgBr = new ImageIcon(Paths.get("src/main/java/icon/"+pms.getMaSach().getHinhSach()).toAbsolutePath().toString());
+				ImageIcon imgBr = new ImageIcon(Paths.get("icon\\"+pms.getMaSach().getHinhSach()).toAbsolutePath().toString());
 				Image imBr = imgBr.getImage();
 				Image imageBr = imBr.getScaledInstance(imglblBr.getWidth(), imglblBr.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon imgBr_lblBr = new ImageIcon(imageBr);

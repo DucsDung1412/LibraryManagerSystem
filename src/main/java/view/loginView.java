@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 import controller.loginListener;
 import dao.userDAO;
 import model.user;
+import view.googleLogin;
 
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
@@ -92,8 +93,8 @@ public class loginView extends JFrame {
 		
 		//addbackGround
 		JLabel lblBackground_pnlBackground_contentPane = new JLabel();
-//		lblBackground_pnlBackground_contentPane.setIcon(new ImageIcon(Paths.get("src/main/java/icon/login_BG.png").toAbsolutePath().toString()));
-		lblBackground_pnlBackground_contentPane.setIcon(new ImageIcon("C:/Users/Admin/eclipse-workspace/librarySys/src/main/java/icon/login_BG.png"));
+		lblBackground_pnlBackground_contentPane.setIcon(new ImageIcon(Paths.get("icon\\login_BG.png").toAbsolutePath().toString()));
+//		lblBackground_pnlBackground_contentPane.setIcon(new ImageIcon("C:/Users/Admin/eclipse-workspace/librarySys/src/main/java/icon/login_BG.png"));
 		lblBackground_pnlBackground_contentPane.setBounds(0,0 , 862, 569);
 		pnlBackground_contentPane.add(lblBackground_pnlBackground_contentPane);
 		
@@ -117,13 +118,13 @@ public class loginView extends JFrame {
 		lblUsername_pnlFormLogin_contentPane = new JLabel();
 		lblUsername_pnlFormLogin_contentPane.setFont(fontLabel);
 		lblUsername_pnlFormLogin_contentPane.setBounds(43, 116, 32, 30);
-		lblUsername_pnlFormLogin_contentPane.setIcon(new ImageIcon(Paths.get("src/main/java/icon/User_Icon.png").toAbsolutePath().toString()));
+		lblUsername_pnlFormLogin_contentPane.setIcon(new ImageIcon(Paths.get("icon\\User_Icon.png").toAbsolutePath().toString()));
 //		lblUsername_pnlFormLogin_contentPane.setIcon(new ImageIcon("E:\\Eclipse Project\\nhatdlps26321\\src\\main\\java\\img\\User_Icon.png"));
 		
 		lblPassword_pnlFormLogin_contentPane = new JLabel();
 		lblPassword_pnlFormLogin_contentPane.setFont(fontLabel);
 		lblPassword_pnlFormLogin_contentPane.setBounds(43, 157, 32, 30);
-		lblPassword_pnlFormLogin_contentPane.setIcon(new ImageIcon(Paths.get("src/main/java/icon/Pass_Icon.png").toAbsolutePath().toString()));
+		lblPassword_pnlFormLogin_contentPane.setIcon(new ImageIcon(Paths.get("icon\\Pass_Icon.png").toAbsolutePath().toString()));
 //		lblPassword_pnlFormLogin_contentPane.setIcon(new ImageIcon("E:\\Eclipse Project\\nhatdlps26321\\src\\main\\java\\img\\Pass_Icon.png"));
 		
 		txtUsername_pnlFormLogin_contentPane = new JTextField(50);
