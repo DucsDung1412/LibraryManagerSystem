@@ -110,7 +110,7 @@ public class controllerRegister implements ActionListener {
 			// chkEmail
 			String user = this.v_reg.txtEmail_panelRegister.getText();
 			String pass = this.v_reg.txtPass_panelRegister.getText();
-			String role = "Độc giả";
+			String role = "Đọc giả";
 			user u = new user(user, pass, role, "Tồn tại");
 			if (userDAO.getuserDAO().selectG(u) != null) {
 				JOptionPane.showMessageDialog(this.v_reg, "Email này đã tồn tại");

@@ -511,7 +511,7 @@ public class libraryManagerSystemView extends JFrame {
 
 		// Thêm panel tại đây
 //		contentPane.add(panel_TTS("Lập trình hướng đối tượng JAVA core"));
-		contentPane.add(panel_sachCuaToi());
+		contentPane.add(panel_Home());
 		
 	}
 
@@ -589,6 +589,12 @@ public class libraryManagerSystemView extends JFrame {
 
 //		panel main home
 		panel_mainHome = new JPanel();
+		panel_mainHome.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_sapXep.setVisible(false);
+			}
+		});
 		panel_mainHome.setBackground(new Color(240, 240, 240));
 		scrollPane_mainHome.setViewportView(panel_mainHome);
 		panel_mainHome.setLayout(new GridLayout(0, 3, 25, 25));
@@ -748,14 +754,13 @@ public class libraryManagerSystemView extends JFrame {
 			});
 		}
 
-		panel_home.addMouseListener(new MouseAdapter() {
+		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				scrollPane_theLoai.setVisible(false);
+			public void mouseClicked(MouseEvent e) {				
 				panel_sapXep.setVisible(false);
+				scrollPane_theLoai.setVisible(false);
 			}
 		});
-
 		panel_home.setLayout(null);
 
 		panel_home.add(scrollPane_theLoai);

@@ -505,7 +505,6 @@ public class phieuMuonSachDAO implements daoInterface<phieuMuonSach>{
 					String hql = "FROM phieuMuonSach pms WHERE pms.email.username LIKE :email AND pms.trangThai != 'Đã xóa' AND pms.trangThaiPhieu = :option ORDER BY pms.ngayMuon ASC";
 					Query query = s.createQuery(hql);
 					query.setParameter("email", "%" + duLieu.getUsername() + "%");
-					System.out.println(duLieu.getUsername());
 					query.setParameter("option", option);
 					list = query.getResultList();
 					

@@ -54,7 +54,6 @@ public class userDAO implements daoInterface<user>{
 				Session s = sf.openSession();
 				try {
 					Transaction ts = s.beginTransaction();
-					
 					user userClone = this.selectG(us);
 					if(!userClone.getListDG().isEmpty()) {
 						for (danhGia dg : userClone.getListDG()) {

@@ -18,6 +18,7 @@ public class user {
 	@Id
 	private String username;
 	private String password, role;
+	private String trangThai;
 	
 	@OneToOne(mappedBy = "email")
 	private thongTinCaNhan ttcn;
@@ -31,7 +32,6 @@ public class user {
 	@OneToMany(mappedBy = "email", cascade = CascadeType.ALL)
 	private List<yeuCau> listYC;
 	
-	private String trangThai;
 	
 	public user(String username, String password, String role, String trangthai) {
 		this.username = username;

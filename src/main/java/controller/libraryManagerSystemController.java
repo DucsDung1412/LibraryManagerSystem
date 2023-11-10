@@ -1149,12 +1149,14 @@ public class libraryManagerSystemController {
 		if(option == JFileChooser.APPROVE_OPTION) {
 			String file = fc.getSelectedFile().getAbsolutePath();
 			Document document = new Document();
+			
 			try {
 				FileOutputStream fos = new FileOutputStream(file + ".pdf");
 				PdfWriter.getInstance(document, fos);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 			document.open();
 			
 			BaseFont baseFontHead = null;

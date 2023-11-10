@@ -86,7 +86,6 @@ public class googleLogin extends JPanel {
 					view.emailLogin = email;
 				} else {
 					JOptionPane.showMessageDialog(null, "Tài khoản chưa tồn tại");
-					
 				}
 				
 				
